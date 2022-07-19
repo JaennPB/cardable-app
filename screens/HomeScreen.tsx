@@ -1,4 +1,4 @@
-import { Dimensions } from "react-native";
+import { Dimensions, Pressable } from "react-native";
 import { Flex } from "native-base";
 
 import BoxItem from "../components/BoxItem";
@@ -9,7 +9,7 @@ import Animated, {
 
 const { height, width } = Dimensions.get("window");
 
-const BOXES = ["Box 1", "Box 2", "Box 3", "Box 4", "Box 5", "Box 6"];
+const BOXES = ["Box 1", "Box 2", "Box 3", "Box 4", "Box 5", "Add box +"];
 
 const HomeScreen: React.FC = () => {
   const XScrollData = useSharedValue(0);
@@ -35,12 +35,9 @@ const HomeScreen: React.FC = () => {
           snapToInterval={width * 0.8}
         >
           {BOXES.map((box, index) => (
-            <BoxItem
-              title={box}
-              key={index}
-              index={index}
-              translateX={XScrollData}
-            />
+            <Pressable key={index} onPress={() => console.log(index)}>
+              <BoxItem title={box} index={index} translateX={XScrollData} />
+            </Pressable>
           ))}
         </Animated.ScrollView>
       </Flex>

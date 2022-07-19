@@ -1,18 +1,19 @@
 import { Dimensions, StyleSheet } from "react-native";
-import { Text } from "native-base";
+import { Heading } from "native-base";
 
 import Animated, {
   interpolate,
   useAnimatedStyle,
+  withSpring,
 } from "react-native-reanimated";
+
+import { useItemSeparator } from "../hooks/utils";
 
 interface Props {
   title: string;
   index: number;
   translateX: Animated.SharedValue<number>;
 }
-
-const BOXES = ["Box 1", "Box 2", "Box 3", "Box 4", "Box 5", "Box 6"];
 
 const { width } = Dimensions.get("window");
 
@@ -28,27 +29,28 @@ const BoxItem: React.FC<Props> = ({ title, index, translateX }) => {
       [0, -35, 0]
     );
 
+    const shadowY = interpolate(
+      translateX.value,
+      [
+        (index - 1) * (width * 0.8),
+        index * (width * 0.8),
+        (index + 1) * (width * 0.8),
+      ],
+      [0.1, 0.2, 0.1]
+    );
+
     return {
       transform: [{ translateY: translateY }],
+      shadowOpacity: withSpring(shadowY),
     };
   });
-
-  function itemSeparator(index: number) {
-    if (index === 0) {
-      return { marginLeft: width * 0.15 };
-    } else if (index === BOXES.length - 1) {
-      return { marginRight: width * 0.15, marginLeft: width * 0.1 };
-    } else if (index > 0 && index < BOXES.length - 1) {
-      return { marginLeft: width * 0.1 };
-    }
-  }
 
   return (
     <Animated.View
       key={index}
-      style={[styles.container, rStyle, itemSeparator(index)]}
+      style={[styles.container, rStyle, useItemSeparator(index, width)]}
     >
-      <Text>{title}</Text>
+      <Heading fontWeight="semibold">{title}</Heading>
     </Animated.View>
   );
 };
@@ -62,7 +64,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 20,
-    backgroundColor: "#cf8d8d",
-    // marginLeft: width * 0.1,
+    backgroundColor: "#fff",
+    shadowColor: "#424242",
+    shadowOffset: { width: 0, height: 6 },
+    shadowRadius: 6,
   },
 });
