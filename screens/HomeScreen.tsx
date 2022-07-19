@@ -1,5 +1,5 @@
-import { Dimensions, ListRenderItemInfo } from "react-native";
-import { Flex, FlatList, View, ScrollView } from "native-base";
+import { Dimensions } from "react-native";
+import { Flex } from "native-base";
 
 import BoxItem from "../components/BoxItem";
 import Animated, {
@@ -7,9 +7,9 @@ import Animated, {
   useSharedValue,
 } from "react-native-reanimated";
 
-const { height } = Dimensions.get("window");
+const { height, width } = Dimensions.get("window");
 
-const BOXES = ["Box 1", "Box 2", "Box 3", "Box 4", "Box 5"];
+const BOXES = ["Box 1", "Box 2", "Box 3", "Box 4", "Box 5", "Box 6"];
 
 const HomeScreen: React.FC = () => {
   const XScrollData = useSharedValue(0);
@@ -26,17 +26,18 @@ const HomeScreen: React.FC = () => {
         <Animated.ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}
-          decelerationRate={0.5}
+          decelerationRate={0}
           scrollEventThrottle={16}
           onScroll={xScrollHandler}
           contentContainerStyle={{
             alignItems: "center",
           }}
+          snapToInterval={width * 0.8}
         >
           {BOXES.map((box, index) => (
             <BoxItem
-              key={index}
               title={box}
+              key={index}
               index={index}
               translateX={XScrollData}
             />
