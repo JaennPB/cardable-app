@@ -1,16 +1,20 @@
 import { StyleSheet, View } from "react-native";
-
 import { NativeBaseProvider } from "native-base";
 
-import HomeScreen from "./screens/HomeScreen";
+import { Provider } from "react-redux";
+
+import HomeScreen from "./src/screens/HomeScreen";
+import { store } from "./src/app/store";
 
 export default function App() {
   return (
-    <NativeBaseProvider>
-      <View style={styles.container}>
-        <HomeScreen />
-      </View>
-    </NativeBaseProvider>
+    <Provider store={store}>
+      <NativeBaseProvider>
+        <View style={styles.container}>
+          <HomeScreen />
+        </View>
+      </NativeBaseProvider>
+    </Provider>
   );
 }
 

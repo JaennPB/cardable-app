@@ -1,5 +1,5 @@
 import { Dimensions, StyleSheet } from "react-native";
-import { Heading } from "native-base";
+import { Heading, Button } from "native-base";
 
 import Animated, {
   interpolate,
@@ -26,7 +26,7 @@ const BoxItem: React.FC<Props> = ({ title, index, translateX }) => {
         index * (width * 0.8),
         (index + 1) * (width * 0.8),
       ],
-      [0, -35, 0]
+      [0, -30, 0]
     );
 
     const shadowY = interpolate(
@@ -36,7 +36,7 @@ const BoxItem: React.FC<Props> = ({ title, index, translateX }) => {
         index * (width * 0.8),
         (index + 1) * (width * 0.8),
       ],
-      [0.1, 0.2, 0.1]
+      [0.1, 0.3, 0.1]
     );
 
     return {
@@ -59,6 +59,8 @@ export default BoxItem;
 
 const styles = StyleSheet.create({
   container: {
+    borderWidth: 0.5,
+    borderColor: "#dbdbdb",
     width: width * 0.7,
     height: width * 0.7,
     justifyContent: "center",

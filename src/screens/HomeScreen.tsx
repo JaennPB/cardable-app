@@ -1,11 +1,13 @@
 import { Dimensions, Pressable } from "react-native";
-import { Flex } from "native-base";
+import { Button, Flex } from "native-base";
 
-import BoxItem from "../components/BoxItem";
 import Animated, {
   useAnimatedScrollHandler,
   useSharedValue,
 } from "react-native-reanimated";
+import * as Haptics from "expo-haptics";
+
+import BoxItem from "../components/BoxItem";
 
 const { height, width } = Dimensions.get("window");
 
@@ -20,13 +22,17 @@ const HomeScreen: React.FC = () => {
     },
   });
 
+  function openBoxHandler() {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
+  }
+
   return (
     <Flex flex={1} justify="center" bg="amber.200">
       <Flex h={height / 2} bg="white" justify="center" align="center">
         <Animated.ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}
-          decelerationRate={0}
+          decelerationRate="fast"
           scrollEventThrottle={16}
           onScroll={xScrollHandler}
           contentContainerStyle={{
@@ -35,7 +41,7 @@ const HomeScreen: React.FC = () => {
           snapToInterval={width * 0.8}
         >
           {BOXES.map((box, index) => (
-            <Pressable key={index} onPress={() => console.log(index)}>
+            <Pressable key={index} onPress={openBoxHandler.bind(this, index)}>
               <BoxItem title={box} index={index} translateX={XScrollData} />
             </Pressable>
           ))}
