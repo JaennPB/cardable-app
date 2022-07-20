@@ -1,6 +1,5 @@
 import { useLayoutEffect } from "react";
-import { View } from "react-native";
-import { Button } from "native-base";
+import { Button, View } from "native-base";
 
 import { useRoute, RouteProp } from "@react-navigation/native";
 import { useAppNavigation } from "../hooks/navigationHooks";
@@ -19,7 +18,7 @@ const DecksScreen: React.FC = () => {
   }
 
   return (
-    <View>
+    <View px={5} py={2}>
       <Button mt={5} onPress={navigateToDeckHandler.bind(this, 1)}>
         Deck 1 (Test)
       </Button>

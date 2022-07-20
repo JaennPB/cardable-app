@@ -1,5 +1,5 @@
 import { Dimensions, Pressable } from "react-native";
-import { Button, Flex } from "native-base";
+import { Flex, Heading } from "native-base";
 
 import Animated, {
   useAnimatedScrollHandler,
@@ -30,7 +30,10 @@ const HomeScreen: React.FC = () => {
   }
 
   return (
-    <Flex flex={1} justify="center" bg="muted.200">
+    <Flex flex={1} justify="center" bg="white">
+      <Heading alignSelf="flex-start" ml={5}>
+        Your boxes
+      </Heading>
       <Flex h={height / 2} bg="white" justify="center" align="center">
         <Animated.ScrollView
           horizontal

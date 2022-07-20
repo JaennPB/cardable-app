@@ -1,5 +1,5 @@
 import { useLayoutEffect } from "react";
-import { Pressable, View } from "native-base";
+import { Pressable, View, Text } from "native-base";
 
 import { useAppNavigation } from "../hooks/navigationHooks";
 import { useRoute, RouteProp } from "@react-navigation/native";
@@ -16,13 +16,15 @@ const FlashcardsScreen: React.FC = () => {
       headerTitle: `Deck ${deckId}`,
       headerRight: () => (
         <Pressable onPress={() => navigation.navigate("HomeScreen")}>
-          <Ionicons name="close-sharp" size={30} color="red" />
+          <Text fontSize={16} color="danger.400">
+            End Session
+          </Text>
         </Pressable>
       ),
     });
   });
 
-  return <View></View>;
+  return <View px={5} py={2}></View>;
 };
 
 export default FlashcardsScreen;
