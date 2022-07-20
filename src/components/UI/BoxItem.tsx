@@ -1,5 +1,5 @@
 import { Dimensions, StyleSheet } from "react-native";
-import { Heading, Button } from "native-base";
+import { Heading } from "native-base";
 
 import Animated, {
   interpolate,
@@ -7,7 +7,7 @@ import Animated, {
   withSpring,
 } from "react-native-reanimated";
 
-import { useItemSeparator } from "../hooks/utils";
+import { useItemSeparator } from "../../hooks/utils";
 
 interface Props {
   title: string;
