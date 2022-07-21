@@ -14,11 +14,11 @@ const ToggleAuthType: React.FC<Props> = ({
   return (
     <>
       <Flex flexDir="row" alignItems="center" alignSelf="center" mt={10} mb={5}>
-        <Divider w="30%" />
+        <Divider w="20%" />
         <Text mx={2}>{dividerTitle}</Text>
-        <Divider w="30%" />
+        <Divider w="20%" />
       </Flex>
-      <Button variant="outline" onPress={onPress}>
+      <Button variant="ghost" onPress={onPress} _text={{ fontSize: 18 }}>
         {buttonTitle}
       </Button>
     </>

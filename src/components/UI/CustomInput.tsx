@@ -4,7 +4,7 @@ import { Input, Text, VStack } from "native-base";
 interface Props {
   label: string;
   placeholder?: string;
-  type?: KeyboardTypeOptions;
+  type: KeyboardTypeOptions;
   value: string;
   onChangeText: (text: string) => void;
   secureTextEntry?: boolean;
@@ -27,17 +27,18 @@ const CustomInput: React.FC<Props> = ({
   autoCapitalize,
 }) => {
   return (
-    <VStack space={2}>
-      <Text>{label}</Text>
+    <VStack>
+      <Text fontSize={18} mb={2}>
+        {label}
+      </Text>
       <Input
         placeholder={placeholder}
         variant="filled"
         size="2xl"
         p={5}
+        mb={5}
         fontSize="xl"
-        color="white"
-        //   placeholderTextColor="darkBlue.400"
-        //   selectionColor="darkBlue.400"
+        color="black"
         keyboardType={type}
         onChangeText={onChangeText}
         value={value}
@@ -49,6 +50,8 @@ const CustomInput: React.FC<Props> = ({
         //     borderColor: validationColor,
         //     backgroundColor: "darkBlue.500",
         //   }}
+        //   placeholderTextColor="darkBlue.400"
+        //   selectionColor="darkBlue.400"
         returnKeyType="done"
         maxLength={maxLength}
       />

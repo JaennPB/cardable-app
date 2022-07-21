@@ -27,26 +27,25 @@ const LogInScreen: React.FC<Props> = ({}) => {
   }
 
   function signInHandler() {
-    console.log("signing in");
+    console.log("logging in");
     console.log(userData);
   }
 
-  function navigateToSignUpScreenHandler() {
+  function navigateToSignUpHandler() {
     navigation.navigate("SignUpScreen");
   }
 
   return (
     <Flex flex={1} px={5} justify="center">
       <BoxContainer>
-        <Flex>
-          <Heading>Welcome Back!</Heading>
-        </Flex>
+        <Heading mb={5}>Welcome back!</Heading>
         <VStack>
           <CustomInput
             label="Email"
             onChangeText={setDataHandler.bind(this, "email")}
             value={userData.email}
             autoCapitalize="none"
+            type="email-address"
           />
           <CustomInput
             label="Password"
@@ -54,13 +53,14 @@ const LogInScreen: React.FC<Props> = ({}) => {
             onChangeText={setDataHandler.bind(this, "password")}
             value={userData.password}
             autoCapitalize="none"
+            type="default"
           />
           <CustomButton title="Log In" onPress={signInHandler} />
         </VStack>
         <ToggleAuthType
-          dividerTitle="I'm a new user"
+          dividerTitle="I don't have an account"
           buttonTitle="Sign Up"
-          onPress={navigateToSignUpScreenHandler}
+          onPress={navigateToSignUpHandler}
         />
       </BoxContainer>
     </Flex>

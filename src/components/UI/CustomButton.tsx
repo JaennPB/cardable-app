@@ -6,7 +6,11 @@ interface Props {
 }
 
 const CustomButton: React.FC<Props> = ({ title, onPress }) => {
-  return <Button onPress={onPress}>{title}</Button>;
+  return (
+    <Button onPress={onPress} _text={{ fontSize: 18 }}>
+      {title}
+    </Button>
+  );
 };
 
 export default CustomButton;

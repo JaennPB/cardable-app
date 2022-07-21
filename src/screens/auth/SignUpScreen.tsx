@@ -27,27 +27,28 @@ const SignUpScreen: React.FC<Props> = ({}) => {
     });
   }
 
-  function signInHandler() {
-    console.log("signing in");
+  function SignUpHandler() {
+    console.log("signing up");
     console.log(userData);
   }
 
-  function navigateToLogInScreenHandler() {
+  function navigateToLogInHandler() {
     navigation.navigate("LogInScreen");
   }
   return (
     <Flex flex={1} px={5} justify="center">
       <BoxContainer>
-        <Flex>
-          <Heading>Welcome to Cardable!</Heading>
+        <VStack mb={5} space={2}>
+          <Heading>Welcome to Cardable.</Heading>
           <Text>Create a free account to continue!</Text>
-        </Flex>
+        </VStack>
         <VStack>
           <CustomInput
             label="Email"
             onChangeText={setDataHandler.bind(this, "email")}
             value={userData.email}
             autoCapitalize="none"
+            type="email-address"
           />
           <CustomInput
             label="Password"
@@ -55,6 +56,7 @@ const SignUpScreen: React.FC<Props> = ({}) => {
             onChangeText={setDataHandler.bind(this, "password")}
             value={userData.password}
             autoCapitalize="none"
+            type="default"
           />
           <CustomInput
             label="Re-enter Password"
@@ -62,13 +64,14 @@ const SignUpScreen: React.FC<Props> = ({}) => {
             onChangeText={setDataHandler.bind(this, "password2")}
             value={userData.password2}
             autoCapitalize="none"
+            type="default"
           />
-          <CustomButton title="Sign Up" onPress={signInHandler} />
+          <CustomButton title="Sign Up" onPress={SignUpHandler} />
         </VStack>
         <ToggleAuthType
-          dividerTitle="Or"
+          dividerTitle="I already have an account"
           buttonTitle="Log In"
-          onPress={navigateToLogInScreenHandler}
+          onPress={navigateToLogInHandler}
         />
       </BoxContainer>
     </Flex>
