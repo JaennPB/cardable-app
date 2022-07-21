@@ -1,7 +1,14 @@
+import { useCallback, useEffect, useState } from "react";
+import { Alert } from "react-native";
 import { NativeBaseProvider, StatusBar, View } from "native-base";
 
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as SplashScreen from "expo-splash-screen";
+
+import { useAppDispatch, useAppSelector } from "./src/hooks/reduxHooks";
 import { Provider } from "react-redux";
 import { store } from "./src/app/store";
+import { authenticate } from "./src/app/mainSlice";
 
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from "@react-navigation/native";
@@ -12,9 +19,10 @@ import SignUpScreen from "./src/screens/auth/SignUpScreen";
 import HomeScreen from "./src/screens/HomeScreen";
 import AccountScreen from "./src/screens/AccountScreen";
 
-import { Ionicons } from "@expo/vector-icons";
 import DecksScreen from "./src/screens/DecksScreen";
 import FlashcardsScreen from "./src/screens/FlashcardsScreen";
+
+import { Ionicons } from "@expo/vector-icons";
 
 const Stack = createNativeStackNavigator<NavParams>();
 const BottomTabs = createBottomTabNavigator<NavParams>();
@@ -82,12 +90,51 @@ function MainNav() {
 }
 
 function AllNavs() {
+  const dispatch = useAppDispatch();
+
+  const userId = useAppSelector((state) => state.userId);
+  const isAuth = useAppSelector((state) => state.isAuth);
+
+  const [appIsReady, setAppIsReady] = useState(false);
+
+  useEffect(() => {
+    async function fetchUserId() {
+      try {
+        await SplashScreen.preventAutoHideAsync();
+
+        const userIdFromStorage = await AsyncStorage.getItem("userId");
+
+        if (userIdFromStorage) {
+          dispatch(authenticate(userIdFromStorage));
+        }
+      } catch {
+        Alert.alert("Something went wrong", "Please reload app");
+      } finally {
+        setAppIsReady(true);
+      }
+    }
+
+    if (!isAuth && !userId) {
+      fetchUserId();
+    }
+  }, [appIsReady]);
+
+  const onLayoutRootView = useCallback(async () => {
+    if (appIsReady) {
+      await SplashScreen.hideAsync();
+    }
+  }, [appIsReady]);
+
+  if (!appIsReady) {
+    return null;
+  }
+
   return (
     <NavigationContainer>
       <StatusBar barStyle="dark-content" />
-      <View flex={1}>
-        {true && <AuthNav />}
-        {false && <MainNav />}
+      <View flex={1} onLayout={onLayoutRootView}>
+        {!isAuth && <AuthNav />}
+        {isAuth && <MainNav />}
       </View>
     </NavigationContainer>
   );

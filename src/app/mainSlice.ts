@@ -41,6 +41,7 @@ const mainSlice = createSlice({
   reducers: {
     authenticate: (state, action: PayloadAction<string>) => {
       state.userId = action.payload;
+      state.isAuth = true;
     },
   },
 });
