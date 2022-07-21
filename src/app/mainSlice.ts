@@ -43,10 +43,24 @@ const mainSlice = createSlice({
       state.userId = action.payload;
       state.isAuth = true;
     },
+    logout: (state) => {
+      (state.userId = ""), (state.isAuth = false);
+      state.data = {
+        box1: {
+          defaultDeck: {},
+        },
+        box3: {
+          defaultDeck: {},
+        },
+        box4: {
+          defaultDeck: {},
+        },
+      };
+    },
   },
 });
 
-export const { authenticate } = mainSlice.actions;
+export const { authenticate, logout } = mainSlice.actions;
 export default mainSlice.reducer;
 
 /**
