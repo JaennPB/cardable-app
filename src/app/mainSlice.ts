@@ -38,10 +38,14 @@ const initialState: MainState = {
 const mainSlice = createSlice({
   name: "main",
   initialState,
-  reducers: {},
+  reducers: {
+    authenticate: (state, action: PayloadAction<string>) => {
+      state.userId = action.payload;
+    },
+  },
 });
 
-export const {} = mainSlice.actions;
+export const { authenticate } = mainSlice.actions;
 export default mainSlice.reducer;
 
 /**

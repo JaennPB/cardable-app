@@ -1,17 +1,33 @@
 import { useState } from "react";
+import { Alert } from "react-native";
 import { Flex, Heading, VStack, Text } from "native-base";
 
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 import { useAppNavigation } from "../../hooks/navigationHooks";
+
+import { useAppDispatch } from "../../hooks/reduxHooks";
+import { authenticate } from "../../app/mainSlice";
+
+import { auth, db } from "../../db/firebase";
+import { createUserWithEmailAndPassword } from "firebase/auth/react-native";
+import { setDoc, doc } from "firebase/firestore";
 
 import CustomButton from "../../components/UI/CustomButton";
 import CustomInput from "../../components/UI/CustomInput";
 import BoxContainer from "../../components/UI/BoxContainer";
 import ToggleAuthType from "../../components/UI/ToggleAuthType";
+import CustomKeyboardAV from "../../components/UI/CustomKeyboardAV";
 
 interface Props {}
 
 const SignUpScreen: React.FC<Props> = ({}) => {
   const navigation = useAppNavigation();
+  const dispatch = useAppDispatch();
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [emailIsInvalid, setEmailIsInvalid] = useState(false);
+  const [passwordIsInvalid, setPassworIsInvalid] = useState(false);
   const [userData, setUserData] = useState({
     email: "",
     password: "",
@@ -27,16 +43,65 @@ const SignUpScreen: React.FC<Props> = ({}) => {
     });
   }
 
-  function SignUpHandler() {
-    console.log("signing up");
-    console.log(userData);
+  async function SignUpHandler() {
+    try {
+      setIsLoading(true);
+
+      if (userData.password !== userData.password2) {
+        Alert.alert("Passwords don't match! 🔑");
+        setPassworIsInvalid(true);
+        setIsLoading(false);
+        return;
+      }
+
+      const response = await createUserWithEmailAndPassword(
+        auth,
+        userData.email,
+        userData.password2
+      );
+      const userId = response.user.uid;
+      await setDoc(doc(db, "users", userId), {
+        data: {},
+      });
+
+      AsyncStorage.setItem("userId", userId);
+      setIsLoading(false);
+
+      dispatch(authenticate(userId));
+    } catch (error: any) {
+      let errorMessage1: string;
+      let errorMessage2: string;
+
+      if (error.code === "auth/invalid-email") {
+        errorMessage1 = "Invalid email!";
+        errorMessage2 = "Please try again. 📩";
+        setUserData({ ...userData, email: "" });
+        setEmailIsInvalid(true);
+      }
+      if (error.code === "auth/weak-password") {
+        errorMessage1 = "Password must be at least 6 characters! ";
+        errorMessage2 = "Please try again. 🔑";
+        setUserData({ ...userData, password: "", password2: "" });
+        setPassworIsInvalid(true);
+      }
+      if (error.code === "auth/email-already-in-use") {
+        errorMessage1 = "Email already in use";
+        errorMessage2 = "Please try a diferent one! 🤯";
+        setUserData({ ...userData, email: "" });
+        setEmailIsInvalid(true);
+      }
+
+      Alert.alert(errorMessage1!, errorMessage2!);
+      setIsLoading(false);
+    }
   }
 
   function navigateToLogInHandler() {
     navigation.navigate("LogInScreen");
   }
+
   return (
-    <Flex flex={1} px={5} justify="center">
+    <CustomKeyboardAV>
       <BoxContainer>
         <VStack mb={5} space={2}>
           <Heading>Welcome to Cardable.</Heading>
@@ -49,6 +114,7 @@ const SignUpScreen: React.FC<Props> = ({}) => {
             value={userData.email}
             autoCapitalize="none"
             type="email-address"
+            isInvalid={emailIsInvalid}
           />
           <CustomInput
             label="Password"
@@ -57,6 +123,7 @@ const SignUpScreen: React.FC<Props> = ({}) => {
             value={userData.password}
             autoCapitalize="none"
             type="default"
+            isInvalid={passwordIsInvalid}
           />
           <CustomInput
             label="Re-enter Password"
@@ -65,8 +132,14 @@ const SignUpScreen: React.FC<Props> = ({}) => {
             value={userData.password2}
             autoCapitalize="none"
             type="default"
+            isInvalid={passwordIsInvalid}
           />
-          <CustomButton title="Sign Up" onPress={SignUpHandler} />
+          <CustomButton
+            title="Sign Up"
+            onPress={SignUpHandler}
+            isLoading={isLoading}
+            isLoadingText="Signing up"
+          />
         </VStack>
         <ToggleAuthType
           dividerTitle="I already have an account"
@@ -74,7 +147,7 @@ const SignUpScreen: React.FC<Props> = ({}) => {
           onPress={navigateToLogInHandler}
         />
       </BoxContainer>
-    </Flex>
+    </CustomKeyboardAV>
   );
 };
 
