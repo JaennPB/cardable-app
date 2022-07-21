@@ -30,11 +30,11 @@ const HomeScreen: React.FC = () => {
   }
 
   return (
-    <Flex flex={1} justify="center" bg="white">
+    <Flex flex={1} justify="center">
       <Heading alignSelf="flex-start" ml={5}>
         Your boxes
       </Heading>
-      <Flex h={height / 2} bg="white" justify="center" align="center">
+      <Flex h={height / 2} justify="center" align="center">
         <Animated.ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}
