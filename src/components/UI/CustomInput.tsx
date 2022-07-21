@@ -1,5 +1,5 @@
 import { KeyboardTypeOptions } from "react-native";
-import { Input, FormControl, VStack } from "native-base";
+import { Input, Text, VStack } from "native-base";
 
 interface Props {
   label: string;
@@ -27,35 +27,32 @@ const CustomInput: React.FC<Props> = ({
   autoCapitalize,
 }) => {
   return (
-    <FormControl isRequired>
-      <VStack space={2}>
-        <FormControl.Label>{label}</FormControl.Label>
-        <Input
-          placeholder={placeholder}
-          variant="filled"
-          size="2xl"
-          p={5}
-          fontSize="xl"
-          color="white"
-          placeholderTextColor="darkBlue.400"
-          selectionColor="darkBlue.400"
-          keyboardType={type}
-          backgroundColor="darkBlue.600"
-          onChangeText={onChangeText}
-          value={value}
-          autoCapitalize={autoCapitalize}
-          secureTextEntry={secureTextEntry}
-          borderColor={validationColor}
-          borderWidth={isInvalid ? 1 : 0}
-          _focus={{
-            borderColor: validationColor,
-            backgroundColor: "darkBlue.500",
-          }}
-          returnKeyType="done"
-          maxLength={maxLength}
-        />
-      </VStack>
-    </FormControl>
+    <VStack space={2}>
+      <Text>{label}</Text>
+      <Input
+        placeholder={placeholder}
+        variant="filled"
+        size="2xl"
+        p={5}
+        fontSize="xl"
+        color="white"
+        //   placeholderTextColor="darkBlue.400"
+        //   selectionColor="darkBlue.400"
+        keyboardType={type}
+        onChangeText={onChangeText}
+        value={value}
+        autoCapitalize={autoCapitalize}
+        secureTextEntry={secureTextEntry}
+        borderColor={validationColor}
+        borderWidth={isInvalid ? 1 : 0}
+        //   _focus={{
+        //     borderColor: validationColor,
+        //     backgroundColor: "darkBlue.500",
+        //   }}
+        returnKeyType="done"
+        maxLength={maxLength}
+      />
+    </VStack>
   );
 };
 

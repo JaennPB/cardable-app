@@ -1,12 +1,17 @@
 import { useState } from "react";
 import { Flex, Heading, Text, VStack } from "native-base";
-import CustomButton from "../../components/UI/CustomButton";
 
+import { useAppNavigation } from "../../hooks/navigationHooks";
+
+import CustomButton from "../../components/UI/CustomButton";
 import CustomInput from "../../components/UI/CustomInput";
+import BoxContainer from "../../components/UI/BoxContainer";
+import ToggleAuthType from "../../components/UI/ToggleAuthType";
 
 interface Props {}
 
 const LogInScreen: React.FC<Props> = ({}) => {
+  const navigation = useAppNavigation();
   const [userData, setUserData] = useState({
     email: "",
     password: "",
@@ -26,28 +31,38 @@ const LogInScreen: React.FC<Props> = ({}) => {
     console.log(userData);
   }
 
+  function navigateToSignUpScreenHandler() {
+    navigation.navigate("SignUpScreen");
+  }
+
   return (
-    <Flex flex={1}>
-      <Flex>
-        <Heading>Welcome!</Heading>
-        <Text>Sign in to continue!</Text>
-      </Flex>
-      <VStack>
-        <CustomInput
-          label="Email"
-          onChangeText={setDataHandler.bind(this, "email")}
-          value={userData.email}
-          autoCapitalize="none"
+    <Flex flex={1} px={5} justify="center">
+      <BoxContainer>
+        <Flex>
+          <Heading>Welcome Back!</Heading>
+        </Flex>
+        <VStack>
+          <CustomInput
+            label="Email"
+            onChangeText={setDataHandler.bind(this, "email")}
+            value={userData.email}
+            autoCapitalize="none"
+          />
+          <CustomInput
+            label="Password"
+            secureTextEntry={true}
+            onChangeText={setDataHandler.bind(this, "password")}
+            value={userData.password}
+            autoCapitalize="none"
+          />
+          <CustomButton title="Log In" onPress={signInHandler} />
+        </VStack>
+        <ToggleAuthType
+          dividerTitle="I'm a new user"
+          buttonTitle="Sign Up"
+          onPress={navigateToSignUpScreenHandler}
         />
-        <CustomInput
-          label="Password"
-          secureTextEntry={true}
-          onChangeText={setDataHandler.bind(this, "password")}
-          value={userData.password}
-          autoCapitalize="none"
-        />
-        <CustomButton title="Sign In" onPress={signInHandler} />
-      </VStack>
+      </BoxContainer>
     </Flex>
   );
 };

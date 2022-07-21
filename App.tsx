@@ -21,7 +21,7 @@ const BottomTabs = createBottomTabNavigator<NavParams>();
 
 function AuthNav() {
   return (
-    <Stack.Navigator defaultScreenOptions={{ headerShown: false }}>
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="LogInScreen" component={LogInScreen} />
       <Stack.Screen name="SignUpScreen" component={SignUpScreen} />
     </Stack.Navigator>
@@ -86,8 +86,8 @@ function AllNavs() {
     <NavigationContainer>
       <StatusBar barStyle="dark-content" />
       <View flex={1}>
-        {false && <AuthNav />}
-        {true && <MainNav />}
+        {true && <AuthNav />}
+        {false && <MainNav />}
       </View>
     </NavigationContainer>
   );
