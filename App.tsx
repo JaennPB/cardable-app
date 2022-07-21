@@ -18,9 +18,9 @@ import LogInScreen from "./src/screens/auth/LogInScreen";
 import SignUpScreen from "./src/screens/auth/SignUpScreen";
 import HomeScreen from "./src/screens/HomeScreen";
 import AccountScreen from "./src/screens/AccountScreen";
-
 import DecksScreen from "./src/screens/DecksScreen";
 import FlashcardsScreen from "./src/screens/FlashcardsScreen";
+import ManageDataScreen from "./src/screens/manageDataScreen";
 
 import { Ionicons } from "@expo/vector-icons";
 
@@ -84,6 +84,11 @@ function MainNav() {
         name="FlashcardsScreen"
         component={FlashcardsScreen}
         options={{ presentation: "fullScreenModal" }}
+      />
+      <Stack.Screen
+        name="ManageDataScreen"
+        component={ManageDataScreen}
+        options={{ presentation: "modal" }}
       />
     </Stack.Navigator>
   );

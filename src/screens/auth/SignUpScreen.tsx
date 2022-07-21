@@ -11,7 +11,7 @@ import { authenticate } from "../../app/mainSlice";
 
 import { auth, db } from "../../db/firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth/react-native";
-import { setDoc, doc } from "firebase/firestore";
+import { collection, doc, writeBatch } from "firebase/firestore";
 
 import CustomButton from "../../components/UI/CustomButton";
 import CustomInput from "../../components/UI/CustomInput";
@@ -60,9 +60,17 @@ const SignUpScreen: React.FC<Props> = ({}) => {
         userData.password2
       );
       const userId = response.user.uid;
-      await setDoc(doc(db, "users", userId), {
-        data: {},
+
+      const initialData = ["Box 1", "Box 2", "Box 3"];
+      const batch = writeBatch(db);
+
+      batch.set(doc(db, "users", userId), { email: userData.email });
+
+      initialData.forEach((box) => {
+        batch.set(doc(db, "users", userId, "boxes", box), { name: box });
       });
+
+      await batch.commit();
 
       AsyncStorage.setItem("userId", userId);
       setIsLoading(false);

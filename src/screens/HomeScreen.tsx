@@ -12,7 +12,7 @@ import { useAppNavigation } from "../hooks/navigationHooks";
 
 const { height, width } = Dimensions.get("window");
 
-const BOXES = ["Box 1", "Box 2", "Box 3", "Box 4", "Box 5", "Add box +"];
+const BOXES = ["Box 1", "Box 2", "Box 3"];
 
 const HomeScreen: React.FC = () => {
   const navigation = useAppNavigation();
@@ -27,6 +27,11 @@ const HomeScreen: React.FC = () => {
   function openBoxHandler(index: number) {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
     navigation.navigate("DecksScreen", { boxId: index });
+  }
+
+  function addBoxHandler() {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
+    navigation.navigate("ManageDataScreen", { type: "box" });
   }
 
   return (
@@ -51,6 +56,13 @@ const HomeScreen: React.FC = () => {
               <BoxItem title={box} index={index} translateX={XScrollData} />
             </Pressable>
           ))}
+          <Pressable onPress={addBoxHandler}>
+            <BoxItem
+              title="+ Add box"
+              index={BOXES.length}
+              translateX={XScrollData}
+            />
+          </Pressable>
         </Animated.ScrollView>
       </Flex>
     </Flex>

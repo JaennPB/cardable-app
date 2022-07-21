@@ -6,4 +6,5 @@ type NavParams = {
   DecksScreen: { boxId: number };
   FlashcardsScreen: { deckId: number };
   BottomTabsNav: undefined;
+  ManageDataScreen: { type: string };
 };

@@ -1,4 +1,4 @@
-const BOXES = ["Box 1", "Box 2", "Box 3", "Box 4", "Box 5", "Add box +"];
+const BOXES = ["Box 1", "Box 2", "Box 3", "Add box"];
 
 export function useItemSeparator(index: number, width: number) {
   const marginX = width * 0.15;

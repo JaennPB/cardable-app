@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Alert } from "react-native";
-import { Flex, Heading, VStack } from "native-base";
+import { Heading, VStack } from "native-base";
+
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { useAppNavigation } from "../../hooks/navigationHooks";
 
@@ -47,6 +49,8 @@ const LogInScreen: React.FC<Props> = ({}) => {
         userData.password
       );
       const userId = response.user.uid;
+
+      AsyncStorage.setItem("userId", userId);
 
       setIsLoading(false);
 
