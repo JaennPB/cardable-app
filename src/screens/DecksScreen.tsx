@@ -6,12 +6,12 @@ import { useAppNavigation } from "../hooks/navigationHooks";
 
 const DecksScreen: React.FC = () => {
   const navigation = useAppNavigation();
-  const route = useRoute<RouteProp<NavParams, "DecksScreen">>();
-  const boxId = route.params.boxId;
+  // const route = useRoute<RouteProp<NavParams, "DecksScreen">>();
+  // const boxId = route.params?.boxId;
 
-  useLayoutEffect(() => {
-    navigation.setOptions({ headerTitle: `Box ${boxId + 1}` });
-  });
+  // useLayoutEffect(() => {
+  //   navigation.setOptions({ headerTitle: `Box ${boxId + 1}` });
+  // });
 
   function navigateToDeckHandler(deckId: number) {
     navigation.navigate("FlashcardsScreen", { deckId: deckId });

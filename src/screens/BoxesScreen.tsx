@@ -18,7 +18,7 @@ import CustomSpinner from "../components/UI/CustomSpinner";
 
 const { height, width } = Dimensions.get("window");
 
-const HomeScreen: React.FC = () => {
+const BoxesScreen: React.FC = () => {
   const navigation = useAppNavigation();
   const dispatch = useAppDispatch();
 
@@ -88,4 +88,4 @@ const HomeScreen: React.FC = () => {
   );
 };
 
-export default HomeScreen;
+export default BoxesScreen;

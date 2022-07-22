@@ -15,7 +15,7 @@ const FlashcardsScreen: React.FC = () => {
     navigation.setOptions({
       headerTitle: `Deck ${deckId}`,
       headerRight: () => (
-        <Pressable onPress={() => navigation.navigate("HomeScreen")}>
+        <Pressable onPress={() => navigation.navigate("BoxesScreen")}>
           <Text fontSize={16} color="danger.400">
             End Session
           </Text>

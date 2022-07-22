@@ -16,13 +16,15 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import LogInScreen from "./src/screens/auth/LogInScreen";
 import SignUpScreen from "./src/screens/auth/SignUpScreen";
-import HomeScreen from "./src/screens/HomeScreen";
+import BoxesScreen from "./src/screens/BoxesScreen";
 import AccountScreen from "./src/screens/AccountScreen";
 import DecksScreen from "./src/screens/DecksScreen";
 import FlashcardsScreen from "./src/screens/FlashcardsScreen";
 import ManageDataScreen from "./src/screens/manageDataScreen";
 
 import { Ionicons } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 const Stack = createNativeStackNavigator<NavParams>();
 const BottomTabs = createBottomTabNavigator<NavParams>();
@@ -42,13 +44,28 @@ function BottomTabsNav() {
       screenOptions={{ tabBarLabelStyle: { fontSize: 13 } }}
     >
       <BottomTabs.Screen
-        name="HomeScreen"
-        component={HomeScreen}
+        name="BoxesScreen"
+        component={BoxesScreen}
         options={{
-          headerTitle: "Home",
-          tabBarLabel: "Home",
+          headerTitle: "Your boxes",
+          tabBarLabel: "Boxes",
           tabBarIcon: ({ color }) => (
-            <Ionicons name="md-home-outline" size={24} color="black" />
+            <AntDesign name="inbox" size={24} color="black" />
+          ),
+        }}
+      />
+      <BottomTabs.Screen
+        name="DecksScreen"
+        component={DecksScreen}
+        options={{
+          headerTitle: "Your decks",
+          tabBarLabel: "Decks",
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons
+              name="card-multiple-outline"
+              size={24}
+              color="black"
+            />
           ),
         }}
       />

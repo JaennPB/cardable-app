@@ -19,18 +19,38 @@ export const asyncFetchInitialData = createAsyncThunk(
   }
 );
 
+interface CardObj {
+  deckId: string;
+  question: string;
+  answer: string;
+}
+
+interface DeckObj {
+  deckName: string;
+  cardsInDeck: CardObj[];
+}
+
+interface BoxObj {
+  boxName: string;
+  cardsInBox: CardObj[];
+}
+
 interface MainState {
   userId: string;
   isAuth: boolean;
-  boxData: string[];
   isLoading: boolean;
+  boxData: string[];
+  boxes: BoxObj[];
+  decks: DeckObj[];
 }
 
 const initialState: MainState = {
   userId: "",
   isAuth: false,
-  boxData: [],
   isLoading: true,
+  boxData: [],
+  boxes: [],
+  decks: [],
 };
 
 const mainSlice = createSlice({
@@ -48,6 +68,28 @@ const mainSlice = createSlice({
     },
     addBox: (state, action: PayloadAction<string>) => {
       state.boxData.push(action.payload);
+      state.boxes.push({
+        boxName: action.payload,
+        cardsInBox: [],
+      });
+    },
+    addDeck: (state, action: PayloadAction<string>) => {
+      state.decks.push({
+        deckName: action.payload,
+        cardsInDeck: [],
+      });
+    },
+    addCard: (state, action: PayloadAction<CardObj>) => {
+      const cardToAdd = {
+        deckId: action.payload.deckId,
+        question: action.payload.question,
+        answer: action.payload.answer,
+      };
+      const deckObj = state.decks.find(
+        (deck) => deck.deckName === action.payload.deckId
+      );
+
+      deckObj?.cardsInDeck.push(cardToAdd);
     },
   },
   extraReducers: (builder) => {
