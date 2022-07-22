@@ -9,7 +9,7 @@ interface Props {
   autoCapitalize: "none" | "sentences";
   placeholder?: string;
   secureTextEntry?: boolean;
-  isInvalid: boolean;
+  isInvalid?: boolean;
   maxLength?: number;
 }
 

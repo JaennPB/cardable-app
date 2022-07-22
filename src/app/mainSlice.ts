@@ -46,6 +46,9 @@ const mainSlice = createSlice({
       state.isAuth = false;
       state.boxData = [];
     },
+    addBox: (state, action: PayloadAction<string>) => {
+      state.boxData.push(action.payload);
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(asyncFetchInitialData.fulfilled, (state, action) => {
@@ -55,7 +58,7 @@ const mainSlice = createSlice({
   },
 });
 
-export const { authenticate, logout } = mainSlice.actions;
+export const { authenticate, logout, addBox } = mainSlice.actions;
 export default mainSlice.reducer;
 
 /**

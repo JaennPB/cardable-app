@@ -7,6 +7,8 @@ import Animated, {
   withSpring,
 } from "react-native-reanimated";
 
+import { useAppSelector } from "../../hooks/reduxHooks";
+
 import { useItemSeparator } from "../../hooks/utils";
 
 interface Props {
@@ -19,6 +21,8 @@ interface Props {
 const { width } = Dimensions.get("window");
 
 const BoxItem: React.FC<Props> = ({ title, index, translateX, onPress }) => {
+  const arrLength = useAppSelector((state) => state.boxData);
+
   const rStyle = useAnimatedStyle(() => {
     const translateY = interpolate(
       translateX.value,
@@ -49,7 +53,11 @@ const BoxItem: React.FC<Props> = ({ title, index, translateX, onPress }) => {
   return (
     <Pressable onPress={onPress}>
       <Animated.View
-        style={[styles.container, rStyle, useItemSeparator(index, width)]}
+        style={[
+          styles.container,
+          rStyle,
+          useItemSeparator(index, width, arrLength.length + 1),
+        ]}
       >
         <Heading fontWeight="semibold">{title}</Heading>
       </Animated.View>
