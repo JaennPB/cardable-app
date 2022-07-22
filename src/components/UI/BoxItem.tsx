@@ -1,5 +1,5 @@
 import { Dimensions, StyleSheet } from "react-native";
-import { Heading } from "native-base";
+import { Heading, Pressable } from "native-base";
 
 import Animated, {
   interpolate,
@@ -13,11 +13,12 @@ interface Props {
   title: string;
   index: number;
   translateX: Animated.SharedValue<number>;
+  onPress: () => void;
 }
 
 const { width } = Dimensions.get("window");
 
-const BoxItem: React.FC<Props> = ({ title, index, translateX }) => {
+const BoxItem: React.FC<Props> = ({ title, index, translateX, onPress }) => {
   const rStyle = useAnimatedStyle(() => {
     const translateY = interpolate(
       translateX.value,
@@ -46,12 +47,13 @@ const BoxItem: React.FC<Props> = ({ title, index, translateX }) => {
   });
 
   return (
-    <Animated.View
-      key={index}
-      style={[styles.container, rStyle, useItemSeparator(index, width)]}
-    >
-      <Heading fontWeight="semibold">{title}</Heading>
-    </Animated.View>
+    <Pressable onPress={onPress}>
+      <Animated.View
+        style={[styles.container, rStyle, useItemSeparator(index, width)]}
+      >
+        <Heading fontWeight="semibold">{title}</Heading>
+      </Animated.View>
+    </Pressable>
   );
 };
 

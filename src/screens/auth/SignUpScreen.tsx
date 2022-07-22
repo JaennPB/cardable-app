@@ -65,7 +65,6 @@ const SignUpScreen: React.FC<Props> = ({}) => {
       const batch = writeBatch(db);
 
       batch.set(doc(db, "users", userId), { email: userData.email });
-
       initialData.forEach((box) => {
         batch.set(doc(db, "users", userId, "boxes", box), { name: box });
       });

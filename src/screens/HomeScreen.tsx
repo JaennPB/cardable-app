@@ -1,5 +1,6 @@
+import { useLayoutEffect } from "react";
 import { Dimensions, Pressable } from "react-native";
-import { Flex, Heading } from "native-base";
+import { Flex, Heading, Text } from "native-base";
 
 import Animated, {
   useAnimatedScrollHandler,
@@ -7,17 +8,25 @@ import Animated, {
 } from "react-native-reanimated";
 import * as Haptics from "expo-haptics";
 
-import BoxItem from "../components/UI/BoxItem";
 import { useAppNavigation } from "../hooks/navigationHooks";
+
+import { useAppDispatch, useAppSelector } from "../hooks/reduxHooks";
+import { asyncFetchInitialData } from "../app/mainSlice";
+
+import BoxItem from "../components/UI/BoxItem";
+import CustomSpinner from "../components/UI/CustomSpinner";
 
 const { height, width } = Dimensions.get("window");
 
-const BOXES = ["Box 1", "Box 2", "Box 3"];
-
 const HomeScreen: React.FC = () => {
   const navigation = useAppNavigation();
-  const XScrollData = useSharedValue(0);
+  const dispatch = useAppDispatch();
 
+  const userId = useAppSelector((state) => state.userId);
+  const boxesData = useAppSelector((state) => state.boxData);
+  const isLoadingState = useAppSelector((state) => state.isLoading);
+
+  const XScrollData = useSharedValue(0);
   const xScrollHandler = useAnimatedScrollHandler({
     onScroll: (event) => {
       XScrollData.value = event.contentOffset.x;
@@ -34,36 +43,46 @@ const HomeScreen: React.FC = () => {
     navigation.navigate("ManageDataScreen", { type: "box" });
   }
 
+  useLayoutEffect(() => {
+    dispatch(asyncFetchInitialData(userId));
+  }, []);
+
   return (
     <Flex flex={1} justify="center">
       <Heading alignSelf="flex-start" ml={5}>
         Your boxes
       </Heading>
       <Flex h={height / 2} justify="center" align="center">
-        <Animated.ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          decelerationRate="fast"
-          scrollEventThrottle={16}
-          onScroll={xScrollHandler}
-          contentContainerStyle={{
-            alignItems: "center",
-          }}
-          snapToInterval={width * 0.8}
-        >
-          {BOXES.map((box, index) => (
-            <Pressable key={index} onPress={openBoxHandler.bind(this, index)}>
-              <BoxItem title={box} index={index} translateX={XScrollData} />
-            </Pressable>
-          ))}
-          <Pressable onPress={addBoxHandler}>
+        {isLoadingState && <CustomSpinner />}
+        {!isLoadingState && (
+          <Animated.ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            decelerationRate="fast"
+            scrollEventThrottle={16}
+            onScroll={xScrollHandler}
+            contentContainerStyle={{
+              alignItems: "center",
+            }}
+            snapToInterval={width * 0.8}
+          >
+            {boxesData.map((box, index) => (
+              <BoxItem
+                key={index}
+                title={box}
+                index={index}
+                translateX={XScrollData}
+                onPress={openBoxHandler.bind(this, index)}
+              />
+            ))}
             <BoxItem
               title="+ Add box"
-              index={BOXES.length}
+              index={boxesData.length}
               translateX={XScrollData}
+              onPress={addBoxHandler}
             />
-          </Pressable>
-        </Animated.ScrollView>
+          </Animated.ScrollView>
+        )}
       </Flex>
     </Flex>
   );
