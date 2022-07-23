@@ -22,8 +22,7 @@ const FlashcardsScreen: React.FC = () => {
 
   function addCardToDeckHandler() {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
-
-    console.log("adding card");
+    navigation.navigate("ManageDataScreen", { type: "card" });
   }
 
   return (

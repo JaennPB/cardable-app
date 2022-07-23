@@ -35,7 +35,8 @@ const BoxesScreen: React.FC = () => {
 
   function openBoxHandler(index: number) {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
-    navigation.navigate("DecksScreen", { boxId: index });
+    // navigation.navigate("DecksScreen", { boxId: index });
+    console.log("opening box");
   }
 
   function addBoxHandler() {

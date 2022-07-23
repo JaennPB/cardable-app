@@ -1,6 +1,6 @@
 import { useLayoutEffect, useState } from "react";
 import { Alert } from "react-native";
-import { Flex, Text, Heading, Button } from "native-base";
+import { Flex, Button } from "native-base";
 
 import { useAppNavigation } from "../hooks/navigationHooks";
 import { useRoute, RouteProp } from "@react-navigation/native";
@@ -11,8 +11,9 @@ import { addBox, addDeck } from "../app/mainSlice";
 import { addDoc, collection, doc, setDoc } from "firebase/firestore";
 import { db } from "../db/firebase";
 
-import CustomInput from "../components/UI/CustomInput";
-import CustomButton from "../components/UI/CustomButton";
+import BoxForm from "../components/forms/BoxForm";
+import DeckForm from "../components/forms/DeckForm";
+import CardForm from "../components/forms/CardForm";
 
 const ManageDataScreen: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -79,36 +80,23 @@ const ManageDataScreen: React.FC = () => {
   return (
     <Flex bg="white" flex={1} p={5}>
       {paramType === "box" && (
-        <>
-          <Heading>Are you sure you want to add a new box?</Heading>
-          <Text my={5}>
-            By adding a new box you will another level to the Leitner system.
-          </Text>
-          <CustomButton
-            title="Add box"
-            onPress={addBoxHandler}
-            isLoading={isLoading}
-            isLoadingText="Adding box"
-          />
-        </>
+        <BoxForm onPress={addBoxHandler} isLoading={isLoading} />
       )}
       {paramType === "deck" && (
-        <>
-          <CustomInput
-            autoCapitalize="sentences"
-            label="Deck name"
-            type="default"
-            placeholder="i.e. Capital cities"
-            onChangeText={setDeckName}
-            value={deckName}
-          />
-          <CustomButton
-            title="Add Deck"
-            onPress={addDeckHandler}
-            isLoading={isLoading}
-            isLoadingText="Adding box"
-          />
-        </>
+        <DeckForm
+          onChangeText={setDeckName}
+          onPress={addDeckHandler}
+          value={deckName}
+          isLoading={isLoading}
+        />
+      )}
+      {paramType === "card" && (
+        <CardForm
+        // onChangeText={setDeckName}
+        // onPress={addDeckHandler}
+        // value={deckName}
+        // isLoading={isLoading}
+        />
       )}
     </Flex>
   );
