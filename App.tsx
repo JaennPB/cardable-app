@@ -100,7 +100,7 @@ function MainNav() {
       <Stack.Screen
         name="FlashcardsScreen"
         component={FlashcardsScreen}
-        options={{ presentation: "fullScreenModal" }}
+        options={{ presentation: "modal" }}
       />
       <Stack.Screen
         name="ManageDataScreen"

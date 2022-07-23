@@ -1,30 +1,37 @@
 import { useLayoutEffect } from "react";
-import { Pressable, View, Text } from "native-base";
+import { View, Text } from "native-base";
+
+import * as Haptics from "expo-haptics";
 
 import { useAppNavigation } from "../hooks/navigationHooks";
+
 import { useRoute, RouteProp } from "@react-navigation/native";
 
-import { Ionicons } from "@expo/vector-icons";
+import PlusButton from "../components/UI/PlusButton";
 
 const FlashcardsScreen: React.FC = () => {
   const navigation = useAppNavigation();
   const route = useRoute<RouteProp<NavParams, "FlashcardsScreen">>();
-  const deckId = route.params.deckId;
+  const { deckName, deckId } = route.params;
 
   useLayoutEffect(() => {
     navigation.setOptions({
-      headerTitle: `Deck ${deckId}`,
-      headerRight: () => (
-        <Pressable onPress={() => navigation.navigate("BoxesScreen")}>
-          <Text fontSize={16} color="danger.400">
-            End Session
-          </Text>
-        </Pressable>
-      ),
+      headerTitle: deckName,
     });
-  });
+  }, []);
 
-  return <View px={5} py={2}></View>;
+  function addCardToDeckHandler() {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
+
+    console.log("adding card");
+  }
+
+  return (
+    <View flex={1} px={5} py={2} position="relative">
+      <Text>{deckId}</Text>
+      <PlusButton onPress={addCardToDeckHandler} />
+    </View>
+  );
 };
 
 export default FlashcardsScreen;

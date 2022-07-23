@@ -1,19 +1,27 @@
 import { Button, ScrollView, View } from "native-base";
-import PlusButton from "../components/UI/PlusButton";
+
+import * as Haptics from "expo-haptics";
 
 import { useAppNavigation } from "../hooks/navigationHooks";
 import { useAppSelector } from "../hooks/reduxHooks";
+
+import PlusButton from "../components/UI/PlusButton";
 
 const DecksScreen: React.FC = () => {
   const navigation = useAppNavigation();
 
   const decksData = useAppSelector((state) => state.decks);
 
-  function navigateToDeckHandler(deckId: number) {
-    navigation.navigate("FlashcardsScreen", { deckId: deckId });
+  function navigateToDeckHandler(deckName: string, deckId: number) {
+    navigation.navigate("FlashcardsScreen", {
+      deckId: deckId,
+      deckName: deckName,
+    });
   }
 
   function addDeckHandler() {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
+
     navigation.navigate("ManageDataScreen", { type: "deck" });
   }
 
@@ -24,7 +32,7 @@ const DecksScreen: React.FC = () => {
           <Button
             key={index}
             mt={5}
-            onPress={navigateToDeckHandler.bind(this, index)}
+            onPress={navigateToDeckHandler.bind(this, deck.deckName, index)}
           >
             {deck.deckName}
           </Button>
