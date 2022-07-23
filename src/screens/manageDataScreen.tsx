@@ -1,6 +1,5 @@
 import { useLayoutEffect, useState } from "react";
-import { Alert } from "react-native";
-import { Flex } from "native-base";
+import { Flex, Text, Heading } from "native-base";
 
 import { useAppNavigation } from "../hooks/navigationHooks";
 import { useRoute, RouteProp } from "@react-navigation/native";
@@ -17,46 +16,47 @@ import CustomButton from "../components/UI/CustomButton";
 const ManageDataScreen: React.FC = () => {
   const dispatch = useAppDispatch();
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const navigation = useAppNavigation();
   const route = useRoute<RouteProp<NavParams, "ManageDataScreen">>();
   const paramType = route.params.type;
 
   const userId = useAppSelector((state) => state.userId);
-  const boxesArr = useAppSelector((state) => state.boxData);
-
-  const [boxName, setBoxName] = useState("");
+  const boxesArr = useAppSelector((state) => state.boxes);
 
   useLayoutEffect(() => {
     navigation.setOptions({ headerTitle: `Add ${paramType}` });
   }, []);
 
   async function addBoxHandler() {
-    if (boxName) {
-      const boxPos = boxesArr.length + 1;
-      await setDoc(doc(db, "users", userId, "boxes", `Box ${boxPos}`), {
-        name: boxName,
-      });
+    setIsLoading(true);
+    const boxName = `Box ${boxesArr.length + 1}`;
+    await setDoc(doc(db, "users", userId, "boxes", `${boxName}`), {
+      boxName: `Box ${boxName}`,
+    });
 
-      dispatch(addBox(boxName));
+    dispatch(addBox(boxName));
 
-      navigation.goBack();
-    } else if (!boxName) {
-      Alert.alert("Please add a box name");
-    }
+    setIsLoading(false);
+
+    navigation.goBack();
   }
 
   return (
     <Flex bg="white" flex={1} p={5}>
       {paramType === "box" && (
         <>
-          <CustomInput
-            label="Box name"
-            autoCapitalize="sentences"
-            type="default"
-            onChangeText={setBoxName}
-            value={boxName}
+          <Heading>Are you sure you want to add a new box?</Heading>
+          <Text my={5}>
+            By adding a new box you will another level to the Leitner system.
+          </Text>
+          <CustomButton
+            title="Add box"
+            onPress={addBoxHandler}
+            isLoading={isLoading}
+            isLoadingText="Adding box"
           />
-          <CustomButton title="Add box" onPress={addBoxHandler} />
         </>
       )}
     </Flex>

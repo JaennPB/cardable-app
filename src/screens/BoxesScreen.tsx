@@ -1,6 +1,6 @@
 import { useLayoutEffect } from "react";
-import { Dimensions, Pressable } from "react-native";
-import { Flex, Heading, Text } from "native-base";
+import { Dimensions } from "react-native";
+import { Flex, Heading } from "native-base";
 
 import Animated, {
   useAnimatedScrollHandler,
@@ -23,7 +23,7 @@ const BoxesScreen: React.FC = () => {
   const dispatch = useAppDispatch();
 
   const userId = useAppSelector((state) => state.userId);
-  const boxesData = useAppSelector((state) => state.boxData);
+  const boxesData = useAppSelector((state) => state.boxes);
   const isLoadingState = useAppSelector((state) => state.isLoading);
 
   const XScrollData = useSharedValue(0);
@@ -69,7 +69,7 @@ const BoxesScreen: React.FC = () => {
             {boxesData.map((box, index) => (
               <BoxItem
                 key={index}
-                title={box}
+                title={box.boxName}
                 index={index}
                 translateX={XScrollData}
                 onPress={openBoxHandler.bind(this, index)}

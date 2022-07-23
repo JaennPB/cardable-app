@@ -21,7 +21,7 @@ interface Props {
 const { width } = Dimensions.get("window");
 
 const BoxItem: React.FC<Props> = ({ title, index, translateX, onPress }) => {
-  const arrLength = useAppSelector((state) => state.boxData);
+  const arrLength = useAppSelector((state) => state.boxes);
 
   const rStyle = useAnimatedStyle(() => {
     const translateY = interpolate(

@@ -8,14 +8,20 @@ export const asyncFetchInitialData = createAsyncThunk(
   async (userId: string) => {
     const response = await getDocs(collection(db, "users", userId, "boxes"));
 
-    let docsArray: string[] = [];
+    let docsArray: BoxObj[] = [];
     if (!response.empty) {
       response.forEach((doc) => {
-        docsArray.push(doc.data().name);
+        // FIXME: test
+        const updatedDoc: BoxObj = {
+          boxName: doc.data().boxName,
+          cardsInBox: [],
+        };
+
+        docsArray.push(updatedDoc);
       });
     }
 
-    return docsArray!;
+    return docsArray;
   }
 );
 
@@ -39,7 +45,6 @@ interface MainState {
   userId: string;
   isAuth: boolean;
   isLoading: boolean;
-  boxData: string[];
   boxes: BoxObj[];
   decks: DeckObj[];
 }
@@ -48,7 +53,6 @@ const initialState: MainState = {
   userId: "",
   isAuth: false,
   isLoading: true,
-  boxData: [],
   boxes: [],
   decks: [],
 };
@@ -64,10 +68,10 @@ const mainSlice = createSlice({
     logout: (state) => {
       state.userId = "";
       state.isAuth = false;
-      state.boxData = [];
+      state.boxes = [];
+      state.decks = [];
     },
     addBox: (state, action: PayloadAction<string>) => {
-      state.boxData.push(action.payload);
       state.boxes.push({
         boxName: action.payload,
         cardsInBox: [],
@@ -94,7 +98,7 @@ const mainSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(asyncFetchInitialData.fulfilled, (state, action) => {
-      state.boxData = action.payload;
+      state.boxes = action.payload;
       state.isLoading = false;
     });
   },
