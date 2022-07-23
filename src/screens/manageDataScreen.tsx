@@ -1,13 +1,14 @@
 import { useLayoutEffect, useState } from "react";
+import { Alert } from "react-native";
 import { Flex, Text, Heading, Button } from "native-base";
 
 import { useAppNavigation } from "../hooks/navigationHooks";
 import { useRoute, RouteProp } from "@react-navigation/native";
 
 import { useAppDispatch, useAppSelector } from "../hooks/reduxHooks";
-import { addBox } from "../app/mainSlice";
+import { addBox, addDeck } from "../app/mainSlice";
 
-import { doc, setDoc } from "firebase/firestore";
+import { addDoc, collection, doc, setDoc } from "firebase/firestore";
 import { db } from "../db/firebase";
 
 import CustomInput from "../components/UI/CustomInput";
@@ -46,20 +47,33 @@ const ManageDataScreen: React.FC = () => {
   }
 
   async function addBoxHandler() {
-    setIsLoading(true);
-    const boxName = `Box ${boxesArr.length + 1}`;
-    await setDoc(doc(db, "users", userId, "boxes", `${boxName}`), {
-      boxName: `Box ${boxName}`,
-    });
+    try {
+      setIsLoading(true);
+      const boxName = `Box ${boxesArr.length + 1}`;
+      await setDoc(doc(db, "users", userId, "boxes", `${boxName}`), {
+        boxName: `Box ${boxName}`,
+      });
 
-    dispatch(addBox(boxName));
-    setIsLoading(false);
+      dispatch(addBox(boxName));
+      setIsLoading(false);
 
-    navigation.goBack();
+      navigation.goBack();
+    } catch {
+      Alert.alert(
+        "Could not add box",
+        "Problem with server, please try again."
+      );
+    }
   }
 
   async function addDeckHandler() {
-    navigation.goBack();
+    try {
+      setIsLoading(true);
+      addDoc(collection(db, "users", userId, "decks"), { deckName: deckName });
+
+      dispatch(addDeck(deckName));
+      navigation.goBack();
+    } catch {}
   }
 
   return (

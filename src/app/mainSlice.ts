@@ -6,22 +6,38 @@ import { db } from "../db/firebase";
 export const asyncFetchInitialData = createAsyncThunk(
   "users/asyncFetchInitialData",
   async (userId: string) => {
-    const response = await getDocs(collection(db, "users", userId, "boxes"));
+    const boxesData = await getDocs(collection(db, "users", userId, "boxes"));
+    const decksData = await getDocs(collection(db, "users", userId, "decks"));
 
-    let docsArray: BoxObj[] = [];
-    if (!response.empty) {
-      response.forEach((doc) => {
+    let boxesArr: BoxObj[] = [];
+    if (!boxesData.empty) {
+      boxesData.forEach((doc) => {
         // FIXME: test
         const updatedDoc: BoxObj = {
           boxName: doc.data().boxName,
           cardsInBox: [],
         };
 
-        docsArray.push(updatedDoc);
+        boxesArr.push(updatedDoc);
       });
     }
 
-    return docsArray;
+    let decksArr: DeckObj[] = [];
+    if (!decksData.empty) {
+      decksData.forEach((doc) => {
+        const updatedDoc: DeckObj = {
+          deckName: doc.data().deckName,
+          cardsInDeck: [],
+        };
+
+        decksArr.push(updatedDoc);
+      });
+    }
+
+    return {
+      boxesArr,
+      decksArr,
+    };
   }
 );
 
@@ -98,13 +114,15 @@ const mainSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(asyncFetchInitialData.fulfilled, (state, action) => {
-      state.boxes = action.payload;
+      state.boxes = action.payload.boxesArr;
+      state.decks = action.payload.decksArr;
       state.isLoading = false;
     });
   },
 });
 
-export const { authenticate, logout, addBox } = mainSlice.actions;
+export const { authenticate, logout, addBox, addDeck, addCard } =
+  mainSlice.actions;
 export default mainSlice.reducer;
 
 /**

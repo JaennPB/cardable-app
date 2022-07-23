@@ -2,9 +2,12 @@ import { Button, ScrollView, View } from "native-base";
 import PlusButton from "../components/UI/PlusButton";
 
 import { useAppNavigation } from "../hooks/navigationHooks";
+import { useAppSelector } from "../hooks/reduxHooks";
 
 const DecksScreen: React.FC = () => {
   const navigation = useAppNavigation();
+
+  const decksData = useAppSelector((state) => state.decks);
 
   function navigateToDeckHandler(deckId: number) {
     navigation.navigate("FlashcardsScreen", { deckId: deckId });
@@ -17,12 +20,15 @@ const DecksScreen: React.FC = () => {
   return (
     <View flex={1} px={5} py={2} position="relative">
       <ScrollView>
-        <Button mt={5} onPress={navigateToDeckHandler.bind(this, 1)}>
-          Deck 1 (Test)
-        </Button>
-        <Button mt={5} onPress={navigateToDeckHandler.bind(this, 2)}>
-          Deck 2 (Test)
-        </Button>
+        {decksData.map((deck, index) => (
+          <Button
+            key={index}
+            mt={5}
+            onPress={navigateToDeckHandler.bind(this, index)}
+          >
+            {deck.deckName}
+          </Button>
+        ))}
       </ScrollView>
       <PlusButton onPress={addDeckHandler} />
     </View>
