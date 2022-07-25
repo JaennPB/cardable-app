@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Alert } from "react-native";
-import { Flex, Heading, VStack, Text } from "native-base";
+import { Heading, VStack, Text } from "native-base";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -11,7 +11,7 @@ import { authenticate } from "../../app/mainSlice";
 
 import { auth, db } from "../../db/firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth/react-native";
-import { collection, doc, writeBatch } from "firebase/firestore";
+import { doc, writeBatch } from "firebase/firestore";
 
 import CustomButton from "../../components/UI/CustomButton";
 import CustomInput from "../../components/UI/CustomInput";
@@ -66,7 +66,19 @@ const SignUpScreen: React.FC<Props> = ({}) => {
 
       batch.set(doc(db, "users", userId), { email: userData.email });
       initialData.forEach((box) => {
-        batch.set(doc(db, "users", userId, "boxes", box), { boxName: box });
+        batch.set(
+          doc(
+            db,
+            "users",
+            userId,
+            "boxes",
+            box.toLowerCase().replace(/\s/, "")
+          ),
+          {
+            boxId: box.toLowerCase().replace(/\s/, ""),
+            boxName: box,
+          }
+        );
       });
 
       await batch.commit();

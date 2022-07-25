@@ -12,9 +12,8 @@ const DecksScreen: React.FC = () => {
 
   const decksData = useAppSelector((state) => state.decks);
 
-  function navigateToDeckHandler(deckName: string, deckId: number) {
+  function navigateToDeckHandler(deckName: string) {
     navigation.navigate("FlashcardsScreen", {
-      deckId: deckId,
       deckName: deckName,
     });
   }
@@ -38,7 +37,7 @@ const DecksScreen: React.FC = () => {
           </Button>
         ))}
       </ScrollView>
-      <PlusButton onPress={addDeckHandler} />
+      <PlusButton onPress={addDeckHandler} title="Add deck" />
     </View>
   );
 };

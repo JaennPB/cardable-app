@@ -3,8 +3,8 @@ type NavParams = {
   SignUpScreen: undefined;
   BoxesScreen: undefined;
   DecksScreen: { boxId: number };
-  FlashcardsScreen: { deckId: number; deckName: string };
+  FlashcardsScreen: { deckName: string };
   AccountScreen: undefined;
   BottomTabsNav: undefined;
-  ManageDataScreen: { type: string };
+  ManageDataScreen: { type: string; addCardFromDeck?: string };
 };

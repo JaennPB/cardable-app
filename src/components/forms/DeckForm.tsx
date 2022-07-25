@@ -1,21 +1,55 @@
+import { useState } from "react";
+import { Alert } from "react-native";
 import { Flex } from "native-base";
+
+import { useAppNavigation } from "../../hooks/navigationHooks";
+
+import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
+import { addDeck } from "../../app/mainSlice";
+
+import { doc, setDoc } from "firebase/firestore";
+import { db } from "../../db/firebase";
 
 import CustomButton from "../UI/CustomButton";
 import CustomInput from "../UI/CustomInput";
 
-interface Props {
-  onChangeText: (text: string) => void;
-  onPress: () => void;
-  value: string;
-  isLoading: boolean;
-}
+const DeckForm: React.FC = () => {
+  const navigation = useAppNavigation();
+  const dispatch = useAppDispatch();
 
-const DeckForm: React.FC<Props> = ({
-  value,
-  isLoading,
-  onChangeText,
-  onPress,
-}) => {
+  const userId = useAppSelector((state) => state.userId);
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [deckName, setDeckName] = useState("");
+
+  async function addDeckHandler() {
+    try {
+      setIsLoading(true);
+      setDoc(
+        doc(
+          db,
+          "users",
+          userId,
+          "decks",
+          deckName.toLowerCase().replace(/\s/, "")
+        ),
+        {
+          deckId: deckName.toLowerCase().replace(/\s/, ""),
+          deckName: deckName,
+        }
+      );
+
+      dispatch(addDeck(deckName));
+      setIsLoading(false);
+
+      navigation.goBack();
+    } catch {
+      setIsLoading(false);
+      Alert.alert("Could not add deck", "Please try again.");
+      navigation.navigate("BoxesScreen");
+    }
+  }
+
   return (
     <Flex bg="white" flex={1} p={5}>
       <CustomInput
@@ -23,12 +57,12 @@ const DeckForm: React.FC<Props> = ({
         label="Deck name"
         type="default"
         placeholder="i.e. Capital cities"
-        onChangeText={onChangeText}
-        value={value}
+        onChangeText={setDeckName}
+        value={deckName}
       />
       <CustomButton
         title="Add Deck"
-        onPress={onPress}
+        onPress={addDeckHandler}
         isLoading={isLoading}
         isLoadingText="Adding deck"
       />

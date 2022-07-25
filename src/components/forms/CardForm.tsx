@@ -1,25 +1,26 @@
 import { useState } from "react";
-import {
-  Divider,
-  Heading,
-  Flex,
-  ScrollView,
-  View,
-  VStack,
-  KeyboardAvoidingView,
-} from "native-base";
+import { Alert } from "react-native";
+import { Divider, Heading, ScrollView, View } from "native-base";
 
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { useAppSelector } from "../../hooks/reduxHooks";
+
+import { useAppNavigation } from "../../hooks/navigationHooks";
+
+import { addDoc, collection } from "firebase/firestore";
+import { db } from "../../db/firebase";
 
 import CustomButton from "../UI/CustomButton";
 import CustomTextArea from "../UI/CustomTextArea";
 
 interface Props {
-  onPress: () => void;
-  isLoading: boolean;
+  addCardfromDeck: string;
 }
 
-const CardForm: React.FC<Props> = ({ isLoading, onPress }) => {
+const CardForm: React.FC<Props> = ({ addCardfromDeck }) => {
+  const navigation = useAppNavigation();
+  const userId = useAppSelector((state) => state.userId);
+
+  const [isLoading, setIsLoading] = useState(false);
   const [userData, setUserData] = useState({
     question: "",
     answer: "",
@@ -33,12 +34,30 @@ const CardForm: React.FC<Props> = ({ isLoading, onPress }) => {
     }));
   }
 
+  async function addCardHandler() {
+    try {
+      setIsLoading(true);
+      const cardObj = {
+        question: userData.question,
+        answer: userData.answer,
+        comment: userData.comment,
+        from: addCardfromDeck.toLowerCase().replace(/\s/, ""),
+        currBox: "box1",
+      };
+      addDoc(collection(db, "users", userId, "cards"), cardObj);
+
+      setIsLoading(false);
+
+      navigation.goBack();
+    } catch {
+      setIsLoading(false);
+      Alert.alert("Could not add card", "Please try again");
+      navigation.navigate("BoxesScreen");
+    }
+  }
+
   return (
-    <KeyboardAwareScrollView
-      style={{ flex: 1, backgroundColor: "white", padding: 20 }}
-      extraScrollHeight={100}
-      keyboardOpeningTime={50}
-    >
+    <ScrollView flex={1} bg="white" p={5}>
       <View>
         <Heading mb={5}>Front</Heading>
         <CustomTextArea
@@ -63,12 +82,12 @@ const CardForm: React.FC<Props> = ({ isLoading, onPress }) => {
         />
         <CustomButton
           title="Add Card"
-          onPress={onPress}
+          onPress={addCardHandler}
           isLoading={isLoading}
           isLoadingText="Adding card"
         />
       </View>
-    </KeyboardAwareScrollView>
+    </ScrollView>
   );
 };
 
