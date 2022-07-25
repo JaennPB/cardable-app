@@ -105,7 +105,7 @@ function MainNav() {
       <Stack.Screen
         name="ManageDataScreen"
         component={ManageDataScreen}
-        options={{ presentation: "modal" }}
+        options={{ presentation: "fullScreenModal" }}
       />
     </Stack.Navigator>
   );

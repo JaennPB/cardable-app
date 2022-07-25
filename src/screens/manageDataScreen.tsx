@@ -1,6 +1,6 @@
 import { useLayoutEffect, useState } from "react";
 import { Alert } from "react-native";
-import { Flex, Button } from "native-base";
+import { Flex, Button, KeyboardAvoidingView } from "native-base";
 
 import { useAppNavigation } from "../hooks/navigationHooks";
 import { useRoute, RouteProp } from "@react-navigation/native";
@@ -52,7 +52,7 @@ const ManageDataScreen: React.FC = () => {
       setIsLoading(true);
       const boxName = `Box ${boxesArr.length + 1}`;
       await setDoc(doc(db, "users", userId, "boxes", `${boxName}`), {
-        boxName: `Box ${boxName}`,
+        boxName: boxName,
       });
 
       dispatch(addBox(boxName));
@@ -78,7 +78,7 @@ const ManageDataScreen: React.FC = () => {
   }
 
   return (
-    <Flex bg="white" flex={1} p={5}>
+    <>
       {paramType === "box" && (
         <BoxForm onPress={addBoxHandler} isLoading={isLoading} />
       )}
@@ -91,14 +91,9 @@ const ManageDataScreen: React.FC = () => {
         />
       )}
       {paramType === "card" && (
-        <CardForm
-        // onChangeText={setDeckName}
-        // onPress={addDeckHandler}
-        // value={deckName}
-        // isLoading={isLoading}
-        />
+        <CardForm isLoading={isLoading} onPress={() => {}} />
       )}
-    </Flex>
+    </>
   );
 };
 

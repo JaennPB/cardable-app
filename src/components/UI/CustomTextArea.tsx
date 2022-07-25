@@ -1,28 +1,38 @@
-import { View, TextArea, Text } from "native-base";
+import { Text, VStack, Input } from "native-base";
 
 interface Props {
   label: string;
   placeholder: string;
+  onChangeText: (text: string) => void;
+  value: string;
 }
 
-const CustomTextArea: React.FC<Props> = ({ label, placeholder }) => {
+const CustomTextArea: React.FC<Props> = ({
+  label,
+  placeholder,
+  onChangeText,
+  value,
+}) => {
   return (
-    <View>
+    <VStack>
       <Text fontSize={18} mb={2}>
         {label}
       </Text>
-      <TextArea
-        placeholder={placeholder}
+      <Input
         p={5}
         mb={5}
-        bg="muted.100"
-        w="100%"
-        h="auto"
-        autoCompleteType
-        fontSize={16}
-        keyboardType="default"
+        placeholder={placeholder}
+        variant="filled"
+        size="2xl"
+        autoCapitalize="sentences"
+        multiline
+        returnKeyType="default"
+        height={120}
+        maxH={150}
+        onChangeText={onChangeText}
+        value={value}
       />
-    </View>
+    </VStack>
   );
 };
 

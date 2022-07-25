@@ -1,3 +1,5 @@
+import { Flex } from "native-base";
+
 import CustomButton from "../UI/CustomButton";
 import CustomInput from "../UI/CustomInput";
 
@@ -15,7 +17,7 @@ const DeckForm: React.FC<Props> = ({
   onPress,
 }) => {
   return (
-    <>
+    <Flex bg="white" flex={1} p={5}>
       <CustomInput
         autoCapitalize="sentences"
         label="Deck name"
@@ -30,7 +32,7 @@ const DeckForm: React.FC<Props> = ({
         isLoading={isLoading}
         isLoadingText="Adding deck"
       />
-    </>
+    </Flex>
   );
 };
 
