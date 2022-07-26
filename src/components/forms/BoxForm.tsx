@@ -32,10 +32,10 @@ const BoxForm: React.FC = () => {
           "users",
           userId,
           "boxes",
-          boxName.toLowerCase().replace(/\s/, "")
+          boxName.toLowerCase().replace(/\s/g, "")
         ),
         {
-          boxId: boxName.toLowerCase().replace(/\s/, ""),
+          boxId: boxName.toLowerCase().replace(/\s/g, ""),
           boxName: boxName,
         }
       );

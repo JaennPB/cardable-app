@@ -17,7 +17,7 @@ const FlashcardsScreen: React.FC = () => {
 
   const route = useRoute<RouteProp<NavParams, "FlashcardsScreen">>();
   const { deckName } = route.params;
-  const deckId = deckName.toLowerCase().replace(/\s/, "");
+  const deckId = deckName.toLowerCase().replace(/\s/g, "");
 
   const filteredCards = useAppSelector((state) => state.allCards).filter(
     (card) => card.from === deckId

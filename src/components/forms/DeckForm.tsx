@@ -31,10 +31,10 @@ const DeckForm: React.FC = () => {
           "users",
           userId,
           "decks",
-          deckName.toLowerCase().replace(/\s/, "")
+          deckName.toLowerCase().replace(/\s/g, "")
         ),
         {
-          deckId: deckName.toLowerCase().replace(/\s/, ""),
+          deckId: deckName.toLowerCase().replace(/\s/g, ""),
           deckName: deckName,
         }
       );
