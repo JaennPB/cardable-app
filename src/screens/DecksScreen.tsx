@@ -10,7 +10,7 @@ import PlusButton from "../components/UI/PlusButton";
 const DecksScreen: React.FC = () => {
   const navigation = useAppNavigation();
 
-  const decksData = useAppSelector((state) => state.decks);
+  const decksData = useAppSelector((state) => state.allDecks);
 
   function navigateToDeckHandler(deckName: string) {
     navigation.navigate("FlashcardsScreen", {

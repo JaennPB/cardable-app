@@ -23,7 +23,7 @@ const BoxesScreen: React.FC = () => {
   const dispatch = useAppDispatch();
 
   const userId = useAppSelector((state) => state.userId);
-  const boxesData = useAppSelector((state) => state.boxes);
+  const boxesData = useAppSelector((state) => state.allBoxes);
   const isLoadingState = useAppSelector((state) => state.isLoading);
 
   const XScrollData = useSharedValue(0);

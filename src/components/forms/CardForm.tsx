@@ -2,7 +2,8 @@ import { useState } from "react";
 import { Alert } from "react-native";
 import { Divider, Heading, ScrollView, View } from "native-base";
 
-import { useAppSelector } from "../../hooks/reduxHooks";
+import { useAppSelector, useAppDispatch } from "../../hooks/reduxHooks";
+import { addCard } from "../../app/mainSlice";
 
 import { useAppNavigation } from "../../hooks/navigationHooks";
 
@@ -18,6 +19,8 @@ interface Props {
 
 const CardForm: React.FC<Props> = ({ addCardfromDeck }) => {
   const navigation = useAppNavigation();
+  const dispatch = useAppDispatch();
+
   const userId = useAppSelector((state) => state.userId);
 
   const [isLoading, setIsLoading] = useState(false);
@@ -41,11 +44,12 @@ const CardForm: React.FC<Props> = ({ addCardfromDeck }) => {
         question: userData.question,
         answer: userData.answer,
         comment: userData.comment,
-        from: addCardfromDeck.toLowerCase().replace(/\s/, ""),
+        from: addCardfromDeck,
         currBox: "box1",
       };
       addDoc(collection(db, "users", userId, "cards"), cardObj);
 
+      dispatch(addCard(cardObj));
       setIsLoading(false);
 
       navigation.goBack();

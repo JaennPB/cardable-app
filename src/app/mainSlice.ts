@@ -1,76 +1,128 @@
 import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
 
-import { getDocs, collection } from "firebase/firestore";
+import { getDocs, collection, query, where } from "firebase/firestore";
 import { db } from "../db/firebase";
+import { RootState } from "./store";
 
-export const asyncFetchInitialData = createAsyncThunk(
-  "users/asyncFetchInitialData",
-  async (userId: string) => {
-    const boxesData = await getDocs(collection(db, "users", userId, "boxes"));
-    const decksData = await getDocs(collection(db, "users", userId, "decks"));
-
-    let boxesArr: BoxObj[] = [];
-    if (!boxesData.empty) {
-      boxesData.forEach((doc) => {
-        // FIXME: test
-        const updatedDoc: BoxObj = {
-          boxName: doc.data().boxName,
-          cardsInBox: [],
-        };
-
-        boxesArr.push(updatedDoc);
-      });
-    }
-
-    let decksArr: DeckObj[] = [];
-    if (!decksData.empty) {
-      decksData.forEach((doc) => {
-        const updatedDoc: DeckObj = {
-          deckName: doc.data().deckName,
-          cardsInDeck: [],
-        };
-
-        decksArr.push(updatedDoc);
-      });
-    }
-
-    return {
-      boxesArr,
-      decksArr,
-    };
-  }
-);
-
-interface CardObj {
-  deckId: string;
+type Flashcard = {
   question: string;
   answer: string;
-}
+  comment: string;
+  from: string;
+  currBox: string;
+};
 
 interface DeckObj {
   deckName: string;
-  cardsInDeck: CardObj[];
+  deckId: string;
 }
 
 interface BoxObj {
   boxName: string;
-  cardsInBox: CardObj[];
+  boxId: string;
 }
 
 interface MainState {
   userId: string;
   isAuth: boolean;
   isLoading: boolean;
-  boxes: BoxObj[];
-  decks: DeckObj[];
+  allBoxes: Array<BoxObj>;
+  allDecks: Array<DeckObj>;
+  allCards: Array<Flashcard>;
 }
+
+export const asyncFetchInitialData = createAsyncThunk(
+  "users/asyncFetchInitialData",
+  async (userId: string) => {
+    const boxesData = await getDocs(collection(db, "users", userId, "boxes"));
+    const decksData = await getDocs(collection(db, "users", userId, "decks"));
+    const cardsData = await getDocs(collection(db, "users", userId, "cards"));
+
+    let boxesArr: BoxObj[] = [];
+    let decksArr: DeckObj[] = [];
+    let cardsArr: Flashcard[] = [];
+
+    if (!boxesData.empty) {
+      boxesData.forEach((doc) => {
+        const updatedDoc: BoxObj = {
+          boxName: doc.data().boxName,
+          boxId: doc.data().boxId,
+        };
+
+        boxesArr.push(updatedDoc);
+      });
+    }
+
+    if (!decksData.empty) {
+      decksData.forEach((doc) => {
+        const updatedDoc: DeckObj = {
+          deckName: doc.data().deckName,
+          deckId: doc.data().deckId,
+        };
+
+        decksArr.push(updatedDoc);
+      });
+    }
+
+    if (!cardsData.empty) {
+      cardsData.forEach((doc) => {
+        const updatedDoc: Flashcard = {
+          question: doc.data().question,
+          answer: doc.data().answer,
+          comment: doc.data().comment,
+          from: doc.data().from,
+          currBox: doc.data().currBox,
+        };
+
+        cardsArr.push(updatedDoc);
+      });
+    }
+
+    return {
+      boxesArr,
+      decksArr,
+      cardsArr,
+    };
+  }
+);
+
+export const asyncFetchCards = createAsyncThunk(
+  "users/asyncFetchCardsData",
+  async (deckId: string, { getState }) => {
+    const state = getState() as RootState;
+    const userId = state.userId;
+
+    let cardsInView: Flashcard[] = [];
+
+    const cardsQuery = query(
+      collection(db, "users", userId, "cards"),
+      where("from", "==", deckId)
+    );
+
+    const cardsDataByDeck = await getDocs(cardsQuery);
+
+    cardsDataByDeck.forEach((doc) => {
+      const updatedDoc: Flashcard = {
+        question: doc.data().question,
+        answer: doc.data().answer,
+        comment: doc.data().comment,
+        from: doc.data().from,
+        currBox: doc.data().currBox,
+      };
+      cardsInView.push(updatedDoc);
+    });
+
+    return cardsInView;
+  }
+);
 
 const initialState: MainState = {
   userId: "",
   isAuth: false,
   isLoading: true,
-  boxes: [],
-  decks: [],
+  allBoxes: [],
+  allDecks: [],
+  allCards: [],
 };
 
 const mainSlice = createSlice({
@@ -84,38 +136,30 @@ const mainSlice = createSlice({
     logout: (state) => {
       state.userId = "";
       state.isAuth = false;
-      state.boxes = [];
-      state.decks = [];
+      state.allBoxes = [];
+      state.allDecks = [];
     },
     addBox: (state, action: PayloadAction<string>) => {
-      state.boxes.push({
+      state.allBoxes.push({
         boxName: action.payload,
-        cardsInBox: [],
+        boxId: action.payload,
       });
     },
     addDeck: (state, action: PayloadAction<string>) => {
-      state.decks.push({
+      state.allDecks.push({
         deckName: action.payload,
-        cardsInDeck: [],
+        deckId: action.payload,
       });
     },
-    addCard: (state, action: PayloadAction<CardObj>) => {
-      const cardToAdd = {
-        deckId: action.payload.deckId,
-        question: action.payload.question,
-        answer: action.payload.answer,
-      };
-      const deckObj = state.decks.find(
-        (deck) => deck.deckName === action.payload.deckId
-      );
-
-      deckObj?.cardsInDeck.push(cardToAdd);
+    addCard: (state, action: PayloadAction<Flashcard>) => {
+      state.allCards.push(action.payload);
     },
   },
   extraReducers: (builder) => {
     builder.addCase(asyncFetchInitialData.fulfilled, (state, action) => {
-      state.boxes = action.payload.boxesArr;
-      state.decks = action.payload.decksArr;
+      state.allBoxes = action.payload.boxesArr;
+      state.allDecks = action.payload.decksArr;
+      state.allCards = action.payload.cardsArr;
       state.isLoading = false;
     });
   },
