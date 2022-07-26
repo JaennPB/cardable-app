@@ -21,8 +21,9 @@ import AccountScreen from "./src/screens/AccountScreen";
 import DecksScreen from "./src/screens/DecksScreen";
 import FlashcardsScreen from "./src/screens/FlashcardsScreen";
 import ManageDataScreen from "./src/screens/manageDataScreen";
-import SessionScreen from "./src/screens/SessionScreen";
+import BeginSessionScreen from "./src/screens/BeginSessionScreen";
 import ActiveSessionScreen from "./src/screens/ActiveSessionScreen";
+import StatsScreen from "./src/screens/StatsScreen";
 
 import { Ionicons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
@@ -100,11 +101,16 @@ function MainNav() {
         component={ManageDataScreen}
         options={{ presentation: "fullScreenModal" }}
       />
-      <Stack.Screen name="SessionScreen" component={SessionScreen} />
+      <Stack.Screen name="BeginSessionScreen" component={BeginSessionScreen} />
       <Stack.Screen
         name="ActiveSessionScreen"
         component={ActiveSessionScreen}
-        options={{ presentation: "fullScreenModal", headerTitle: "" }}
+        options={{ headerTitle: "", headerBackVisible: false }}
+      />
+      <Stack.Screen
+        name="StatsScreen"
+        component={StatsScreen}
+        options={{ headerTitle: "", headerBackVisible: false }}
       />
     </Stack.Navigator>
   );

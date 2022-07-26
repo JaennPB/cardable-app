@@ -1,4 +1,4 @@
-import { ScrollView } from "native-base";
+import { Divider, Flex, Heading, ScrollView } from "native-base";
 
 import * as Haptics from "expo-haptics";
 
@@ -28,15 +28,24 @@ const DecksScreen: React.FC = () => {
 
   return (
     <FlexScreen>
-      <ScrollView>
-        {decksData.map((deck, index) => (
-          <DeckItem
-            key={deck.deckId + index}
-            title={deck.deckName}
-            onPress={navigateToDeckHandler.bind(this, deck.deckName, index)}
-          />
-        ))}
-      </ScrollView>
+      {decksData.length >= 1 && (
+        <ScrollView>
+          {decksData.map((deck, index) => (
+            <DeckItem
+              key={deck.deckId + index}
+              title={deck.deckName}
+              onPress={navigateToDeckHandler.bind(this, deck.deckName, index)}
+            />
+          ))}
+        </ScrollView>
+      )}
+      {decksData.length <= 0 && (
+        <Flex flex={1} justify="center" alignItems="center">
+          <Heading textAlign="center" fontSize={18}>
+            Please begin by adding some decks.
+          </Heading>
+        </Flex>
+      )}
       <PlusButton onPress={addDeckHandler} title="Add deck" />
     </FlexScreen>
   );

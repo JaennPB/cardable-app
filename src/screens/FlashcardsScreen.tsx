@@ -1,5 +1,12 @@
 import { useLayoutEffect } from "react";
-import { Button, ScrollView, Text, Pressable } from "native-base";
+import {
+  Button,
+  ScrollView,
+  Text,
+  Pressable,
+  Flex,
+  Heading,
+} from "native-base";
 
 import * as Haptics from "expo-haptics";
 
@@ -39,15 +46,24 @@ const FlashcardsScreen: React.FC = () => {
 
   return (
     <FlexScreen>
-      <ScrollView>
-        {filteredCards.map((card, index) => (
-          <FlashcardItem
-            key={index}
-            questionSnippet={card.question}
-            onPress={() => console.log("Viewing card")}
-          />
-        ))}
-      </ScrollView>
+      {filteredCards.length >= 1 && (
+        <ScrollView>
+          {filteredCards.map((card, index) => (
+            <FlashcardItem
+              key={index}
+              questionSnippet={card.question}
+              onPress={() => console.log("Viewing card")}
+            />
+          ))}
+        </ScrollView>
+      )}
+      {filteredCards.length <= 0 && (
+        <Flex flex={1} justify="center" alignItems="center">
+          <Heading textAlign="center" fontSize={18}>
+            Now, add some flashcards to begin!
+          </Heading>
+        </Flex>
+      )}
       <PlusButton onPress={addCardToDeckHandler} title="Add card" />
     </FlexScreen>
   );

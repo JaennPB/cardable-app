@@ -23,26 +23,18 @@ const DeckForm: React.FC = () => {
   const [deckName, setDeckName] = useState("");
 
   async function addDeckHandler() {
+    const deckId = deckName.toLowerCase().replace(/\s/g, "");
     try {
       setIsLoading(true);
-      setDoc(
-        doc(
-          db,
-          "users",
-          userId,
-          "decks",
-          deckName.toLowerCase().replace(/\s/g, "")
-        ),
-        {
-          deckId: deckName.toLowerCase().replace(/\s/g, ""),
-          deckName: deckName,
-        }
-      );
+      setDoc(doc(db, "users", userId, "decks", deckId), {
+        deckId: deckId,
+        deckName: deckName,
+      });
 
       dispatch(addDeck(deckName));
       setIsLoading(false);
 
-      navigation.goBack();
+      navigation.replace("FlashcardsScreen", { deckName: deckName });
     } catch {
       setIsLoading(false);
       Alert.alert("Could not add deck", "Please try again.");

@@ -111,13 +111,13 @@ const mainSlice = createSlice({
     addBox: (state, action: PayloadAction<string>) => {
       state.allBoxes.push({
         boxName: action.payload,
-        boxId: action.payload,
+        boxId: action.payload.toLowerCase().replace(/\s/g, ""),
       });
     },
     addDeck: (state, action: PayloadAction<string>) => {
       state.allDecks.push({
         deckName: action.payload,
-        deckId: action.payload,
+        deckId: action.payload.toLowerCase().replace(/\s/g, ""),
       });
     },
     addCard: (state, action: PayloadAction<Flashcard>) => {

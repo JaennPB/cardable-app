@@ -7,6 +7,7 @@ import { useAppNavigation } from "../hooks/navigationHooks";
 import { useAppSelector } from "../hooks/reduxHooks";
 
 import FlexScreen from "../components/UI/FlexScreen";
+import { Alert } from "react-native";
 
 const ActiveSessionScreen: React.FC = () => {
   const navigation = useAppNavigation();
@@ -19,15 +20,34 @@ const ActiveSessionScreen: React.FC = () => {
     (card) => card.currBox === boxId && card.from === deckId
   );
 
+  function endSessionHandler() {
+    Alert.alert(
+      "Are you sure you want to end your session?",
+      "There are still some flashcards left on this box.",
+      [
+        {
+          text: "Cancel",
+          onPress: () => {},
+          style: "default",
+        },
+        {
+          text: "End session",
+          onPress: () => navigation.navigate("StatsScreen"),
+          style: "destructive",
+        },
+      ]
+    );
+  }
+
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
         <Button
           variant="ghost"
           _text={{ fontSize: 18, color: "danger.400" }}
-          onPress={() => navigation.navigate("BoxesScreen")}
+          onPress={endSessionHandler}
         >
-          End Session
+          End session
         </Button>
       ),
     });

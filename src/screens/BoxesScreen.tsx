@@ -35,7 +35,7 @@ const BoxesScreen: React.FC = () => {
 
   function openBoxHandler(boxName: string) {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
-    navigation.navigate("SessionScreen", { boxName: boxName });
+    navigation.navigate("BeginSessionScreen", { boxName: boxName });
   }
 
   function addBoxHandler() {

@@ -11,9 +11,9 @@ import { useAppSelector } from "../hooks/reduxHooks";
 import DeckItem from "../components/UI/DeckItem";
 import FlexScreen from "../components/UI/FlexScreen";
 
-const SessionScreen: React.FC = () => {
+const BeginSessionScreen: React.FC = () => {
   const navigation = useAppNavigation();
-  const route = useRoute<RouteProp<NavParams, "SessionScreen">>();
+  const route = useRoute<RouteProp<NavParams, "BeginSessionScreen">>();
   const { boxName } = route.params;
   const boxId = boxName.toLowerCase().replace(/\s/, "");
 
@@ -45,4 +45,4 @@ const SessionScreen: React.FC = () => {
   );
 };
 
-export default SessionScreen;
+export default BeginSessionScreen;
