@@ -1,8 +1,7 @@
 import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
 
-import { getDocs, collection, query, where } from "firebase/firestore";
+import { getDocs, collection } from "firebase/firestore";
 import { db } from "../db/firebase";
-import { RootState } from "./store";
 
 type Flashcard = {
   question: string;
@@ -86,36 +85,6 @@ export const asyncFetchInitialData = createAsyncThunk(
   }
 );
 
-export const asyncFetchCards = createAsyncThunk(
-  "users/asyncFetchCardsData",
-  async (deckId: string, { getState }) => {
-    const state = getState() as RootState;
-    const userId = state.userId;
-
-    let cardsInView: Flashcard[] = [];
-
-    const cardsQuery = query(
-      collection(db, "users", userId, "cards"),
-      where("from", "==", deckId)
-    );
-
-    const cardsDataByDeck = await getDocs(cardsQuery);
-
-    cardsDataByDeck.forEach((doc) => {
-      const updatedDoc: Flashcard = {
-        question: doc.data().question,
-        answer: doc.data().answer,
-        comment: doc.data().comment,
-        from: doc.data().from,
-        currBox: doc.data().currBox,
-      };
-      cardsInView.push(updatedDoc);
-    });
-
-    return cardsInView;
-  }
-);
-
 const initialState: MainState = {
   userId: "",
   isAuth: false,
@@ -168,19 +137,3 @@ const mainSlice = createSlice({
 export const { authenticate, logout, addBox, addDeck, addCard } =
   mainSlice.actions;
 export default mainSlice.reducer;
-
-/**
- * Reducers:
- *
- * authenticate,
- * logout,
- * setData,
- * resetData,
- * openeditor("box", "deck", "card")
- * manageBoxes("add", "delete", {data})
- * manageDecks("add", "delete", {data})
- * manageCards("add", "delete", {data})
- * shiftUpCard,
- * shiftDownCard
- *
- */
