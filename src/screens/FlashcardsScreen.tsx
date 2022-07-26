@@ -1,5 +1,5 @@
 import { useLayoutEffect } from "react";
-import { View, Button, ScrollView, Text, Pressable, HStack } from "native-base";
+import { Button, ScrollView, Text, Pressable } from "native-base";
 
 import * as Haptics from "expo-haptics";
 
@@ -9,6 +9,8 @@ import { useRoute, RouteProp } from "@react-navigation/native";
 import { useAppSelector } from "../hooks/reduxHooks";
 
 import PlusButton from "../components/UI/PlusButton";
+import FlexScreen from "../components/UI/FlexScreen";
+import FlashcardItem from "../components/UI/FlashcardItem";
 
 const FlashcardsScreen: React.FC = () => {
   const navigation = useAppNavigation();
@@ -24,15 +26,6 @@ const FlashcardsScreen: React.FC = () => {
   useLayoutEffect(() => {
     navigation.setOptions({
       headerTitle: deckName,
-      headerRight: () => (
-        <Button
-          onPress={() => navigation.goBack()}
-          _text={{ fontSize: 18, color: "danger.400" }}
-          variant="ghost"
-        >
-          Close
-        </Button>
-      ),
     });
   }, []);
 
@@ -45,28 +38,18 @@ const FlashcardsScreen: React.FC = () => {
   }
 
   return (
-    <View flex={1} px={5} py={2} position="relative">
+    <FlexScreen>
       <ScrollView>
         {filteredCards.map((card, index) => (
-          <Pressable
+          <FlashcardItem
             key={index}
-            bg="#3a8ed3"
-            py={2}
-            px={5}
-            mb={5}
-            borderRadius={15}
-          >
-            <Text color="white" fontSize={20} fontWeight="semibold">
-              Question:
-            </Text>
-            <Text color="white" fontSize={18}>
-              {card.question}
-            </Text>
-          </Pressable>
+            questionSnippet={card.question}
+            onPress={() => console.log("Viewing card")}
+          />
         ))}
       </ScrollView>
       <PlusButton onPress={addCardToDeckHandler} title="Add card" />
-    </View>
+    </FlexScreen>
   );
 };
 

@@ -1,4 +1,4 @@
-import { Button, ScrollView, View } from "native-base";
+import { ScrollView } from "native-base";
 
 import * as Haptics from "expo-haptics";
 
@@ -6,6 +6,8 @@ import { useAppNavigation } from "../hooks/navigationHooks";
 import { useAppSelector } from "../hooks/reduxHooks";
 
 import PlusButton from "../components/UI/PlusButton";
+import DeckItem from "../components/UI/DeckItem";
+import FlexScreen from "../components/UI/FlexScreen";
 
 const DecksScreen: React.FC = () => {
   const navigation = useAppNavigation();
@@ -25,21 +27,18 @@ const DecksScreen: React.FC = () => {
   }
 
   return (
-    <View flex={1} px={5} py={2} position="relative">
+    <FlexScreen>
       <ScrollView>
         {decksData.map((deck, index) => (
-          <Button
-            key={index}
-            mt={5}
-            borderRadius={15}
+          <DeckItem
+            key={deck.deckId + index}
+            title={deck.deckName}
             onPress={navigateToDeckHandler.bind(this, deck.deckName, index)}
-          >
-            {deck.deckName}
-          </Button>
+          />
         ))}
       </ScrollView>
       <PlusButton onPress={addDeckHandler} title="Add deck" />
-    </View>
+    </FlexScreen>
   );
 };
 

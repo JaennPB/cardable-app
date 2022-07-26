@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Alert } from "react-native";
-import { Flex } from "native-base";
 
 import { useAppNavigation } from "../../hooks/navigationHooks";
 
@@ -12,6 +11,7 @@ import { db } from "../../db/firebase";
 
 import CustomButton from "../UI/CustomButton";
 import CustomInput from "../UI/CustomInput";
+import FlexScreen from "../UI/FlexScreen";
 
 const DeckForm: React.FC = () => {
   const navigation = useAppNavigation();
@@ -51,7 +51,7 @@ const DeckForm: React.FC = () => {
   }
 
   return (
-    <Flex bg="white" flex={1} p={5}>
+    <FlexScreen>
       <CustomInput
         autoCapitalize="sentences"
         label="Deck name"
@@ -66,7 +66,7 @@ const DeckForm: React.FC = () => {
         isLoading={isLoading}
         isLoadingText="Adding deck"
       />
-    </Flex>
+    </FlexScreen>
   );
 };
 

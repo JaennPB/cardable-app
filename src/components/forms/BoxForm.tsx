@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Alert } from "react-native";
-import { Heading, Text, Flex } from "native-base";
+import { Heading, Text } from "native-base";
 
 import { useAppNavigation } from "../../hooks/navigationHooks";
 
@@ -11,6 +11,7 @@ import { doc, setDoc } from "firebase/firestore";
 import { db } from "../../db/firebase";
 
 import CustomButton from "../UI/CustomButton";
+import FlexScreen from "../UI/FlexScreen";
 
 const BoxForm: React.FC = () => {
   const navigation = useAppNavigation();
@@ -19,7 +20,7 @@ const BoxForm: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const userId = useAppSelector((state) => state.userId);
-  const boxesArr = useAppSelector((state) => state.boxes);
+  const boxesArr = useAppSelector((state) => state.allBoxes);
 
   async function addBoxHandler() {
     try {
@@ -54,10 +55,10 @@ const BoxForm: React.FC = () => {
   }
 
   return (
-    <Flex bg="white" flex={1} p={5}>
+    <FlexScreen>
       <Heading>Are you sure you want to add a new box?</Heading>
       <Text my={5}>
-        By adding a new box you will another level to the Leitner system.
+        By adding a new box you will another level to the Leitner System.
       </Text>
       <CustomButton
         title="Add box"
@@ -65,7 +66,7 @@ const BoxForm: React.FC = () => {
         isLoading={isLoading}
         isLoadingText="Adding box"
       />
-    </Flex>
+    </FlexScreen>
   );
 };
 
