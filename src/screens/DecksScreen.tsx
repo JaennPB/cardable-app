@@ -31,6 +31,7 @@ const DecksScreen: React.FC = () => {
           <Button
             key={index}
             mt={5}
+            borderRadius={15}
             onPress={navigateToDeckHandler.bind(this, deck.deckName, index)}
           >
             {deck.deckName}

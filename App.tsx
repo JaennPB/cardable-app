@@ -21,6 +21,7 @@ import AccountScreen from "./src/screens/AccountScreen";
 import DecksScreen from "./src/screens/DecksScreen";
 import FlashcardsScreen from "./src/screens/FlashcardsScreen";
 import ManageDataScreen from "./src/screens/manageDataScreen";
+import SessionScreen from "./src/screens/SessionScreen";
 
 import { Ionicons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
@@ -93,20 +94,16 @@ function MainNav() {
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="DecksScreen"
-        component={DecksScreen}
-        options={{ presentation: "modal" }}
-      />
-      <Stack.Screen
         name="FlashcardsScreen"
         component={FlashcardsScreen}
-        options={{ presentation: "modal" }}
+        options={{ presentation: "fullScreenModal" }}
       />
       <Stack.Screen
         name="ManageDataScreen"
         component={ManageDataScreen}
         options={{ presentation: "fullScreenModal" }}
       />
+      <Stack.Screen name="SessionScreen" component={SessionScreen} />
     </Stack.Navigator>
   );
 }

@@ -1,13 +1,12 @@
 import { useLayoutEffect } from "react";
-import { View, Button, ScrollView, Text } from "native-base";
+import { View, Button, ScrollView, Text, Pressable, HStack } from "native-base";
 
 import * as Haptics from "expo-haptics";
 
 import { useAppNavigation } from "../hooks/navigationHooks";
+import { useRoute, RouteProp } from "@react-navigation/native";
 
 import { useAppSelector } from "../hooks/reduxHooks";
-
-import { useRoute, RouteProp } from "@react-navigation/native";
 
 import PlusButton from "../components/UI/PlusButton";
 
@@ -49,7 +48,21 @@ const FlashcardsScreen: React.FC = () => {
     <View flex={1} px={5} py={2} position="relative">
       <ScrollView>
         {filteredCards.map((card, index) => (
-          <Text key={index}>{card.question}</Text>
+          <Pressable
+            key={index}
+            bg="#3a8ed3"
+            py={2}
+            px={5}
+            mb={5}
+            borderRadius={15}
+          >
+            <Text color="white" fontSize={20} fontWeight="semibold">
+              Question:
+            </Text>
+            <Text color="white" fontSize={18}>
+              {card.question}
+            </Text>
+          </Pressable>
         ))}
       </ScrollView>
       <PlusButton onPress={addCardToDeckHandler} title="Add card" />
