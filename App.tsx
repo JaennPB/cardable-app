@@ -50,7 +50,7 @@ function BottomTabsNav() {
         name="BoxesScreen"
         component={BoxesScreen}
         options={{
-          headerTitle: "Your boxes",
+          headerTitle: "Cardable",
           tabBarLabel: "Boxes",
           tabBarIcon: ({ color }) => (
             <AntDesign name="inbox" size={24} color="black" />
