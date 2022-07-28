@@ -23,7 +23,7 @@ const PlusButton: React.FC<Props> = ({ onPress, title }) => {
         py={2}
         pr={2}
         pl={3}
-        borderRadius="50%"
+        borderRadius={50}
       >
         <Text fontSize={20} color="white">
           {title}

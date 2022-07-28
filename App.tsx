@@ -99,7 +99,9 @@ function MainNav() {
       <Stack.Screen
         name="ManageDataScreen"
         component={ManageDataScreen}
-        options={{ presentation: "fullScreenModal" }}
+        options={{
+          presentation: "fullScreenModal",
+        }}
       />
       <Stack.Screen name="BeginSessionScreen" component={BeginSessionScreen} />
       <Stack.Screen
@@ -158,7 +160,7 @@ function AllNavs() {
 
   return (
     <NavigationContainer>
-      <StatusBar barStyle="dark-content" />
+      <StatusBar barStyle="default" />
       <View flex={1} onLayout={onLayoutRootView}>
         {!isAuth && <AuthNav />}
         {isAuth && <MainNav />}

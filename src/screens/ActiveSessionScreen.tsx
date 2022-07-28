@@ -58,9 +58,7 @@ const ActiveSessionScreen: React.FC = () => {
   const ref = useRef<FlatList>(null);
   const [nextIndex, setNextIndex] = useState(1);
 
-  function downgradeCardHandler(cardId: string) {
-    console.log("down", cardId);
-
+  function autoScroll() {
     if (nextIndex < filteredCardsByBoxAndDeck.length) {
       ref.current?.scrollToIndex({ animated: true, index: nextIndex });
       setNextIndex((prevState) => prevState + 1);
@@ -69,26 +67,19 @@ const ActiveSessionScreen: React.FC = () => {
     }
   }
 
-  function skipCardHandler(cardId: string) {
-    console.log("skip", cardId);
-
-    if (nextIndex < filteredCardsByBoxAndDeck.length) {
-      ref.current?.scrollToIndex({ animated: true, index: nextIndex });
-      setNextIndex((prevState) => prevState + 1);
-    } else {
-      navigation.navigate("StatsScreen");
-    }
+  function downgradeCardHandler(cardId: string) {
+    console.log("down", cardId);
+    autoScroll();
   }
 
   function upgradeCardHandler(cardId: string) {
     console.log("up", cardId);
+    autoScroll();
+  }
 
-    if (nextIndex < filteredCardsByBoxAndDeck.length) {
-      ref.current?.scrollToIndex({ animated: true, index: nextIndex });
-      setNextIndex((prevState) => prevState + 1);
-    } else {
-      navigation.navigate("StatsScreen");
-    }
+  function keepCardHandler(cardId: string) {
+    console.log("stay", cardId);
+    autoScroll();
   }
 
   function renderFlashcardItemHandler(itemData: ListRenderItemInfo<Flashcard>) {
@@ -99,9 +90,9 @@ const ActiveSessionScreen: React.FC = () => {
         <Flashcard
           question={item.question}
           answer={item.answer}
-          onPressDowngrade={() => downgradeCardHandler(item.question)}
-          onPressSkip={() => skipCardHandler(item.question)}
-          onPressUpgrade={() => upgradeCardHandler(item.question)}
+          onPressDowngrade={() => downgradeCardHandler(item.id)}
+          onPressUpgrade={() => upgradeCardHandler(item.id)}
+          onPressStay={() => keepCardHandler(item.id)}
         />
       </Flex>
     );

@@ -46,6 +46,7 @@ const CardForm: React.FC<Props> = ({ addCardfromDeck }) => {
         comment: userData.comment,
         from: addCardfromDeck,
         currBox: "box1",
+        id: Date.now().toString(36) + Math.random().toString(36),
       };
       addDoc(collection(db, "users", userId, "cards"), cardObj);
 

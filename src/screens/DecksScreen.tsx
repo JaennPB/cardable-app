@@ -1,4 +1,4 @@
-import { Divider, Flex, Heading, ScrollView } from "native-base";
+import { Flex, Heading, ScrollView } from "native-base";
 
 import * as Haptics from "expo-haptics";
 
@@ -27,14 +27,14 @@ const DecksScreen: React.FC = () => {
   }
 
   return (
-    <FlexScreen>
+    <Flex flex={1} p={5}>
       {decksData.length >= 1 && (
         <ScrollView>
-          {decksData.map((deck, index) => (
+          {decksData.map((deck) => (
             <DeckItem
-              key={deck.deckId + index}
+              key={deck.deckId}
               title={deck.deckName}
-              onPress={navigateToDeckHandler.bind(this, deck.deckName, index)}
+              onPress={navigateToDeckHandler.bind(this, deck.deckName)}
             />
           ))}
         </ScrollView>
@@ -47,7 +47,7 @@ const DecksScreen: React.FC = () => {
         </Flex>
       )}
       <PlusButton onPress={addDeckHandler} title="Add deck" />
-    </FlexScreen>
+    </Flex>
   );
 };
 

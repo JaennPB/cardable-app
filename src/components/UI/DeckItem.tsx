@@ -1,4 +1,4 @@
-import { Text, Pressable, Divider, Box, View } from "native-base";
+import { Text, Pressable, Divider, View } from "native-base";
 
 interface Props {
   title: string;
@@ -7,7 +7,7 @@ interface Props {
 
 const DeckItem: React.FC<Props> = ({ title, onPress }) => {
   return (
-    <View position="relative">
+    <View>
       <Pressable onPress={onPress} bg="blue.400" borderRadius={10} p={5} mb={5}>
         <Text fontSize={18} color="white" fontWeight="semibold">
           {title}

@@ -1,10 +1,9 @@
-import { Box, Button, Flex, Heading, Text, View } from "native-base";
+import { Button, Heading, View } from "native-base";
 import { useState } from "react";
 import { Dimensions, StyleSheet } from "react-native";
 
 import Animated, {
   Easing,
-  FadeIn,
   interpolate,
   SlideInDown,
   useAnimatedStyle,
@@ -18,8 +17,8 @@ interface Props {
   question: string;
   answer: string;
   onPressDowngrade: () => void;
-  onPressSkip: () => void;
   onPressUpgrade: () => void;
+  onPressStay: () => void;
 }
 const { width } = Dimensions.get("window");
 
@@ -27,8 +26,8 @@ const Flashcard: React.FC<Props> = ({
   question,
   answer,
   onPressDowngrade,
-  onPressSkip,
   onPressUpgrade,
+  onPressStay,
 }) => {
   const [cardIsFlipped, setCardIsFlipped] = useState(false);
 
@@ -93,8 +92,8 @@ const Flashcard: React.FC<Props> = ({
         <Animated.View entering={SlideInDown}>
           <FlashcardControls
             onPressDowngrade={onPressDowngrade}
-            onPressSkip={onPressSkip}
             onPressUpgrade={onPressUpgrade}
+            onPressStay={onPressStay}
           />
         </Animated.View>
       )}
@@ -112,6 +111,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     justifyContent: "space-around",
     borderRadius: 40,
+    padding: 20,
     alignItems: "center",
     height: "100%",
     width: "100%",

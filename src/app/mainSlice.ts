@@ -63,6 +63,7 @@ export const asyncFetchInitialData = createAsyncThunk(
           comment: doc.data().comment,
           from: doc.data().from,
           currBox: doc.data().currBox,
+          id: doc.data().id,
         };
 
         cardsArr.push(updatedDoc);

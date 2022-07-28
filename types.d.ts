@@ -18,4 +18,5 @@ type Flashcard = {
   comment: string;
   from: string;
   currBox: string;
+  id: string;
 };

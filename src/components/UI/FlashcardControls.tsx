@@ -1,47 +1,56 @@
-import { Button, Flex } from "native-base";
+import { Button, HStack, Text } from "native-base";
+
+import { FontAwesome } from "@expo/vector-icons";
 
 interface Props {
   onPressDowngrade: () => void;
-  onPressSkip: () => void;
   onPressUpgrade: () => void;
+  onPressStay: () => void;
 }
 
 const FlashcardControls: React.FC<Props> = ({
   onPressDowngrade,
-  onPressSkip,
   onPressUpgrade,
+  onPressStay,
 }) => {
   return (
-    <Flex flexDir="row" mt={5}>
+    <HStack mt={5} space={2}>
       <Button
         onPress={onPressDowngrade}
         bg="danger.400"
         flex={1}
         borderRadius={50}
-        _text={{ fontSize: 18 }}
       >
-        Nope
+        <HStack space={2} alignItems="center">
+          <Text fontSize={18} color="white">
+            Nope
+          </Text>
+          <FontAwesome name="frown-o" size={24} color="white" />
+        </HStack>
       </Button>
-      <Button
-        onPress={onPressSkip}
-        bg="darkBlue.300"
-        flex={1}
-        mx={2}
-        borderRadius={50}
-        _text={{ fontSize: 18 }}
-      >
-        Skip
+      <Button onPress={onPressStay} bg="amber.400" flex={1} borderRadius={50}>
+        <HStack space={2} alignItems="center">
+          <Text fontSize={18} color="white">
+            Not really
+          </Text>
+          <FontAwesome name="meh-o" size={24} color="white" />
+        </HStack>
       </Button>
+
       <Button
         onPress={onPressUpgrade}
         bg="success.400"
         flex={1}
         borderRadius={50}
-        _text={{ fontSize: 18 }}
       >
-        Got it
+        <HStack space={2} alignItems="center">
+          <Text fontSize={18} color="white">
+            Got it
+          </Text>
+          <FontAwesome name="smile-o" size={24} color="white" />
+        </HStack>
       </Button>
-    </Flex>
+    </HStack>
   );
 };
 
