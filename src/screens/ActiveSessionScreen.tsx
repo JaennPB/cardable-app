@@ -1,6 +1,6 @@
-import { useLayoutEffect } from "react";
-import { Alert } from "react-native";
-import { Button, Flex } from "native-base";
+import { useLayoutEffect, useRef } from "react";
+import { Alert, Dimensions, ListRenderItemInfo } from "react-native";
+import { Button, Flex, View } from "native-base";
 
 import { useRoute, RouteProp } from "@react-navigation/native";
 import { useAppNavigation } from "../hooks/navigationHooks";
@@ -8,7 +8,10 @@ import { useAppNavigation } from "../hooks/navigationHooks";
 import { useAppSelector } from "../hooks/reduxHooks";
 
 import Flashcard from "../components/UI/Flashcard";
-import FlashcardControls from "../components/UI/FlashcardControls";
+import Animated from "react-native-reanimated";
+import { useItemSeparator } from "../hooks/utils";
+
+const { width } = Dimensions.get("window");
 
 const ActiveSessionScreen: React.FC = () => {
   const navigation = useAppNavigation();
@@ -54,36 +57,46 @@ const ActiveSessionScreen: React.FC = () => {
     });
   }, []);
 
-  function downgradeCardHandler() {
-    console.log("down");
+  function downgradeCardHandler(cardId: string) {
+    console.log("down", cardId);
   }
 
-  function skipCardHandler() {
-    console.log("skip");
+  function skipCardHandler(cardId: string) {
+    console.log("skip", cardId);
   }
 
-  function upgradeCardHandler() {
-    console.log("up");
+  function upgradeCardHandler(cardId: string) {
+    console.log("up", cardId);
+  }
+
+  function renderFlashcardItemHandler(itemData: ListRenderItemInfo<Flashcard>) {
+    const item = itemData.item;
+
+    return (
+      <Flex px={width * 0.05}>
+        <Flashcard
+          question={item.question}
+          answer={item.answer}
+          onPressDowngrade={() => downgradeCardHandler(item.question)}
+          onPressSkip={() => skipCardHandler(item.question)}
+          onPressUpgrade={() => upgradeCardHandler(item.question)}
+        />
+      </Flex>
+    );
   }
 
   return (
-    <Flex flex={1} p={5}>
-      {filteredCardsByBoxAndDeck.map((card, index) => (
-        <Flex flex={0.8} justify="center" align="center" key={index}>
-          <Flashcard
-            question={card.question}
-            answer={card.answer}
-            key={index}
-          />
-        </Flex>
-      ))}
-      <Flex flex={0.2}>
-        <FlashcardControls
-          onPressNope={skipCardHandler}
-          onPressSkip={downgradeCardHandler}
-          onPressGotIt={upgradeCardHandler}
+    <Flex flex={1} justify="center">
+      <View>
+        <Animated.FlatList
+          data={filteredCardsByBoxAndDeck}
+          renderItem={renderFlashcardItemHandler}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          decelerationRate="fast"
+          scrollEventThrottle={16}
         />
-      </Flex>
+      </View>
     </Flex>
   );
 };

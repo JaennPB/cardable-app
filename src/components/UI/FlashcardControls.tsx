@@ -1,20 +1,20 @@
 import { Button, Flex } from "native-base";
 
 interface Props {
-  onPressGotIt: () => void;
+  onPressDowngrade: () => void;
   onPressSkip: () => void;
-  onPressNope: () => void;
+  onPressUpgrade: () => void;
 }
 
 const FlashcardControls: React.FC<Props> = ({
-  onPressGotIt,
-  onPressNope,
+  onPressDowngrade,
   onPressSkip,
+  onPressUpgrade,
 }) => {
   return (
     <Flex flexDir="row" mt={5}>
       <Button
-        onPress={onPressSkip}
+        onPress={onPressDowngrade}
         bg="danger.400"
         flex={1}
         borderRadius={50}
@@ -23,7 +23,7 @@ const FlashcardControls: React.FC<Props> = ({
         Nope
       </Button>
       <Button
-        onPress={onPressNope}
+        onPress={onPressSkip}
         bg="darkBlue.300"
         flex={1}
         mx={2}
@@ -33,7 +33,7 @@ const FlashcardControls: React.FC<Props> = ({
         Skip
       </Button>
       <Button
-        onPress={onPressGotIt}
+        onPress={onPressUpgrade}
         bg="success.400"
         flex={1}
         borderRadius={50}

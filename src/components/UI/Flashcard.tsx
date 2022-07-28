@@ -1,30 +1,55 @@
-import { Box, Button, Heading, View } from "native-base";
-import { StyleSheet } from "react-native";
+import { Box, Button, Flex, Heading, Text, View } from "native-base";
+import { useState } from "react";
+import { Dimensions, StyleSheet } from "react-native";
 
 import Animated, {
+  Easing,
   interpolate,
+  SlideInDown,
   useAnimatedStyle,
   useSharedValue,
   withTiming,
 } from "react-native-reanimated";
 
+import FlashcardControls from "./FlashcardControls";
+
 interface Props {
   question: string;
   answer: string;
+  onPressDowngrade: () => void;
+  onPressSkip: () => void;
+  onPressUpgrade: () => void;
 }
+const { width } = Dimensions.get("window");
 
-const Flashcard: React.FC<Props> = ({ question, answer }) => {
+const Flashcard: React.FC<Props> = ({
+  question,
+  answer,
+  onPressDowngrade,
+  onPressSkip,
+  onPressUpgrade,
+}) => {
+  const [cardIsFlipped, setCardIsFlipped] = useState(false);
+
   const rotateY = useSharedValue(0);
 
   function flipCardHandler() {
     rotateY.value = 180;
+    setCardIsFlipped(true);
   }
 
   const rStylesFront = useAnimatedStyle(() => {
     const rotateFront = interpolate(rotateY.value, [0, 180], [0, 180]);
 
     return {
-      transform: [{ rotateY: withTiming(`${rotateFront}deg`) }],
+      transform: [
+        {
+          rotateY: withTiming(`${rotateFront}deg`, {
+            duration: 600,
+            easing: Easing.exp,
+          }),
+        },
+      ],
       zIndex: 10,
     };
   });
@@ -33,63 +58,62 @@ const Flashcard: React.FC<Props> = ({ question, answer }) => {
     const rotateBack = interpolate(rotateY.value, [0, 180], [180, 360]);
 
     return {
-      transform: [{ rotateY: withTiming(`${rotateBack}deg`) }],
+      transform: [
+        {
+          rotateY: withTiming(`${rotateBack}deg`, {
+            duration: 600,
+            easing: Easing.exp,
+          }),
+        },
+      ],
     };
   });
 
   return (
-    <View position="absolute">
-      <Animated.View style={[styles.hidden, rStylesFront]}>
-        <Box
-          borderWidth={1}
-          borderColor="#ccc"
-          bg="white"
-          shadow="1"
-          h={500}
-          w={330}
-          borderRadius={25}
-          justifyContent="space-between"
-          alignItems="center"
-          p={5}
-          pt={10}
-        >
+    <>
+      <View style={[styles.container]}>
+        <Animated.View style={[styles.card, rStylesFront]}>
           <Heading>{question}</Heading>
           <Button
             variant="ghost"
             onPress={flipCardHandler}
             borderRadius={50}
-            w="50%"
             zIndex={20}
-            _text={{ fontSize: 20, color: "blue.500" }}
+            _text={{ fontSize: 20, color: "black" }}
           >
-            Flip
+            View answer
           </Button>
-        </Box>
-      </Animated.View>
-      <Animated.View style={[styles.backCard, styles.hidden, rStylesBack]}>
-        <Box
-          borderWidth={1}
-          borderColor="#ccc"
-          bg="white"
-          shadow="1"
-          h={500}
-          w={330}
-          borderRadius={25}
-          justifyContent="space-between"
-          alignItems="center"
-          p={5}
-          pt={10}
-        >
+        </Animated.View>
+        <Animated.View style={[styles.card, styles.backCard, rStylesBack]}>
           <Heading>{answer}</Heading>
-        </Box>
-      </Animated.View>
-    </View>
+        </Animated.View>
+      </View>
+      {cardIsFlipped && (
+        <Animated.View entering={SlideInDown}>
+          <FlashcardControls
+            onPressDowngrade={onPressDowngrade}
+            onPressSkip={onPressSkip}
+            onPressUpgrade={onPressUpgrade}
+          />
+        </Animated.View>
+      )}
+    </>
   );
 };
 
 const styles = StyleSheet.create({
-  hidden: {
+  container: {
+    width: width * 0.9,
+    height: width * 1.4,
+  },
+  card: {
     backfaceVisibility: "hidden",
+    backgroundColor: "white",
+    justifyContent: "space-around",
+    borderRadius: 40,
+    alignItems: "center",
+    height: "100%",
+    width: "100%",
   },
   backCard: {
     position: "absolute",
