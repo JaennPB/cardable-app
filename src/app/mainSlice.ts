@@ -3,14 +3,6 @@ import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
 import { getDocs, collection } from "firebase/firestore";
 import { db } from "../db/firebase";
 
-type Flashcard = {
-  question: string;
-  answer: string;
-  comment: string;
-  from: string;
-  currBox: string;
-};
-
 interface DeckObj {
   deckName: string;
   deckId: string;

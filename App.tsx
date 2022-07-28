@@ -20,7 +20,7 @@ import BoxesScreen from "./src/screens/BoxesScreen";
 import AccountScreen from "./src/screens/AccountScreen";
 import DecksScreen from "./src/screens/DecksScreen";
 import FlashcardsScreen from "./src/screens/FlashcardsScreen";
-import ManageDataScreen from "./src/screens/manageDataScreen";
+import ManageDataScreen from "./src/screens/ManageDataScreen";
 import BeginSessionScreen from "./src/screens/BeginSessionScreen";
 import ActiveSessionScreen from "./src/screens/ActiveSessionScreen";
 import StatsScreen from "./src/screens/StatsScreen";

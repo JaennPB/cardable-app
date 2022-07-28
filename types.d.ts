@@ -11,3 +11,11 @@ type NavParams = {
   BottomTabsNav: undefined;
   ManageDataScreen: { type: string; addCardFromDeck?: string };
 };
+
+type Flashcard = {
+  question: string;
+  answer: string;
+  comment: string;
+  from: string;
+  currBox: string;
+};
