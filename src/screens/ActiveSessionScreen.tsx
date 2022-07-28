@@ -1,5 +1,5 @@
-import { useLayoutEffect, useRef } from "react";
-import { Alert, Dimensions, ListRenderItemInfo } from "react-native";
+import { useLayoutEffect, useRef, useState } from "react";
+import { Alert, Dimensions, FlatList, ListRenderItemInfo } from "react-native";
 import { Button, Flex, View } from "native-base";
 
 import { useRoute, RouteProp } from "@react-navigation/native";
@@ -8,8 +8,6 @@ import { useAppNavigation } from "../hooks/navigationHooks";
 import { useAppSelector } from "../hooks/reduxHooks";
 
 import Flashcard from "../components/UI/Flashcard";
-import Animated from "react-native-reanimated";
-import { useItemSeparator } from "../hooks/utils";
 
 const { width } = Dimensions.get("window");
 
@@ -57,16 +55,40 @@ const ActiveSessionScreen: React.FC = () => {
     });
   }, []);
 
+  const ref = useRef<FlatList>(null);
+  const [nextIndex, setNextIndex] = useState(1);
+
   function downgradeCardHandler(cardId: string) {
     console.log("down", cardId);
+
+    if (nextIndex < filteredCardsByBoxAndDeck.length) {
+      ref.current?.scrollToIndex({ animated: true, index: nextIndex });
+      setNextIndex((prevState) => prevState + 1);
+    } else {
+      navigation.navigate("StatsScreen");
+    }
   }
 
   function skipCardHandler(cardId: string) {
     console.log("skip", cardId);
+
+    if (nextIndex < filteredCardsByBoxAndDeck.length) {
+      ref.current?.scrollToIndex({ animated: true, index: nextIndex });
+      setNextIndex((prevState) => prevState + 1);
+    } else {
+      navigation.navigate("StatsScreen");
+    }
   }
 
   function upgradeCardHandler(cardId: string) {
     console.log("up", cardId);
+
+    if (nextIndex < filteredCardsByBoxAndDeck.length) {
+      ref.current?.scrollToIndex({ animated: true, index: nextIndex });
+      setNextIndex((prevState) => prevState + 1);
+    } else {
+      navigation.navigate("StatsScreen");
+    }
   }
 
   function renderFlashcardItemHandler(itemData: ListRenderItemInfo<Flashcard>) {
@@ -88,7 +110,9 @@ const ActiveSessionScreen: React.FC = () => {
   return (
     <Flex flex={1} justify="center">
       <View>
-        <Animated.FlatList
+        <FlatList
+          scrollEnabled={false}
+          ref={ref}
           data={filteredCardsByBoxAndDeck}
           renderItem={renderFlashcardItemHandler}
           horizontal

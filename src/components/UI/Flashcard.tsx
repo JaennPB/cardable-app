@@ -4,6 +4,7 @@ import { Dimensions, StyleSheet } from "react-native";
 
 import Animated, {
   Easing,
+  FadeIn,
   interpolate,
   SlideInDown,
   useAnimatedStyle,
