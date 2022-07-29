@@ -6,7 +6,9 @@ type NavParams = {
   FlashcardsScreen: { deckName: string };
   BeginSessionScreen: { boxName: string; boxId: number };
   ActiveSessionScreen: { boxId: number; deckId: string };
-  StatsScreen: { updatedItems: { cardId: string; type: "up" | "down" }[] };
+  StatsScreen: {
+    updatedItems: { cardId: string; type: "up" | "down"; newBox: number }[];
+  };
   StatsScreen: undefined;
   AccountScreen: undefined;
   BottomTabsNav: undefined;

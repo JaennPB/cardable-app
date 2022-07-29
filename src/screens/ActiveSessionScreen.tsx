@@ -1,6 +1,6 @@
 import { useLayoutEffect, useRef, useState } from "react";
 import { Alert, Dimensions, FlatList, ListRenderItemInfo } from "react-native";
-import { Button, Flex, View } from "native-base";
+import { Button, Flex, Heading, Text, View } from "native-base";
 
 import { useRoute, RouteProp } from "@react-navigation/native";
 import { useAppNavigation } from "../hooks/navigationHooks";
@@ -8,6 +8,7 @@ import { useAppNavigation } from "../hooks/navigationHooks";
 import { useAppSelector } from "../hooks/reduxHooks";
 
 import Flashcard from "../components/UI/Flashcard";
+import CustomButton from "../components/UI/CustomButton";
 
 const { width } = Dimensions.get("window");
 
@@ -19,10 +20,11 @@ const ActiveSessionScreen: React.FC = () => {
 
   const [nextIndex, setNextIndex] = useState(1);
   const [docsToUpdate, setDocsToUpdate] = useState<
-    { cardId: string; type: "up" | "down" }[]
+    { cardId: string; type: "up" | "down"; newBox: number }[]
   >([]);
 
   const allCards = useAppSelector((state) => state.allCards);
+  const allBoxes = useAppSelector((state) => state.allBoxes);
   const filteredCardsByBoxAndDeck = allCards.filter(
     (card) => card.currBox === boxId && card.from === deckId
   );
@@ -73,14 +75,17 @@ const ActiveSessionScreen: React.FC = () => {
 
   function upgradeOrDowngradeCard(
     cardId: string,
-    type: "down" | "up" | "skip"
+    type: "down" | "up" | "skip",
+    currBox: number
   ) {
-    if (type === "down") {
-      docsToUpdate.push({ cardId, type });
+    if (type === "down" && currBox !== 1) {
+      const newBox = currBox - 1;
+      docsToUpdate.push({ cardId, type, newBox });
     }
 
-    if (type === "up") {
-      docsToUpdate.push({ cardId, type });
+    if (type === "up" && currBox < allBoxes.length) {
+      const newBox = currBox + 1;
+      docsToUpdate.push({ cardId, type, newBox });
     }
 
     autoScroll();
@@ -94,8 +99,12 @@ const ActiveSessionScreen: React.FC = () => {
         <Flashcard
           question={item.question}
           answer={item.answer}
-          onPressDowngrade={() => upgradeOrDowngradeCard(item.id, "down")}
-          onPressUpgrade={() => upgradeOrDowngradeCard(item.id, "up")}
+          onPressDowngrade={() =>
+            upgradeOrDowngradeCard(item.id, "down", item.currBox)
+          }
+          onPressUpgrade={() =>
+            upgradeOrDowngradeCard(item.id, "up", item.currBox)
+          }
           onPressStay={autoScroll}
         />
       </Flex>
@@ -103,20 +112,34 @@ const ActiveSessionScreen: React.FC = () => {
   }
 
   return (
-    <Flex flex={1} justify="center">
-      <View>
-        <FlatList
-          scrollEnabled={false}
-          ref={ref}
-          data={filteredCardsByBoxAndDeck}
-          renderItem={renderFlashcardItemHandler}
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          decelerationRate="fast"
-          scrollEventThrottle={16}
-        />
-      </View>
-    </Flex>
+    <>
+      {filteredCardsByBoxAndDeck.length <= 0 && (
+        <Flex flex={1} justify="center" alignItems="center">
+          <Heading textAlign="center" fontSize={18}>
+            Looks like there are no cards from this deck availible in this box.
+          </Heading>
+          <Text my={2}>Please check subsequent or previous boxes.</Text>
+          <CustomButton
+            title="Go to boxes screen"
+            onPress={() => navigation.navigate("BoxesScreen")}
+          />
+        </Flex>
+      )}
+      <Flex flex={1} justify="center">
+        <View>
+          <FlatList
+            scrollEnabled={false}
+            ref={ref}
+            data={filteredCardsByBoxAndDeck}
+            renderItem={renderFlashcardItemHandler}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            decelerationRate="fast"
+            scrollEventThrottle={16}
+          />
+        </View>
+      </Flex>
+    </>
   );
 };
 
