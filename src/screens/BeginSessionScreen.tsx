@@ -52,6 +52,9 @@ const BeginSessionScreen: React.FC = () => {
             key={deck.deckId + index}
             title={deck.deckName}
             onPress={beginActiveSessionHandler.bind(this, deck.deckId)}
+            deckId={deck.deckId}
+            fromContext="box"
+            boxId={boxId}
           />
         </ScrollView>
       ))}

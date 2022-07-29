@@ -35,6 +35,8 @@ const DecksScreen: React.FC = () => {
               key={deck.deckId}
               title={deck.deckName}
               onPress={navigateToDeckHandler.bind(this, deck.deckName)}
+              deckId={deck.deckId}
+              fromContext="deck"
             />
           ))}
         </ScrollView>

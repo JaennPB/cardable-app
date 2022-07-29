@@ -100,6 +100,7 @@ const mainSlice = createSlice({
       state.isAuth = false;
       state.allBoxes = [];
       state.allDecks = [];
+      state.allCards = [];
     },
     addBox: (
       state,
