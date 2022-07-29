@@ -1,4 +1,4 @@
-import { useLayoutEffect } from "react";
+import { useLayoutEffect, useRef } from "react";
 import { Dimensions } from "react-native";
 import { Flex, Heading } from "native-base";
 
@@ -7,6 +7,7 @@ import Animated, {
   useSharedValue,
 } from "react-native-reanimated";
 import * as Haptics from "expo-haptics";
+import moment from "moment";
 
 import { useAppNavigation } from "../hooks/navigationHooks";
 
@@ -15,8 +16,11 @@ import { asyncFetchInitialData } from "../app/mainSlice";
 
 import BoxItem from "../components/UI/BoxItem";
 import CustomSpinner from "../components/UI/CustomSpinner";
+import CustomButton from "../components/UI/CustomButton";
 
 const { height, width } = Dimensions.get("window");
+
+console.log("WARNING");
 
 const BoxesScreen: React.FC = () => {
   const navigation = useAppNavigation();
@@ -55,7 +59,7 @@ const BoxesScreen: React.FC = () => {
       <Heading alignSelf="flex-start" ml={5}>
         Your boxes
       </Heading>
-      <Flex h={height / 2} justify="center" align="center">
+      <Flex h={height * 0.7} justify="center" align="center">
         {isLoadingState && <CustomSpinner />}
         {!isLoadingState && (
           <Animated.ScrollView
@@ -85,6 +89,14 @@ const BoxesScreen: React.FC = () => {
               onPress={addBoxHandler}
             />
           </Animated.ScrollView>
+        )}
+        {!isLoadingState && (
+          <Flex bg="white" w={width * 0.8} p={5} borderRadius={10}>
+            <Heading mb={5} textAlign="center">
+              {moment().format("MMMM Do YYYY")}
+            </Heading>
+            <CustomButton title="Review Box 3" onPress={() => {}} />
+          </Flex>
         )}
       </Flex>
     </Flex>

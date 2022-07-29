@@ -44,7 +44,9 @@ function AuthNav() {
 function BottomTabsNav() {
   return (
     <BottomTabs.Navigator
-      screenOptions={{ tabBarLabelStyle: { fontSize: 13 } }}
+      screenOptions={{
+        tabBarLabelStyle: { fontSize: 13 },
+      }}
     >
       <BottomTabs.Screen
         name="BoxesScreen"
