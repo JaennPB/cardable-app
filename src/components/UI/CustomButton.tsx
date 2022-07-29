@@ -19,6 +19,7 @@ const CustomButton: React.FC<Props> = ({
       _text={{ fontSize: 18 }}
       isLoading={isLoading}
       isLoadingText={isLoadingText}
+      borderRadius={50}
     >
       {title}
     </Button>

@@ -1,5 +1,5 @@
 import { useLayoutEffect } from "react";
-import { Heading } from "native-base";
+import { Button, Flex, Heading, ScrollView } from "native-base";
 
 import * as Haptics from "expo-haptics";
 
@@ -10,12 +10,12 @@ import { useAppSelector } from "../hooks/reduxHooks";
 
 import DeckItem from "../components/UI/DeckItem";
 import FlexScreen from "../components/UI/FlexScreen";
+import CustomButton from "../components/UI/CustomButton";
 
 const BeginSessionScreen: React.FC = () => {
   const navigation = useAppNavigation();
   const route = useRoute<RouteProp<NavParams, "BeginSessionScreen">>();
-  const { boxName } = route.params;
-  const boxId = boxName.toLowerCase().replace(/\s/, "");
+  const { boxName, boxId } = route.params;
 
   const allDecks = useAppSelector((state) => state.allDecks);
 
@@ -33,13 +33,27 @@ const BeginSessionScreen: React.FC = () => {
 
   return (
     <FlexScreen>
-      <Heading mb={5}>Choose a deck to study</Heading>
+      {allDecks.length <= 0 && (
+        <Flex flex={1} justify="center" alignItems="center">
+          <Heading textAlign="center" fontSize={18} mb={5}>
+            Please begin by adding some decks from the deck screen or the button
+            below.
+          </Heading>
+          <CustomButton
+            title="Go to decks"
+            onPress={() => navigation.navigate("DecksScreen")}
+          />
+        </Flex>
+      )}
       {allDecks.map((deck, index) => (
-        <DeckItem
-          key={deck.deckId + index}
-          title={deck.deckName}
-          onPress={beginActiveSessionHandler.bind(this, deck.deckId)}
-        />
+        <ScrollView flex={1} key={index}>
+          <Heading mb={5}>Choose a deck to study</Heading>
+          <DeckItem
+            key={deck.deckId + index}
+            title={deck.deckName}
+            onPress={beginActiveSessionHandler.bind(this, deck.deckId)}
+          />
+        </ScrollView>
       ))}
     </FlexScreen>
   );

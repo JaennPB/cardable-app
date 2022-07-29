@@ -33,9 +33,12 @@ const BoxesScreen: React.FC = () => {
     },
   });
 
-  function openBoxHandler(boxName: string) {
+  function openBoxHandler(boxName: string, boxId: number) {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
-    navigation.navigate("BeginSessionScreen", { boxName: boxName });
+    navigation.navigate("BeginSessionScreen", {
+      boxName: boxName,
+      boxId: boxId,
+    });
   }
 
   function addBoxHandler() {
@@ -72,7 +75,7 @@ const BoxesScreen: React.FC = () => {
                 title={box.boxName}
                 index={index}
                 translateX={XScrollData}
-                onPress={openBoxHandler.bind(this, box.boxName)}
+                onPress={openBoxHandler.bind(this, box.boxName, box.boxId)}
               />
             ))}
             <BoxItem

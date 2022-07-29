@@ -7,11 +7,12 @@ import { addCard } from "../../app/mainSlice";
 
 import { useAppNavigation } from "../../hooks/navigationHooks";
 
-import { addDoc, collection } from "firebase/firestore";
+import { doc, setDoc } from "firebase/firestore";
 import { db } from "../../db/firebase";
 
 import CustomButton from "../UI/CustomButton";
 import CustomTextArea from "../UI/CustomTextArea";
+import FlexScreen from "../UI/FlexScreen";
 
 interface Props {
   addCardfromDeck: string;
@@ -38,6 +39,7 @@ const CardForm: React.FC<Props> = ({ addCardfromDeck }) => {
   }
 
   async function addCardHandler() {
+    const cardId = Date.now().toString(36) + Math.random().toString(36);
     try {
       setIsLoading(true);
       const cardObj = {
@@ -45,10 +47,10 @@ const CardForm: React.FC<Props> = ({ addCardfromDeck }) => {
         answer: userData.answer,
         comment: userData.comment,
         from: addCardfromDeck,
-        currBox: "box1",
-        id: Date.now().toString(36) + Math.random().toString(36),
+        currBox: 1,
+        id: cardId,
       };
-      addDoc(collection(db, "users", userId, "cards"), cardObj);
+      setDoc(doc(db, "users", userId, "cards", cardId), cardObj);
 
       dispatch(addCard(cardObj));
       setIsLoading(false);
@@ -62,37 +64,39 @@ const CardForm: React.FC<Props> = ({ addCardfromDeck }) => {
   }
 
   return (
-    <ScrollView flex={1} bg="white" p={5}>
-      <View>
-        <Heading mb={5}>Front</Heading>
-        <CustomTextArea
-          label="Question"
-          placeholder="i.e. Capital of Mexico"
-          onChangeText={setDataHandler.bind(this, "question")}
-          value={userData.question}
-        />
-        <Divider />
-        <Heading my={5}>Back</Heading>
-        <CustomTextArea
-          label="Answer"
-          placeholder="i.e. Mexico City"
-          onChangeText={setDataHandler.bind(this, "answer")}
-          value={userData.answer}
-        />
-        <CustomTextArea
-          label="Comment"
-          placeholder="i.e. Population 8.8 million"
-          onChangeText={setDataHandler.bind(this, "comment")}
-          value={userData.comment}
-        />
-        <CustomButton
-          title="Add Card"
-          onPress={addCardHandler}
-          isLoading={isLoading}
-          isLoadingText="Adding card"
-        />
-      </View>
-    </ScrollView>
+    <FlexScreen>
+      <ScrollView flex={1} bg="white">
+        <View>
+          <Heading mb={5}>Front</Heading>
+          <CustomTextArea
+            label="Question"
+            placeholder="i.e. Capital of Mexico"
+            onChangeText={setDataHandler.bind(this, "question")}
+            value={userData.question}
+          />
+          <Divider />
+          <Heading my={5}>Back</Heading>
+          <CustomTextArea
+            label="Answer"
+            placeholder="i.e. Mexico City"
+            onChangeText={setDataHandler.bind(this, "answer")}
+            value={userData.answer}
+          />
+          <CustomTextArea
+            label="Comment"
+            placeholder="i.e. Population 8.8 million"
+            onChangeText={setDataHandler.bind(this, "comment")}
+            value={userData.comment}
+          />
+          <CustomButton
+            title="Add Card"
+            onPress={addCardHandler}
+            isLoading={isLoading}
+            isLoadingText="Adding card"
+          />
+        </View>
+      </ScrollView>
+    </FlexScreen>
   );
 };
 

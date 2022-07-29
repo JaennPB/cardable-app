@@ -17,6 +17,11 @@ const ActiveSessionScreen: React.FC = () => {
   const route = useRoute<RouteProp<NavParams, "ActiveSessionScreen">>();
   const { boxId, deckId } = route.params;
 
+  const [nextIndex, setNextIndex] = useState(1);
+  const [docsToUpdate, setDocsToUpdate] = useState<
+    { cardId: string; type: "up" | "down" }[]
+  >([]);
+
   const allCards = useAppSelector((state) => state.allCards);
   const filteredCardsByBoxAndDeck = allCards.filter(
     (card) => card.currBox === boxId && card.from === deckId
@@ -24,7 +29,7 @@ const ActiveSessionScreen: React.FC = () => {
 
   function endSessionHandler() {
     Alert.alert(
-      "Are you sure you want to end your session?",
+      "Are you sure?",
       "There are still some flashcards left on this box.",
       [
         {
@@ -34,7 +39,8 @@ const ActiveSessionScreen: React.FC = () => {
         },
         {
           text: "End session",
-          onPress: () => navigation.navigate("StatsScreen"),
+          onPress: () =>
+            navigation.navigate("StatsScreen", { updatedItems: docsToUpdate }),
           style: "destructive",
         },
       ]
@@ -56,29 +62,27 @@ const ActiveSessionScreen: React.FC = () => {
   }, []);
 
   const ref = useRef<FlatList>(null);
-  const [nextIndex, setNextIndex] = useState(1);
-
   function autoScroll() {
     if (nextIndex < filteredCardsByBoxAndDeck.length) {
+      setNextIndex(nextIndex + 1);
       ref.current?.scrollToIndex({ animated: true, index: nextIndex });
-      setNextIndex((prevState) => prevState + 1);
     } else {
-      navigation.navigate("StatsScreen");
+      navigation.navigate("StatsScreen", { updatedItems: docsToUpdate });
     }
   }
 
-  function downgradeCardHandler(cardId: string) {
-    console.log("down", cardId);
-    autoScroll();
-  }
+  function upgradeOrDowngradeCard(
+    cardId: string,
+    type: "down" | "up" | "skip"
+  ) {
+    if (type === "down") {
+      docsToUpdate.push({ cardId, type });
+    }
 
-  function upgradeCardHandler(cardId: string) {
-    console.log("up", cardId);
-    autoScroll();
-  }
+    if (type === "up") {
+      docsToUpdate.push({ cardId, type });
+    }
 
-  function keepCardHandler(cardId: string) {
-    console.log("stay", cardId);
     autoScroll();
   }
 
@@ -90,9 +94,9 @@ const ActiveSessionScreen: React.FC = () => {
         <Flashcard
           question={item.question}
           answer={item.answer}
-          onPressDowngrade={() => downgradeCardHandler(item.id)}
-          onPressUpgrade={() => upgradeCardHandler(item.id)}
-          onPressStay={() => keepCardHandler(item.id)}
+          onPressDowngrade={() => upgradeOrDowngradeCard(item.id, "down")}
+          onPressUpgrade={() => upgradeOrDowngradeCard(item.id, "up")}
+          onPressStay={autoScroll}
         />
       </Flex>
     );

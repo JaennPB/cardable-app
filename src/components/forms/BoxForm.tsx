@@ -26,6 +26,7 @@ const BoxForm: React.FC = () => {
     try {
       setIsLoading(true);
       const boxName = `Box ${boxesArr.length + 1}`;
+      const boxId = boxesArr.length + 1;
       await setDoc(
         doc(
           db,
@@ -35,12 +36,12 @@ const BoxForm: React.FC = () => {
           boxName.toLowerCase().replace(/\s/g, "")
         ),
         {
-          boxId: boxName.toLowerCase().replace(/\s/g, ""),
+          boxId: boxesArr.length + 1,
           boxName: boxName,
         }
       );
 
-      dispatch(addBox(boxName));
+      dispatch(addBox({ boxName, boxId }));
       setIsLoading(false);
 
       navigation.goBack();

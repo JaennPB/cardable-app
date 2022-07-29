@@ -27,7 +27,6 @@ const CustomTextArea: React.FC<Props> = ({
         autoCapitalize="sentences"
         multiline
         returnKeyType="default"
-        height={120}
         maxH={150}
         onChangeText={onChangeText}
         value={value}

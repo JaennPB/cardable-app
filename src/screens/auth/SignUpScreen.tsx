@@ -65,7 +65,7 @@ const SignUpScreen: React.FC<Props> = ({}) => {
       const batch = writeBatch(db);
 
       batch.set(doc(db, "users", userId), { email: userData.email });
-      initialData.forEach((box) => {
+      initialData.forEach((box, index) => {
         batch.set(
           doc(
             db,
@@ -75,7 +75,7 @@ const SignUpScreen: React.FC<Props> = ({}) => {
             box.toLowerCase().replace(/\s/, "")
           ),
           {
-            boxId: box.toLowerCase().replace(/\s/, ""),
+            boxId: index + 1,
             boxName: box,
           }
         );

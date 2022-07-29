@@ -4,8 +4,9 @@ type NavParams = {
   BoxesScreen: undefined;
   DecksScreen: undefined;
   FlashcardsScreen: { deckName: string };
-  BeginSessionScreen: { boxName: string };
-  ActiveSessionScreen: { boxId: string; deckId: string };
+  BeginSessionScreen: { boxName: string; boxId: number };
+  ActiveSessionScreen: { boxId: number; deckId: string };
+  StatsScreen: { updatedItems: { cardId: string; type: "up" | "down" }[] };
   StatsScreen: undefined;
   AccountScreen: undefined;
   BottomTabsNav: undefined;
@@ -17,6 +18,6 @@ type Flashcard = {
   answer: string;
   comment: string;
   from: string;
-  currBox: string;
+  currBox: number;
   id: string;
 };

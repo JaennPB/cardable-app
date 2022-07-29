@@ -10,7 +10,7 @@ interface DeckObj {
 
 interface BoxObj {
   boxName: string;
-  boxId: string;
+  boxId: number;
 }
 
 interface MainState {
@@ -101,10 +101,13 @@ const mainSlice = createSlice({
       state.allBoxes = [];
       state.allDecks = [];
     },
-    addBox: (state, action: PayloadAction<string>) => {
+    addBox: (
+      state,
+      action: PayloadAction<{ boxName: string; boxId: number }>
+    ) => {
       state.allBoxes.push({
-        boxName: action.payload,
-        boxId: action.payload.toLowerCase().replace(/\s/g, ""),
+        boxName: action.payload.boxName,
+        boxId: action.payload.boxId,
       });
     },
     addDeck: (state, action: PayloadAction<string>) => {
@@ -115,6 +118,19 @@ const mainSlice = createSlice({
     },
     addCard: (state, action: PayloadAction<Flashcard>) => {
       state.allCards.push(action.payload);
+    },
+    manageCard: (
+      state,
+      action: PayloadAction<{ cardId: string; type: "up" | "down" }>
+    ) => {
+      const card = state.allCards.find(
+        (card) => card.id === action.payload.cardId
+      )!;
+      if (action.payload.type === "up") {
+        card.currBox++;
+      } else if (action.payload.type === "down") {
+        card.currBox--;
+      }
     },
   },
   extraReducers: (builder) => {
@@ -127,6 +143,6 @@ const mainSlice = createSlice({
   },
 });
 
-export const { authenticate, logout, addBox, addDeck, addCard } =
+export const { authenticate, logout, addBox, addDeck, addCard, manageCard } =
   mainSlice.actions;
 export default mainSlice.reducer;
