@@ -126,9 +126,12 @@ const mainSlice = createSlice({
       const card = state.allCards.find(
         (card) => card.id === action.payload.cardId
       )!;
-      if (action.payload.type === "up") {
+      if (
+        action.payload.type === "up" &&
+        card.currBox < state.allBoxes.length
+      ) {
         card.currBox++;
-      } else if (action.payload.type === "down") {
+      } else if (action.payload.type === "down" && card.currBox > 1) {
         card.currBox--;
       }
     },
