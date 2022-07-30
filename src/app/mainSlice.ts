@@ -110,6 +110,11 @@ const mainSlice = createSlice({
     addCard: (state, action: PayloadAction<Flashcard>) => {
       state.allCards.push(action.payload);
     },
+    deleteCard: (state, action: PayloadAction<string>) => {
+      state.allCards = state.allCards.filter(
+        (card) => card.id !== action.payload
+      );
+    },
     manageCard: (
       state,
       action: PayloadAction<{ cardId: string; type: "up" | "down" }>
@@ -137,6 +142,13 @@ const mainSlice = createSlice({
   },
 });
 
-export const { authenticate, logout, addBox, addDeck, addCard, manageCard } =
-  mainSlice.actions;
+export const {
+  authenticate,
+  logout,
+  addBox,
+  addDeck,
+  addCard,
+  deleteCard,
+  manageCard,
+} = mainSlice.actions;
 export default mainSlice.reducer;

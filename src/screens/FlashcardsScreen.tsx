@@ -41,7 +41,13 @@ const FlashcardsScreen: React.FC = () => {
   function renderFlashcardItemHandler(itemData: ListRenderItemInfo<Flashcard>) {
     const item = itemData.item;
 
-    return <FlashcardItem key={item.id} questionSnippet={item.question} />;
+    return (
+      <FlashcardItem
+        key={item.id}
+        questionSnippet={item.question}
+        cardId={item.id}
+      />
+    );
   }
 
   return (

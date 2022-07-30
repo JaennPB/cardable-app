@@ -66,11 +66,20 @@ const DeckItem: React.FC<Props> = ({
     ],
   }));
 
+  function deleteDeckItemHandler(deckId: string) {
+    console.log(deckId);
+  }
+
   return (
     <Animated.View style={{ position: "relative" }}>
-      <HiddenButtons translateX={translateX} />
+      {fromContext !== "box" && (
+        <HiddenButtons
+          translateX={translateX}
+          onPress={deleteDeckItemHandler.bind(this, deckId)}
+        />
+      )}
       <GestureDetector gesture={gesture}>
-        <Animated.View style={rStyle}>
+        <Animated.View style={fromContext !== "box" && rStyle}>
           <Pressable
             onPress={onPress}
             bg="blue.400"

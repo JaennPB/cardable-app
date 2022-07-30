@@ -10,9 +10,14 @@ import * as Haptics from "expo-haptics";
 interface Props {
   translateX: Animated.SharedValue<number>;
   isFlashcard?: boolean;
+  onPress: () => void;
 }
 
-const HiddenButtons: React.FC<Props> = ({ translateX, isFlashcard }) => {
+const HiddenButtons: React.FC<Props> = ({
+  translateX,
+  isFlashcard,
+  onPress,
+}) => {
   const rStyle = useAnimatedStyle(() => {
     const inputRange = [0, -100];
     const opacity = interpolate(translateX.value, inputRange, [0, 1]);
@@ -37,6 +42,7 @@ const HiddenButtons: React.FC<Props> = ({ translateX, isFlashcard }) => {
         justifyContent="center"
         alignItems="center"
         py={isFlashcard ? 8 : 5}
+        onPress={onPress}
       >
         <Text color="white" fontSize={18} alignSelf="flex-end">
           Delete

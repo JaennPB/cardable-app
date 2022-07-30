@@ -1,5 +1,6 @@
 import { useLayoutEffect } from "react";
-import { Button, Flex, Heading, ScrollView } from "native-base";
+import { ListRenderItemInfo } from "react-native";
+import { FlatList, Flex, Heading, ScrollView } from "native-base";
 
 import * as Haptics from "expo-haptics";
 
@@ -31,6 +32,21 @@ const BeginSessionScreen: React.FC = () => {
     });
   }
 
+  function renderDeckItemsHandler(itemData: ListRenderItemInfo<DeckObj>) {
+    const item = itemData.item;
+
+    return (
+      <DeckItem
+        key={item.deckId}
+        title={item.deckName}
+        onPress={() => beginActiveSessionHandler(item.deckId)}
+        deckId={item.deckId}
+        fromContext="box"
+        boxId={boxId}
+      />
+    );
+  }
+
   return (
     <FlexScreen>
       {allDecks.length <= 0 && (
@@ -45,19 +61,12 @@ const BeginSessionScreen: React.FC = () => {
           />
         </Flex>
       )}
-      {allDecks.map((deck, index) => (
-        <ScrollView flex={1} key={index}>
+      {allDecks.length > 0 && (
+        <>
           <Heading mb={5}>Choose a deck to study</Heading>
-          <DeckItem
-            key={deck.deckId + index}
-            title={deck.deckName}
-            onPress={beginActiveSessionHandler.bind(this, deck.deckId)}
-            deckId={deck.deckId}
-            fromContext="box"
-            boxId={boxId}
-          />
-        </ScrollView>
-      ))}
+          <FlatList data={allDecks} renderItem={renderDeckItemsHandler} />
+        </>
+      )}
     </FlexScreen>
   );
 };

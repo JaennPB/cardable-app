@@ -13,9 +13,10 @@ import HiddenButtons from "./HiddenButtons";
 
 interface Props {
   questionSnippet: string;
+  cardId: string;
 }
 
-const FlashcardItem: React.FC<Props> = ({ questionSnippet }) => {
+const FlashcardItem: React.FC<Props> = ({ questionSnippet, cardId }) => {
   const translateX = useSharedValue(0);
   const context = useSharedValue(0);
 
@@ -46,9 +47,17 @@ const FlashcardItem: React.FC<Props> = ({ questionSnippet }) => {
     ],
   }));
 
+  function deleteFlashcardHandler(cardId: string) {
+    console.log(cardId);
+  }
+
   return (
     <Animated.View style={{ position: "relative" }}>
-      <HiddenButtons translateX={translateX} isFlashcard />
+      <HiddenButtons
+        translateX={translateX}
+        isFlashcard
+        onPress={deleteFlashcardHandler.bind(this, cardId)}
+      />
       <GestureDetector gesture={gesture}>
         <Animated.View style={rStyle}>
           <View bg="blue.400" borderRadius={10} p={5} mb={5}>
