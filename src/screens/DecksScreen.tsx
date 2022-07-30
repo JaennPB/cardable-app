@@ -1,4 +1,5 @@
-import { Flex, Heading, ScrollView } from "native-base";
+import { ListRenderItemInfo } from "react-native";
+import { FlatList, Flex, Heading } from "native-base";
 
 import * as Haptics from "expo-haptics";
 
@@ -7,7 +8,6 @@ import { useAppSelector } from "../hooks/reduxHooks";
 
 import PlusButton from "../components/UI/PlusButton";
 import DeckItem from "../components/UI/DeckItem";
-import FlexScreen from "../components/UI/FlexScreen";
 
 const DecksScreen: React.FC = () => {
   const navigation = useAppNavigation();
@@ -26,20 +26,24 @@ const DecksScreen: React.FC = () => {
     navigation.navigate("ManageDataScreen", { type: "deck" });
   }
 
+  function renderDeckItemsHandler(itemData: ListRenderItemInfo<DeckObj>) {
+    const item = itemData.item;
+
+    return (
+      <DeckItem
+        key={item.deckId}
+        title={item.deckName}
+        onPress={() => navigateToDeckHandler(item.deckName)}
+        deckId={item.deckId}
+        fromContext="deck"
+      />
+    );
+  }
+
   return (
     <Flex flex={1} p={5}>
       {decksData.length >= 1 && (
-        <ScrollView>
-          {decksData.map((deck) => (
-            <DeckItem
-              key={deck.deckId}
-              title={deck.deckName}
-              onPress={navigateToDeckHandler.bind(this, deck.deckName)}
-              deckId={deck.deckId}
-              fromContext="deck"
-            />
-          ))}
-        </ScrollView>
+        <FlatList data={decksData} renderItem={renderDeckItemsHandler} />
       )}
       {decksData.length <= 0 && (
         <Flex flex={1} justify="center" alignItems="center">

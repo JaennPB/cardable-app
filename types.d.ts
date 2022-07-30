@@ -23,3 +23,13 @@ type Flashcard = {
   currBox: number;
   id: string;
 };
+
+type DeckObj = {
+  deckName: string;
+  deckId: string;
+};
+
+type BoxObj = {
+  boxName: string;
+  boxId: number;
+};

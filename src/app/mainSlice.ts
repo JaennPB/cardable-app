@@ -3,16 +3,6 @@ import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
 import { getDocs, collection } from "firebase/firestore";
 import { db } from "../db/firebase";
 
-interface DeckObj {
-  deckName: string;
-  deckId: string;
-}
-
-interface BoxObj {
-  boxName: string;
-  boxId: number;
-}
-
 interface MainState {
   userId: string;
   isAuth: boolean;

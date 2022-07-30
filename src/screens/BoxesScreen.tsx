@@ -17,6 +17,7 @@ import { asyncFetchInitialData } from "../app/mainSlice";
 import BoxItem from "../components/UI/BoxItem";
 import CustomSpinner from "../components/UI/CustomSpinner";
 import CustomButton from "../components/UI/CustomButton";
+import DateReview from "../components/UI/DateReview";
 
 const { height, width } = Dimensions.get("window");
 
@@ -55,51 +56,57 @@ const BoxesScreen: React.FC = () => {
   }, []);
 
   return (
-    <Flex flex={1} justify="center">
-      <Heading alignSelf="flex-start" ml={5}>
-        Your boxes
-      </Heading>
-      <Flex h={height * 0.7} justify="center" align="center">
-        {isLoadingState && <CustomSpinner />}
-        {!isLoadingState && (
-          <Animated.ScrollView
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            decelerationRate="fast"
-            scrollEventThrottle={16}
-            onScroll={xScrollHandler}
-            contentContainerStyle={{
-              alignItems: "center",
-            }}
-            snapToInterval={width * 0.8}
-          >
-            {boxesData.map((box, index) => (
-              <BoxItem
-                key={index}
-                title={box.boxName}
-                index={index}
-                translateX={XScrollData}
-                onPress={openBoxHandler.bind(this, box.boxName, box.boxId)}
-              />
-            ))}
-            <BoxItem
-              title="+ Add box"
-              index={boxesData.length}
-              translateX={XScrollData}
-              onPress={addBoxHandler}
-            />
-          </Animated.ScrollView>
-        )}
-        {!isLoadingState && (
-          <Flex bg="white" w={width * 0.8} p={5} borderRadius={10}>
-            <Heading mb={5} textAlign="center">
-              {moment().format("MMMM Do YYYY")}
+    <>
+      {isLoadingState && <CustomSpinner />}
+      {!isLoadingState && (
+        <Flex flex={1} justify="center" bg="muted.100">
+          <Flex flex={1}>
+            <Heading alignSelf="flex-start" ml={5} pt={5}>
+              Your boxes
             </Heading>
-            <CustomButton title="Review Box 3" onPress={() => {}} />
           </Flex>
-        )}
-      </Flex>
-    </Flex>
+          <Flex flex={5} justify="center" align="center">
+            <Animated.ScrollView
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              decelerationRate="fast"
+              scrollEventThrottle={16}
+              onScroll={xScrollHandler}
+              contentContainerStyle={{
+                alignItems: "center",
+              }}
+              snapToInterval={width * 0.8}
+            >
+              {boxesData.map((box, index) => (
+                <BoxItem
+                  key={index}
+                  title={box.boxName}
+                  index={index}
+                  translateX={XScrollData}
+                  onPress={openBoxHandler.bind(this, box.boxName, box.boxId)}
+                />
+              ))}
+              <BoxItem
+                title="+ Add box"
+                index={boxesData.length}
+                translateX={XScrollData}
+                onPress={addBoxHandler}
+              />
+            </Animated.ScrollView>
+          </Flex>
+          <Flex
+            flex={2}
+            bg="white"
+            w={width}
+            p={5}
+            borderTopRadius={20}
+            justify="space-between"
+          >
+            <DateReview onPress={() => {}} />
+          </Flex>
+        </Flex>
+      )}
+    </>
   );
 };
 

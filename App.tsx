@@ -1,9 +1,16 @@
 import { useCallback, useEffect, useState } from "react";
 import { Alert } from "react-native";
-import { NativeBaseProvider, StatusBar, View } from "native-base";
+import {
+  Heading,
+  HStack,
+  NativeBaseProvider,
+  StatusBar,
+  View,
+} from "native-base";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as SplashScreen from "expo-splash-screen";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 import { useAppDispatch, useAppSelector } from "./src/hooks/reduxHooks";
 import { Provider } from "react-redux";
@@ -46,16 +53,24 @@ function BottomTabsNav() {
     <BottomTabs.Navigator
       screenOptions={{
         tabBarLabelStyle: { fontSize: 13 },
+        headerTitleStyle: { fontSize: 20 },
+        headerShadowVisible: false,
       }}
     >
       <BottomTabs.Screen
         name="BoxesScreen"
         component={BoxesScreen}
         options={{
-          headerTitle: "Cardable",
+          headerTitle: "",
+          headerLeft: () => (
+            <HStack space={1} ml={5}>
+              <MaterialCommunityIcons name="cards" size={24} color="black" />
+              <Heading color="black">Cardable</Heading>
+            </HStack>
+          ),
           tabBarLabel: "Boxes",
           tabBarIcon: ({ color }) => (
-            <AntDesign name="inbox" size={24} color="black" />
+            <AntDesign name="inbox" size={24} color={color} />
           ),
         }}
       />
@@ -69,7 +84,7 @@ function BottomTabsNav() {
             <MaterialCommunityIcons
               name="card-multiple-outline"
               size={24}
-              color="black"
+              color={color}
             />
           ),
         }}
@@ -81,7 +96,7 @@ function BottomTabsNav() {
           headerTitle: "Account",
           tabBarLabel: "Account",
           tabBarIcon: ({ color }) => (
-            <Ionicons name="md-person-outline" size={24} color="black" />
+            <Ionicons name="md-person-outline" size={24} color={color} />
           ),
         }}
       />
@@ -162,10 +177,12 @@ function AllNavs() {
 
   return (
     <NavigationContainer>
-      <StatusBar barStyle="default" />
+      <StatusBar />
       <View flex={1} onLayout={onLayoutRootView}>
-        {!isAuth && <AuthNav />}
-        {isAuth && <MainNav />}
+        <GestureHandlerRootView style={{ flex: 1 }}>
+          {!isAuth && <AuthNav />}
+          {isAuth && <MainNav />}
+        </GestureHandlerRootView>
       </View>
     </NavigationContainer>
   );

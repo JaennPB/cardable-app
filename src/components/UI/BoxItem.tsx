@@ -59,7 +59,9 @@ const BoxItem: React.FC<Props> = ({ title, index, translateX, onPress }) => {
           useItemSeparator(index, width, arrLength.length + 1),
         ]}
       >
-        <Heading fontWeight="semibold">{title}</Heading>
+        <Heading fontWeight="semibold" size="xl">
+          {title}
+        </Heading>
       </Animated.View>
     </Pressable>
   );
@@ -69,14 +71,12 @@ export default BoxItem;
 
 const styles = StyleSheet.create({
   container: {
-    borderWidth: 0.5,
-    borderColor: "#dbdbdb",
     width: width * 0.7,
     height: width * 0.7,
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 20,
-    backgroundColor: "#fff",
+    backgroundColor: "white",
     shadowColor: "#424242",
     shadowOffset: { width: 0, height: 6 },
     shadowRadius: 6,

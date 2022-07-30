@@ -9,6 +9,7 @@ const CustomKeyboardAV: React.FC = ({ children }) => {
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       justifyContent="center"
       alignItems="center"
+      bg="muted.100"
     >
       {children}
     </KeyboardAvoidingView>

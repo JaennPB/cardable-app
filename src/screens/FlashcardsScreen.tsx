@@ -1,12 +1,6 @@
 import { useLayoutEffect } from "react";
-import {
-  Button,
-  ScrollView,
-  Text,
-  Pressable,
-  Flex,
-  Heading,
-} from "native-base";
+import { ListRenderItemInfo } from "react-native";
+import { Flex, Heading, FlatList } from "native-base";
 
 import * as Haptics from "expo-haptics";
 
@@ -44,18 +38,19 @@ const FlashcardsScreen: React.FC = () => {
     });
   }
 
+  function renderFlashcardItemHandler(itemData: ListRenderItemInfo<Flashcard>) {
+    const item = itemData.item;
+
+    return <FlashcardItem key={item.id} questionSnippet={item.question} />;
+  }
+
   return (
     <FlexScreen>
       {filteredCards.length >= 1 && (
-        <ScrollView>
-          {filteredCards.map((card, index) => (
-            <FlashcardItem
-              key={index}
-              questionSnippet={card.question}
-              onPress={() => console.log("Viewing card")}
-            />
-          ))}
-        </ScrollView>
+        <FlatList
+          data={filteredCards}
+          renderItem={renderFlashcardItemHandler}
+        />
       )}
       {filteredCards.length <= 0 && (
         <Flex flex={1} justify="center" alignItems="center">

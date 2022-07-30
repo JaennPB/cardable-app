@@ -3,7 +3,7 @@ import { Platform } from "react-native";
 
 const FlexScreen: React.FC = ({ children }) => {
   return (
-    <Flex bg="white" flex={1} p={5} pt={Platform.OS === "android" ? 70 : 5}>
+    <Flex bg="white" flex={1} p={5} pt={5}>
       {children}
     </Flex>
   );
