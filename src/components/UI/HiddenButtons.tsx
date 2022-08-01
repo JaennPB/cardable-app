@@ -3,7 +3,6 @@ import { Pressable, Text } from "native-base";
 import Animated, {
   interpolate,
   useAnimatedStyle,
-  withSpring,
 } from "react-native-reanimated";
 import * as Haptics from "expo-haptics";
 
@@ -36,12 +35,11 @@ const HiddenButtons: React.FC<Props> = ({
         bg="danger.400"
         borderRadius={10}
         px={6}
-        mb={5}
         right={0}
         w="100%"
+        h={isFlashcard ? 85 : 60}
         justifyContent="center"
         alignItems="center"
-        py={isFlashcard ? 8 : 5}
         onPress={onPress}
       >
         <Text color="white" fontSize={18} alignSelf="flex-end">

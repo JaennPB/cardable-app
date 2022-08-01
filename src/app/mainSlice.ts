@@ -107,13 +107,24 @@ const mainSlice = createSlice({
         deckId: action.payload.toLowerCase().replace(/\s/g, ""),
       });
     },
+    deleteDeck: (state, action: PayloadAction<string>) => {
+      const index = state.allDecks.findIndex(
+        (deck) => deck.deckId === action.payload
+      );
+      state.allDecks.splice(index, 1);
+      const updatedCardsArr = state.allCards.filter(
+        (card) => card.from !== action.payload
+      );
+      state.allCards = updatedCardsArr;
+    },
     addCard: (state, action: PayloadAction<Flashcard>) => {
       state.allCards.push(action.payload);
     },
     deleteCard: (state, action: PayloadAction<string>) => {
-      state.allCards = state.allCards.filter(
-        (card) => card.id !== action.payload
+      const index = state.allCards.findIndex(
+        (card) => card.id === action.payload
       );
+      state.allCards.splice(index, 1);
     },
     manageCard: (
       state,
@@ -147,6 +158,7 @@ export const {
   logout,
   addBox,
   addDeck,
+  deleteDeck,
   addCard,
   deleteCard,
   manageCard,

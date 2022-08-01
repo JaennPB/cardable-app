@@ -1,5 +1,5 @@
 import { ListRenderItemInfo } from "react-native";
-import { FlatList, Flex, Heading } from "native-base";
+import { FlatList, Flex, Heading, ScrollView } from "native-base";
 
 import * as Haptics from "expo-haptics";
 
@@ -26,24 +26,21 @@ const DecksScreen: React.FC = () => {
     navigation.navigate("ManageDataScreen", { type: "deck" });
   }
 
-  function renderDeckItemsHandler(itemData: ListRenderItemInfo<DeckObj>) {
-    const item = itemData.item;
-
-    return (
-      <DeckItem
-        key={item.deckId}
-        title={item.deckName}
-        onPress={() => navigateToDeckHandler(item.deckName)}
-        deckId={item.deckId}
-        fromContext="deck"
-      />
-    );
-  }
-
   return (
     <Flex flex={1} p={5}>
       {decksData.length >= 1 && (
-        <FlatList data={decksData} renderItem={renderDeckItemsHandler} />
+        <ScrollView>
+          {decksData.map((deck, index) => (
+            <DeckItem
+              key={deck.deckId}
+              title={deck.deckName}
+              onPress={() => navigateToDeckHandler(deck.deckName)}
+              deckId={deck.deckId}
+              fromContext="deck"
+              index={index}
+            />
+          ))}
+        </ScrollView>
       )}
       {decksData.length <= 0 && (
         <Flex flex={1} justify="center" alignItems="center">

@@ -1,3 +1,4 @@
+import { Alert } from "react-native";
 import { Text, View } from "native-base";
 
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
@@ -9,14 +10,25 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from "react-native-reanimated";
+
+import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
+import { deleteCard } from "../../app/mainSlice";
+
+import { deleteDoc, doc } from "firebase/firestore";
+import { db } from "../../db/firebase";
+
 import HiddenButtons from "./HiddenButtons";
 
 interface Props {
   questionSnippet: string;
   cardId: string;
+  index: number;
 }
 
-const FlashcardItem: React.FC<Props> = ({ questionSnippet, cardId }) => {
+const FlashcardItem: React.FC<Props> = ({ questionSnippet, cardId, index }) => {
+  const userId = useAppSelector((state) => state.userId);
+
+  const dispatch = useAppDispatch();
   const translateX = useSharedValue(0);
   const context = useSharedValue(0);
 
@@ -47,12 +59,22 @@ const FlashcardItem: React.FC<Props> = ({ questionSnippet, cardId }) => {
     ],
   }));
 
-  function deleteFlashcardHandler(cardId: string) {
-    console.log(cardId);
+  async function deleteFlashcardHandler(cardId: string) {
+    try {
+      dispatch(deleteCard(cardId));
+
+      await deleteDoc(doc(db, "users", userId, "cards", cardId));
+    } catch {
+      Alert.alert("Could not delete card", "Please try again");
+    }
   }
 
   return (
-    <Animated.View style={{ position: "relative" }}>
+    <Animated.View
+      entering={SlideInRight.delay(100 * index)}
+      exiting={SlideOutLeft}
+      layout={Layout.delay(100)}
+    >
       <HiddenButtons
         translateX={translateX}
         isFlashcard
@@ -60,7 +82,7 @@ const FlashcardItem: React.FC<Props> = ({ questionSnippet, cardId }) => {
       />
       <GestureDetector gesture={gesture}>
         <Animated.View style={rStyle}>
-          <View bg="blue.400" borderRadius={10} p={5} mb={5}>
+          <View bg="blue.400" borderRadius={10} p={5} mb={5} h={85}>
             <Text color="white" fontSize={18} fontWeight="semibold">
               Question:
             </Text>

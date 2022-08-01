@@ -1,3 +1,4 @@
+import { Alert } from "react-native";
 import { Text, Pressable, HStack } from "native-base";
 
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
@@ -10,7 +11,12 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated";
 
-import { useAppSelector } from "../../hooks/reduxHooks";
+import { writeBatch, doc, deleteDoc } from "firebase/firestore";
+import { db } from "../../db/firebase";
+
+import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
+import { deleteDeck } from "../../app/mainSlice";
+
 import HiddenButtons from "./HiddenButtons";
 
 interface Props {
@@ -19,6 +25,7 @@ interface Props {
   fromContext: "deck" | "box";
   deckId: string;
   boxId?: number;
+  index: number;
 }
 
 const DeckItem: React.FC<Props> = ({
@@ -27,10 +34,13 @@ const DeckItem: React.FC<Props> = ({
   deckId,
   fromContext,
   boxId,
+  index,
 }) => {
-  const allCards = useAppSelector((state) => state.allCards);
+  const dispatch = useAppDispatch();
 
-  const cardsInDeck = allCards.filter((card) => card.from === deckId).length;
+  const allCards = useAppSelector((state) => state.allCards);
+  const cardsInDeck = allCards.filter((card) => card.from === deckId);
+  const userId = useAppSelector((state) => state.userId);
 
   const filteredCardsByBoxAndDeck = allCards.filter(
     (card) => card.currBox === boxId && card.from === deckId
@@ -51,7 +61,7 @@ const DeckItem: React.FC<Props> = ({
       }
     })
     .onEnd(() => {
-      if (translateX.value < -50) {
+      if (translateX.value < -80) {
         translateX.value = withTiming(-100);
       } else {
         translateX.value = withTiming(0);
@@ -66,12 +76,30 @@ const DeckItem: React.FC<Props> = ({
     ],
   }));
 
-  function deleteDeckItemHandler(deckId: string) {
-    console.log(deckId);
+  async function deleteDeckItemHandler(deckId: string) {
+    try {
+      dispatch(deleteDeck(deckId));
+
+      const batch = writeBatch(db);
+
+      batch.delete(doc(db, "users", userId, "decks", deckId));
+      cardsInDeck.forEach((card) => {
+        batch.delete(doc(db, "users", userId, "cards", card.id));
+      });
+
+      await batch.commit();
+    } catch {
+      Alert.alert("There was a problem deleting your deck", "Please try again");
+    }
   }
 
   return (
-    <Animated.View style={{ position: "relative" }}>
+    <Animated.View
+      style={{ position: "relative" }}
+      entering={SlideInRight.delay(100 * index)}
+      exiting={SlideOutLeft}
+      layout={Layout.delay(100)}
+    >
       {fromContext !== "box" && (
         <HiddenButtons
           translateX={translateX}
@@ -86,6 +114,7 @@ const DeckItem: React.FC<Props> = ({
             borderRadius={10}
             p={5}
             mb={5}
+            h={60}
           >
             <HStack alignItems="center" justifyContent="space-between">
               <Text fontSize={18} color="white" fontWeight="semibold">
@@ -93,8 +122,8 @@ const DeckItem: React.FC<Props> = ({
               </Text>
               <Text fontSize={16} color="white">
                 {fromContext === "deck"
-                  ? `${cardsInDeck} cards`
-                  : `${filteredCardsByBoxAndDeck}/${cardsInDeck} cards`}
+                  ? `${cardsInDeck.length} cards`
+                  : `${filteredCardsByBoxAndDeck}/${cardsInDeck.length} cards`}
               </Text>
             </HStack>
           </Pressable>
