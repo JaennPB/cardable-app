@@ -110,17 +110,18 @@ const DeckItem: React.FC<Props> = ({
         <Animated.View style={fromContext !== "box" && rStyle}>
           <Pressable
             onPress={onPress}
-            bg="blue.400"
+            bg="teal.500"
             borderRadius={10}
             p={5}
             mb={5}
-            h={60}
+            h={66}
+            shadow={2}
           >
             <HStack alignItems="center" justifyContent="space-between">
-              <Text fontSize={18} color="white" fontWeight="semibold">
+              <Text fontSize={20} color="white" fontFamily="Poppins_400Regular">
                 {title}
               </Text>
-              <Text fontSize={16} color="white">
+              <Text fontSize={16} color="white" fontFamily="Poppins_400Regular">
                 {fromContext === "deck"
                   ? `${cardsInDeck.length} cards`
                   : `${filteredCardsByBoxAndDeck}/${cardsInDeck.length} cards`}

@@ -18,7 +18,11 @@ const ManageDataScreen: React.FC = () => {
       headerRight: () => (
         <Button
           onPress={() => navigation.goBack()}
-          _text={{ fontSize: 18, color: "danger.400" }}
+          _text={{
+            fontSize: 18,
+            color: "danger.400",
+            fontFamily: "Poppins_400Regular",
+          }}
           variant="ghost"
         >
           Cancel

@@ -94,7 +94,7 @@ const StatsScreen: React.FC = () => {
     <>
       <Flex flex={0.6} justify="center" align="center" position="relative">
         <ReText
-          style={{ fontSize: 60, fontWeight: "bold" }}
+          style={{ fontSize: 60, fontFamily: "Poppins_600SemiBold" }}
           text={animatedText}
         />
         <Flex position="absolute" h={height} w={width}>
@@ -103,15 +103,14 @@ const StatsScreen: React.FC = () => {
               cx={width / 2}
               cy={height / 2}
               r={CIRCLE_LENGTH / (2 * Math.PI)}
-              stroke="#b7b7b7"
               strokeWidth={25}
             />
             <AnimatedCircle
               cx={width / 2}
               cy={height / 2}
               r={900 / (2 * Math.PI)}
-              stroke={percentage! > 0.6 ? "#8af693" : "#ffff76"}
-              strokeWidth={12}
+              stroke={percentage! > 0.5 ? "#2dd4bf" : "#fcd34d"}
+              strokeWidth={15}
               strokeDasharray={CIRCLE_LENGTH}
               animatedProps={animatedProps}
               strokeLinecap="round"
@@ -121,10 +120,13 @@ const StatsScreen: React.FC = () => {
       </Flex>
       <Flex flex={0.3} align="center">
         <Animated.View entering={SlideInUp.delay(300)}>
-          <Heading size="2xl">{`You got ${upCards} out of ${cardsInBoxLength}`}</Heading>
+          <Heading
+            size="2xl"
+            fontFamily="Poppins_600SemiBold"
+          >{`You got ${upCards} out of ${cardsInBoxLength}`}</Heading>
         </Animated.View>
         <Animated.View entering={SlideInUp.delay(2300)}>
-          <Heading size="lg" mt={5}>
+          <Heading size="lg" mt={5} fontFamily="Poppins_600SemiBold">
             {percentage! < 0.5 ? "Try harder next time!" : "Well done!"}
           </Heading>
         </Animated.View>

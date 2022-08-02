@@ -57,7 +57,11 @@ const ActiveSessionScreen: React.FC = () => {
       headerRight: () => (
         <Button
           variant="ghost"
-          _text={{ fontSize: 18, color: "danger.400" }}
+          _text={{
+            fontSize: 18,
+            color: "danger.400",
+            fontFamily: "Poppins_400Regular",
+          }}
           onPress={endSessionHandler}
         >
           End session

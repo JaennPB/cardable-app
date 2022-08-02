@@ -1,5 +1,5 @@
 import { useLayoutEffect } from "react";
-import { Alert, Dimensions } from "react-native";
+import { Dimensions } from "react-native";
 import { Flex, Heading } from "native-base";
 
 import Animated, {
@@ -42,11 +42,6 @@ const BoxesScreen: React.FC = () => {
     });
   }
 
-  function addBoxHandler() {
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
-    navigation.navigate("ManageDataScreen", { type: "box" });
-  }
-
   useLayoutEffect(() => {
     dispatch(asyncFetchInitialData(userId));
   }, []);
@@ -57,7 +52,13 @@ const BoxesScreen: React.FC = () => {
       {!isLoadingState && (
         <Flex flex={1} justify="center" bg="muted.100">
           <Flex flex={1}>
-            <Heading alignSelf="flex-start" ml={5} pt={5}>
+            <Heading
+              alignSelf="flex-start"
+              ml={5}
+              pt={10}
+              fontFamily="Poppins_600SemiBold"
+              size="2xl"
+            >
               Your boxes
             </Heading>
           </Flex>
@@ -90,9 +91,9 @@ const BoxesScreen: React.FC = () => {
             w={width}
             p={5}
             borderTopRadius={20}
-            justify="space-between"
+            justify="space-around"
           >
-            <DateReview onPress={() => {}} />
+            <DateReview onPressToday={() => {}} onPressTomorrow={() => {}} />
           </Flex>
         </Flex>
       )}

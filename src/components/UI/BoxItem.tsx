@@ -59,7 +59,7 @@ const BoxItem: React.FC<Props> = ({ title, index, translateX, onPress }) => {
           useItemSeparator(index, width, arrLength.length),
         ]}
       >
-        <Heading fontWeight="semibold" size="xl">
+        <Heading fontFamily="Poppins_600SemiBold" size="xl">
           {title}
         </Heading>
       </Animated.View>
@@ -80,5 +80,7 @@ const styles = StyleSheet.create({
     shadowColor: "#424242",
     shadowOffset: { width: 0, height: 6 },
     shadowRadius: 6,
+    borderColor: "#2dd4bf",
+    borderWidth: 1,
   },
 });

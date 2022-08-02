@@ -37,12 +37,17 @@ const HiddenButtons: React.FC<Props> = ({
         px={6}
         right={0}
         w="100%"
-        h={isFlashcard ? 85 : 60}
+        h={isFlashcard ? 90 : 66}
         justifyContent="center"
         alignItems="center"
         onPress={onPress}
       >
-        <Text color="white" fontSize={18} alignSelf="flex-end">
+        <Text
+          color="white"
+          fontSize={18}
+          alignSelf="flex-end"
+          fontFamily="Poppins_600SemiBold"
+        >
           Delete
         </Text>
       </Pressable>

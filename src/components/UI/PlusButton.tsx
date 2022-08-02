@@ -15,17 +15,17 @@ const PlusButton: React.FC<Props> = ({ onPress, title }) => {
       right={5}
       bottom={5}
       flexDir="row"
+      shadow={3}
     >
       <HStack
         space={2}
         alignItems="center"
-        bg="#3a8ed3"
-        py={2}
-        pr={2}
-        pl={3}
-        borderRadius={50}
+        bg="teal.400"
+        pl={4}
+        p={3}
+        borderRadius={30}
       >
-        <Text fontSize={20} color="white">
+        <Text fontSize={20} color="white" fontFamily="Poppins_400Regular">
           {title}
         </Text>
         <AntDesign name="pluscircle" size={35} color="white" />

@@ -63,7 +63,9 @@ const BeginSessionScreen: React.FC = () => {
       )}
       {allDecks.length > 0 && (
         <>
-          <Heading mb={5}>Choose a deck to study</Heading>
+          <Heading mb={5} fontFamily="Poppins_600SemiBold">
+            Choose a deck to study
+          </Heading>
           <FlatList data={allDecks} renderItem={renderDeckItemsHandler} />
         </>
       )}

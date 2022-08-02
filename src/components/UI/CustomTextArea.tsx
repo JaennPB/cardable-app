@@ -15,7 +15,7 @@ const CustomTextArea: React.FC<Props> = ({
 }) => {
   return (
     <VStack>
-      <Text fontSize={18} mb={2}>
+      <Text fontSize={18} mb={2} fontFamily="Poppins_400Regular">
         {label}
       </Text>
       <Input
@@ -30,6 +30,7 @@ const CustomTextArea: React.FC<Props> = ({
         maxH={150}
         onChangeText={onChangeText}
         value={value}
+        fontFamily="Poppins_400Regular"
       />
     </VStack>
   );

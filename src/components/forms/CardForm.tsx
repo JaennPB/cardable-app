@@ -67,7 +67,9 @@ const CardForm: React.FC<Props> = ({ addCardfromDeck }) => {
     <FlexScreen>
       <ScrollView flex={1} bg="white">
         <View>
-          <Heading mb={5}>Front</Heading>
+          <Heading mb={5} fontFamily="Poppins_600SemiBold">
+            Front
+          </Heading>
           <CustomTextArea
             label="Question"
             placeholder="i.e. Capital of Mexico"
@@ -75,7 +77,9 @@ const CardForm: React.FC<Props> = ({ addCardfromDeck }) => {
             value={userData.question}
           />
           <Divider />
-          <Heading my={5}>Back</Heading>
+          <Heading my={5} fontFamily="Poppins_600SemiBold">
+            Back
+          </Heading>
           <CustomTextArea
             label="Answer"
             placeholder="i.e. Mexico City"

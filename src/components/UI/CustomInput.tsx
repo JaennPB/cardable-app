@@ -26,7 +26,7 @@ const CustomInput: React.FC<Props> = ({
 }) => {
   return (
     <VStack>
-      <Text fontSize={18} mb={2}>
+      <Text fontSize={18} mb={2} fontFamily="Poppins_400Regular">
         {label}
       </Text>
       <Input
@@ -35,7 +35,7 @@ const CustomInput: React.FC<Props> = ({
         size="2xl"
         p={5}
         mb={5}
-        fontSize="xl"
+        fontSize={20}
         color="black"
         keyboardType={type}
         onChangeText={onChangeText}
@@ -46,9 +46,11 @@ const CustomInput: React.FC<Props> = ({
         borderWidth={isInvalid ? 1 : 0}
         _focus={{
           borderColor: "danger.400",
+          bg: "teal.100",
         }}
         returnKeyType="done"
         maxLength={maxLength}
+        fontFamily="Poppins_400Regular"
       />
     </VStack>
   );

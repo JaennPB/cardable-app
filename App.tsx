@@ -1,16 +1,16 @@
 import { useCallback, useEffect, useState } from "react";
 import { Alert } from "react-native";
-import {
-  Heading,
-  HStack,
-  NativeBaseProvider,
-  StatusBar,
-  View,
-} from "native-base";
+import { NativeBaseProvider, StatusBar, View, Image } from "native-base";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as SplashScreen from "expo-splash-screen";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import {
+  useFonts,
+  Poppins_400Regular,
+  Poppins_600SemiBold,
+  Poppins_700Bold,
+} from "@expo-google-fonts/poppins";
 
 import { useAppDispatch, useAppSelector } from "./src/hooks/reduxHooks";
 import { Provider } from "react-redux";
@@ -52,8 +52,12 @@ function BottomTabsNav() {
   return (
     <BottomTabs.Navigator
       screenOptions={{
-        tabBarLabelStyle: { fontSize: 13 },
-        headerTitleStyle: { fontSize: 20 },
+        tabBarLabelStyle: {
+          fontSize: 13,
+          fontFamily: "Poppins_400Regular",
+        },
+        tabBarActiveTintColor: "#14b8a6",
+        headerTitleStyle: { fontSize: 20, fontFamily: "Poppins_600SemiBold" },
         headerShadowVisible: false,
       }}
     >
@@ -63,10 +67,12 @@ function BottomTabsNav() {
         options={{
           headerTitle: "",
           headerLeft: () => (
-            <HStack space={1} ml={5}>
-              <MaterialCommunityIcons name="cards" size={24} color="black" />
-              <Heading color="black">Cardable</Heading>
-            </HStack>
+            <Image
+              ml={3}
+              source={require("./assets/logo-small.png")}
+              alt="Alternate Text"
+              resizeMode="contain"
+            />
           ),
           tabBarLabel: "Boxes",
           tabBarIcon: ({ color }) => (
@@ -110,17 +116,28 @@ function MainNav() {
       <Stack.Screen
         name="BottomTabsNav"
         component={BottomTabsNav}
-        options={{ headerShown: false }}
+        options={{
+          headerShown: false,
+        }}
       />
-      <Stack.Screen name="FlashcardsScreen" component={FlashcardsScreen} />
+      <Stack.Screen
+        name="FlashcardsScreen"
+        component={FlashcardsScreen}
+        options={{ headerTitleStyle: { fontFamily: "Poppins_600SemiBold" } }}
+      />
       <Stack.Screen
         name="ManageDataScreen"
         component={ManageDataScreen}
         options={{
           presentation: "fullScreenModal",
+          headerTitleStyle: { fontFamily: "Poppins_600SemiBold" },
         }}
       />
-      <Stack.Screen name="BeginSessionScreen" component={BeginSessionScreen} />
+      <Stack.Screen
+        name="BeginSessionScreen"
+        component={BeginSessionScreen}
+        options={{ headerTitleStyle: { fontFamily: "Poppins_600SemiBold" } }}
+      />
       <Stack.Screen
         name="ActiveSessionScreen"
         component={ActiveSessionScreen}
@@ -129,7 +146,11 @@ function MainNav() {
       <Stack.Screen
         name="StatsScreen"
         component={StatsScreen}
-        options={{ headerTitle: "", headerBackVisible: false }}
+        options={{
+          headerTitle: "Your stats",
+          headerBackVisible: false,
+          headerTitleStyle: { fontFamily: "Poppins_600SemiBold" },
+        }}
       />
     </Stack.Navigator>
   );
@@ -142,6 +163,12 @@ function AllNavs() {
   const isAuth = useAppSelector((state) => state.isAuth);
 
   const [appIsReady, setAppIsReady] = useState(false);
+
+  let [fontsLoaded] = useFonts({
+    Poppins_400Regular,
+    Poppins_600SemiBold,
+    Poppins_700Bold,
+  });
 
   useEffect(() => {
     async function fetchUserId() {
@@ -171,20 +198,22 @@ function AllNavs() {
     }
   }, [appIsReady]);
 
-  if (!appIsReady) {
+  if (!appIsReady || !fontsLoaded) {
     return null;
   }
 
   return (
-    <NavigationContainer>
+    <>
       <StatusBar barStyle="dark-content" />
-      <View flex={1} onLayout={onLayoutRootView}>
-        <GestureHandlerRootView style={{ flex: 1 }}>
-          {!isAuth && <AuthNav />}
-          {isAuth && <MainNav />}
-        </GestureHandlerRootView>
-      </View>
-    </NavigationContainer>
+      <NavigationContainer>
+        <View flex={1} onLayout={onLayoutRootView}>
+          <GestureHandlerRootView style={{ flex: 1 }}>
+            {!isAuth && <AuthNav />}
+            {isAuth && <MainNav />}
+          </GestureHandlerRootView>
+        </View>
+      </NavigationContainer>
+    </>
   );
 }
 

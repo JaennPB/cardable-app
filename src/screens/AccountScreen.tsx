@@ -17,7 +17,8 @@ const AccountScreen: React.FC = () => {
 
   return (
     <VStack flex={1} p={5} space={5}>
-      <CustomButton title="Log Out" onPress={logOutHandler} />
+      <CustomButton title="Log out" onPress={logOutHandler} />
+      <CustomButton title="Dark theme" onPress={logOutHandler} />
     </VStack>
   );
 };

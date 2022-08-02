@@ -16,10 +16,13 @@ const CustomButton: React.FC<Props> = ({
   return (
     <Button
       onPress={onPress}
-      _text={{ fontSize: 18 }}
+      _text={{ fontSize: 20, fontFamily: "Poppins_400Regular" }}
       isLoading={isLoading}
       isLoadingText={isLoadingText}
-      borderRadius={50}
+      borderRadius={20}
+      p={5}
+      bg="teal.400"
+      colorScheme="teal"
     >
       {title}
     </Button>

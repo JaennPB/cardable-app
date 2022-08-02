@@ -89,7 +89,10 @@ const LogInScreen: React.FC<Props> = ({}) => {
   return (
     <CustomKeyboardAV>
       <BoxContainer>
-        <Heading mb={5}>Welcome back!</Heading>
+        <Heading mb={5} fontFamily="Poppins_600SemiBold">
+          <Heading color="teal.500">Welcome </Heading>
+          back!
+        </Heading>
         <VStack>
           <CustomInput
             label="Email"

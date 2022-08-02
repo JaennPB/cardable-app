@@ -130,8 +130,12 @@ const SignUpScreen: React.FC<Props> = ({}) => {
     <CustomKeyboardAV>
       <BoxContainer>
         <VStack mb={5} space={2}>
-          <Heading>Welcome to Cardable.</Heading>
-          <Text>Create a free account to continue!</Text>
+          <Heading fontFamily="Poppins_600SemiBold">
+            Welcome to <Heading color="teal.500">Cardable</Heading>
+          </Heading>
+          <Text fontFamily="Poppins_400Regular">
+            Create a free account to continue!
+          </Text>
         </VStack>
         <VStack>
           <CustomInput
