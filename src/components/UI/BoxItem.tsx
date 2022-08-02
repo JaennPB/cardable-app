@@ -56,7 +56,7 @@ const BoxItem: React.FC<Props> = ({ title, index, translateX, onPress }) => {
         style={[
           styles.container,
           rStyle,
-          useItemSeparator(index, width, arrLength.length + 1),
+          useItemSeparator(index, width, arrLength.length),
         ]}
       >
         <Heading fontWeight="semibold" size="xl">

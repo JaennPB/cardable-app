@@ -4,7 +4,6 @@ import { Button } from "native-base";
 import { useAppNavigation } from "../hooks/navigationHooks";
 import { useRoute, RouteProp } from "@react-navigation/native";
 
-import BoxForm from "../components/forms/BoxForm";
 import DeckForm from "../components/forms/DeckForm";
 import CardForm from "../components/forms/CardForm";
 
@@ -30,7 +29,6 @@ const ManageDataScreen: React.FC = () => {
 
   return (
     <>
-      {type === "box" && <BoxForm />}
       {type === "deck" && <DeckForm />}
       {type === "card" && <CardForm addCardfromDeck={addCardFromDeck!} />}
     </>

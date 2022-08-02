@@ -92,15 +92,6 @@ const mainSlice = createSlice({
       state.allDecks = [];
       state.allCards = [];
     },
-    addBox: (
-      state,
-      action: PayloadAction<{ boxName: string; boxId: number }>
-    ) => {
-      state.allBoxes.push({
-        boxName: action.payload.boxName,
-        boxId: action.payload.boxId,
-      });
-    },
     addDeck: (state, action: PayloadAction<string>) => {
       state.allDecks.push({
         deckName: action.payload,
@@ -156,7 +147,6 @@ const mainSlice = createSlice({
 export const {
   authenticate,
   logout,
-  addBox,
   addDeck,
   deleteDeck,
   addCard,

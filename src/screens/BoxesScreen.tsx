@@ -1,5 +1,5 @@
-import { useLayoutEffect, useRef } from "react";
-import { Dimensions } from "react-native";
+import { useLayoutEffect } from "react";
+import { Alert, Dimensions } from "react-native";
 import { Flex, Heading } from "native-base";
 
 import Animated, {
@@ -7,7 +7,6 @@ import Animated, {
   useSharedValue,
 } from "react-native-reanimated";
 import * as Haptics from "expo-haptics";
-import moment from "moment";
 
 import { useAppNavigation } from "../hooks/navigationHooks";
 
@@ -16,12 +15,9 @@ import { asyncFetchInitialData } from "../app/mainSlice";
 
 import BoxItem from "../components/UI/BoxItem";
 import CustomSpinner from "../components/UI/CustomSpinner";
-import CustomButton from "../components/UI/CustomButton";
 import DateReview from "../components/UI/DateReview";
 
-const { height, width } = Dimensions.get("window");
-
-console.log("WARNING");
+const { width } = Dimensions.get("window");
 
 const BoxesScreen: React.FC = () => {
   const navigation = useAppNavigation();
@@ -86,12 +82,6 @@ const BoxesScreen: React.FC = () => {
                   onPress={openBoxHandler.bind(this, box.boxName, box.boxId)}
                 />
               ))}
-              <BoxItem
-                title="+ Add box"
-                index={boxesData.length}
-                translateX={XScrollData}
-                onPress={addBoxHandler}
-              />
             </Animated.ScrollView>
           </Flex>
           <Flex

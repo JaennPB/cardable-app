@@ -1,6 +1,6 @@
 import { useLayoutEffect } from "react";
 import { ListRenderItemInfo } from "react-native";
-import { FlatList, Flex, Heading, ScrollView } from "native-base";
+import { FlatList, Flex, Heading } from "native-base";
 
 import * as Haptics from "expo-haptics";
 
@@ -43,6 +43,7 @@ const BeginSessionScreen: React.FC = () => {
         deckId={item.deckId}
         fromContext="box"
         boxId={boxId}
+        index={itemData.index}
       />
     );
   }
@@ -52,8 +53,7 @@ const BeginSessionScreen: React.FC = () => {
       {allDecks.length <= 0 && (
         <Flex flex={1} justify="center" alignItems="center">
           <Heading textAlign="center" fontSize={18} mb={5}>
-            Please begin by adding some decks from the deck screen or the button
-            below.
+            Please begin by adding some decks from the decks screen.
           </Heading>
           <CustomButton
             title="Go to decks"
