@@ -42,7 +42,10 @@ const ActiveSessionScreen: React.FC = () => {
         {
           text: "End session",
           onPress: () =>
-            navigation.navigate("StatsScreen", { updatedItems: docsToUpdate }),
+            navigation.navigate("StatsScreen", {
+              updatedItems: docsToUpdate,
+              cardsInBoxLength: filteredCardsByBoxAndDeck.length,
+            }),
           style: "destructive",
         },
       ]
@@ -69,7 +72,10 @@ const ActiveSessionScreen: React.FC = () => {
       setNextIndex(nextIndex + 1);
       ref.current?.scrollToIndex({ animated: true, index: nextIndex });
     } else {
-      navigation.navigate("StatsScreen", { updatedItems: docsToUpdate });
+      navigation.navigate("StatsScreen", {
+        updatedItems: docsToUpdate,
+        cardsInBoxLength: filteredCardsByBoxAndDeck.length,
+      });
     }
   }
 

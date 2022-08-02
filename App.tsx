@@ -177,7 +177,7 @@ function AllNavs() {
 
   return (
     <NavigationContainer>
-      <StatusBar />
+      <StatusBar barStyle="dark-content" />
       <View flex={1} onLayout={onLayoutRootView}>
         <GestureHandlerRootView style={{ flex: 1 }}>
           {!isAuth && <AuthNav />}

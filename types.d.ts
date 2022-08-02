@@ -8,6 +8,7 @@ type NavParams = {
   ActiveSessionScreen: { boxId: number; deckId: string };
   StatsScreen: {
     updatedItems: { cardId: string; type: "up" | "down"; newBox: number }[];
+    cardsInBoxLength: number;
   };
   StatsScreen: undefined;
   AccountScreen: undefined;

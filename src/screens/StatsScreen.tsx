@@ -1,5 +1,20 @@
 import { useEffect } from "react";
-import { Button, Text } from "native-base";
+import { Dimensions, Alert } from "react-native";
+import { Flex, Heading } from "native-base";
+
+import Animated, {
+  SlideInDown,
+  SlideInLeft,
+  SlideInRight,
+  SlideInUp,
+  useAnimatedProps,
+  useDerivedValue,
+  useSharedValue,
+  withSpring,
+  withTiming,
+} from "react-native-reanimated";
+import Svg, { Circle } from "react-native-svg";
+import { ReText } from "react-native-redash";
 
 import { useRoute, RouteProp } from "@react-navigation/native";
 import { useAppNavigation } from "../hooks/navigationHooks";
@@ -10,8 +25,13 @@ import { manageCard } from "../app/mainSlice";
 import { doc, writeBatch } from "firebase/firestore";
 import { db } from "../db/firebase";
 
-import FlexScreen from "../components/UI/FlexScreen";
-import { Alert } from "react-native";
+import CustomButton from "../components/UI/CustomButton";
+
+const { width, height } = Dimensions.get("window");
+
+const CIRCLE_LENGTH = 900;
+
+const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 
 const StatsScreen: React.FC = () => {
   const navigation = useAppNavigation();
@@ -20,14 +40,25 @@ const StatsScreen: React.FC = () => {
   const userId = useAppSelector((state) => state.userId);
 
   const route = useRoute<RouteProp<NavParams, "StatsScreen">>();
-  const itemsToUpdate = route.params.updatedItems;
+  const { updatedItems, cardsInBoxLength } = route.params;
+
+  const progress = useSharedValue(0);
+
+  let percentage: number;
+  const upCards = updatedItems.filter((card) => card.type === "up").length;
+  if (upCards === 0) {
+    percentage = 0;
+  }
+  if (upCards > 0) {
+    percentage = upCards / cardsInBoxLength;
+  }
 
   useEffect(() => {
     async function updateData() {
       try {
         const batch = writeBatch(db);
 
-        itemsToUpdate.forEach((card) => {
+        updatedItems.forEach((card) => {
           dispatch(manageCard({ cardId: card.cardId, type: card.type }));
           batch.update(doc(db, "users", userId, "cards", card.cardId), {
             currBox: card.newBox,
@@ -41,15 +72,69 @@ const StatsScreen: React.FC = () => {
     }
 
     updateData();
+
+    setTimeout(() => {
+      progress.value = withTiming(percentage, { duration: 2000 });
+    }, 500);
   }, []);
 
+  const animatedProps = useAnimatedProps(() => ({
+    strokeDashoffset: CIRCLE_LENGTH * (1 - progress.value),
+  }));
+
+  const animatedText = useDerivedValue(() => {
+    return `${Math.floor(progress.value * 100)}%`;
+  });
+
+  function continueHandler() {
+    navigation.navigate("BoxesScreen");
+  }
+
   return (
-    <FlexScreen>
-      <Text>StatsScreen</Text>
-      <Button onPress={() => navigation.navigate("BoxesScreen")}>
-        Continue
-      </Button>
-    </FlexScreen>
+    <>
+      <Flex flex={0.6} justify="center" align="center" position="relative">
+        <ReText
+          style={{ fontSize: 60, fontWeight: "bold" }}
+          text={animatedText}
+        />
+        <Flex position="absolute" h={height} w={width}>
+          <Svg>
+            <Circle
+              cx={width / 2}
+              cy={height / 2}
+              r={CIRCLE_LENGTH / (2 * Math.PI)}
+              stroke="#b7b7b7"
+              strokeWidth={25}
+            />
+            <AnimatedCircle
+              cx={width / 2}
+              cy={height / 2}
+              r={900 / (2 * Math.PI)}
+              stroke={percentage! > 0.6 ? "#8af693" : "#ffff76"}
+              strokeWidth={12}
+              strokeDasharray={CIRCLE_LENGTH}
+              animatedProps={animatedProps}
+              strokeLinecap="round"
+            />
+          </Svg>
+        </Flex>
+      </Flex>
+      <Flex flex={0.3} align="center">
+        <Animated.View entering={SlideInUp.delay(300)}>
+          <Heading size="2xl">{`You got ${upCards} out of ${cardsInBoxLength}`}</Heading>
+        </Animated.View>
+        <Animated.View entering={SlideInUp.delay(2300)}>
+          <Heading size="lg" mt={5}>
+            {percentage! < 0.5 ? "Try harder next time!" : "Well done!"}
+          </Heading>
+        </Animated.View>
+      </Flex>
+      <Flex flex={0.1} p={5}>
+        <Animated.View entering={SlideInDown.delay(2300)}>
+          <CustomButton title="Continue" onPress={continueHandler} />
+        </Animated.View>
+      </Flex>
+    </>
   );
 };
 
