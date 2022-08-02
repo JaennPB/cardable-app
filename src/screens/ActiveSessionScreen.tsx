@@ -131,20 +131,16 @@ const ActiveSessionScreen: React.FC = () => {
           />
         </Flex>
       )}
-      <Flex flex={1} justify="center">
-        <View>
-          <FlatList
-            scrollEnabled={false}
-            ref={ref}
-            data={filteredCardsByBoxAndDeck}
-            renderItem={renderFlashcardItemHandler}
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            decelerationRate="fast"
-            scrollEventThrottle={16}
-          />
-        </View>
-      </Flex>
+      <FlatList
+        scrollEnabled={false}
+        ref={ref}
+        data={filteredCardsByBoxAndDeck}
+        renderItem={renderFlashcardItemHandler}
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        decelerationRate="fast"
+        scrollEventThrottle={16}
+      />
     </>
   );
 };

@@ -1,4 +1,4 @@
-import { Button, Heading, View } from "native-base";
+import { Button, Flex, Heading, View } from "native-base";
 import { useState } from "react";
 import { Dimensions, StyleSheet } from "react-native";
 
@@ -70,8 +70,8 @@ const Flashcard: React.FC<Props> = ({
   });
 
   return (
-    <>
-      <View style={[styles.container]}>
+    <Flex flex={1}>
+      <Flex flex={0.8} mt={5}>
         <Animated.View style={[styles.card, rStylesFront]}>
           <Heading>{question}</Heading>
           <Button
@@ -87,34 +87,34 @@ const Flashcard: React.FC<Props> = ({
         <Animated.View style={[styles.card, styles.backCard, rStylesBack]}>
           <Heading>{answer}</Heading>
         </Animated.View>
-      </View>
-      {cardIsFlipped && (
-        <Animated.View entering={SlideInDown}>
-          <FlashcardControls
-            onPressDowngrade={onPressDowngrade}
-            onPressUpgrade={onPressUpgrade}
-            onPressStay={onPressStay}
-          />
-        </Animated.View>
-      )}
-    </>
+      </Flex>
+      <Flex flex={0.2}>
+        {cardIsFlipped && (
+          <Animated.View entering={SlideInDown}>
+            <FlashcardControls
+              onPressDowngrade={onPressDowngrade}
+              onPressUpgrade={onPressUpgrade}
+              onPressStay={onPressStay}
+            />
+          </Animated.View>
+        )}
+      </Flex>
+    </Flex>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    width: width * 0.9,
-    height: width * 1.4,
-  },
   card: {
     backfaceVisibility: "hidden",
     backgroundColor: "white",
     justifyContent: "space-around",
     borderRadius: 40,
+    borderWidth: 1,
+    borderColor: "#ccc",
     padding: 20,
     alignItems: "center",
     height: "100%",
-    width: "100%",
+    width: width * 0.9,
   },
   backCard: {
     position: "absolute",
