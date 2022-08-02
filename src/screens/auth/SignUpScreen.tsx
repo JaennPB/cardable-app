@@ -15,7 +15,7 @@ import { doc, writeBatch } from "firebase/firestore";
 
 import CustomButton from "../../components/UI/CustomButton";
 import CustomInput from "../../components/UI/CustomInput";
-import BoxContainer from "../../components/UI/BoxContainer";
+import AuthBoxContainer from "../../components/UI/AuthBoxContainer";
 import ToggleAuthType from "../../components/UI/ToggleAuthType";
 import CustomKeyboardAV from "../../components/UI/CustomKeyboardAV";
 
@@ -128,9 +128,9 @@ const SignUpScreen: React.FC<Props> = ({}) => {
 
   return (
     <CustomKeyboardAV>
-      <BoxContainer>
+      <AuthBoxContainer>
         <VStack mb={5} space={2}>
-          <Heading fontFamily="Poppins_600SemiBold">
+          <Heading fontFamily="Poppins_600SemiBold" fontWeight="normal">
             Welcome to <Heading color="teal.500">Cardable</Heading>
           </Heading>
           <Text fontFamily="Poppins_400Regular">
@@ -176,7 +176,7 @@ const SignUpScreen: React.FC<Props> = ({}) => {
           buttonTitle="Log In"
           onPress={navigateToLogInHandler}
         />
-      </BoxContainer>
+      </AuthBoxContainer>
     </CustomKeyboardAV>
   );
 };

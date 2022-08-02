@@ -1,10 +1,9 @@
-import { Dimensions, StyleSheet } from "react-native";
-import { Heading, Pressable } from "native-base";
+import { Dimensions } from "react-native";
+import { Flex, Heading, Pressable } from "native-base";
 
 import Animated, {
   interpolate,
   useAnimatedStyle,
-  withSpring,
 } from "react-native-reanimated";
 
 import { useAppSelector } from "../../hooks/reduxHooks";
@@ -34,53 +33,38 @@ const BoxItem: React.FC<Props> = ({ title, index, translateX, onPress }) => {
       [0, -30, 0]
     );
 
-    const shadowY = interpolate(
-      translateX.value,
-      [
-        (index - 1) * (width * 0.8),
-        index * (width * 0.8),
-        (index + 1) * (width * 0.8),
-      ],
-      [0.1, 0.3, 0.1]
-    );
-
     return {
       transform: [{ translateY: translateY }],
-      shadowOpacity: withSpring(shadowY),
     };
   });
 
   return (
     <Pressable onPress={onPress}>
       <Animated.View
-        style={[
-          styles.container,
-          rStyle,
-          useItemSeparator(index, width, arrLength.length),
-        ]}
+        style={[rStyle, useItemSeparator(index, width, arrLength.length)]}
       >
-        <Heading fontFamily="Poppins_600SemiBold" size="xl">
-          {title}
-        </Heading>
+        <Flex
+          w={width * 0.7}
+          height={width * 0.7}
+          justify="center"
+          align="center"
+          borderRadius={25}
+          bg="white"
+          borderWidth={1}
+          borderColor="teal.500"
+          shadow={4}
+        >
+          <Heading
+            fontFamily="Poppins_600SemiBold"
+            size="xl"
+            fontWeight="normal"
+          >
+            {title}
+          </Heading>
+        </Flex>
       </Animated.View>
     </Pressable>
   );
 };
 
 export default BoxItem;
-
-const styles = StyleSheet.create({
-  container: {
-    width: width * 0.7,
-    height: width * 0.7,
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: 20,
-    backgroundColor: "white",
-    shadowColor: "#424242",
-    shadowOffset: { width: 0, height: 6 },
-    shadowRadius: 6,
-    borderColor: "#2dd4bf",
-    borderWidth: 1,
-  },
-});

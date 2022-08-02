@@ -115,7 +115,7 @@ const DeckItem: React.FC<Props> = ({
             p={5}
             mb={5}
             h={66}
-            shadow={2}
+            shadow={3}
           >
             <HStack alignItems="center" justifyContent="space-between">
               <Text fontSize={20} color="white" fontFamily="Poppins_400Regular">

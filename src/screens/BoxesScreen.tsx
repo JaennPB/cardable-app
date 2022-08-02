@@ -1,5 +1,5 @@
 import { useLayoutEffect } from "react";
-import { Dimensions } from "react-native";
+import { Dimensions, Platform } from "react-native";
 import { Flex, Heading } from "native-base";
 
 import Animated, {
@@ -46,6 +46,10 @@ const BoxesScreen: React.FC = () => {
     dispatch(asyncFetchInitialData(userId));
   }, []);
 
+  function navigateToBoxShortcutHandler(boxId: number, boxName: string) {
+    navigation.navigate("BeginSessionScreen", { boxId, boxName });
+  }
+
   return (
     <>
       {isLoadingState && <CustomSpinner />}
@@ -57,7 +61,8 @@ const BoxesScreen: React.FC = () => {
               ml={5}
               pt={10}
               fontFamily="Poppins_600SemiBold"
-              size="2xl"
+              size={Platform.OS === "ios" ? "2xl" : "lg"}
+              fontWeight="normal"
             >
               Your boxes
             </Heading>
@@ -93,7 +98,14 @@ const BoxesScreen: React.FC = () => {
             borderTopRadius={20}
             justify="space-around"
           >
-            <DateReview onPressToday={() => {}} onPressTomorrow={() => {}} />
+            <DateReview
+              onPressToday={navigateToBoxShortcutHandler.bind(this, 1, "Box 1")}
+              onPressTomorrow={navigateToBoxShortcutHandler.bind(
+                this,
+                3,
+                "Box 3"
+              )}
+            />
           </Flex>
         </Flex>
       )}

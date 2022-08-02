@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { Alert } from "react-native";
+import { Alert, Platform } from "react-native";
 import { NativeBaseProvider, StatusBar, View, Image } from "native-base";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -68,10 +68,9 @@ function BottomTabsNav() {
           headerTitle: "",
           headerLeft: () => (
             <Image
-              ml={3}
               source={require("./assets/logo-small.png")}
               alt="Alternate Text"
-              resizeMode="contain"
+              resizeMode="center"
             />
           ),
           tabBarLabel: "Boxes",
@@ -136,7 +135,9 @@ function MainNav() {
       <Stack.Screen
         name="BeginSessionScreen"
         component={BeginSessionScreen}
-        options={{ headerTitleStyle: { fontFamily: "Poppins_600SemiBold" } }}
+        options={{
+          headerTitleStyle: { fontFamily: "Poppins_600SemiBold" },
+        }}
       />
       <Stack.Screen
         name="ActiveSessionScreen"
@@ -204,7 +205,10 @@ function AllNavs() {
 
   return (
     <>
-      <StatusBar barStyle="dark-content" />
+      <StatusBar
+        barStyle={"dark-content"}
+        backgroundColor={Platform.OS === "android" ? "white" : ""}
+      />
       <NavigationContainer>
         <View flex={1} onLayout={onLayoutRootView}>
           <GestureHandlerRootView style={{ flex: 1 }}>

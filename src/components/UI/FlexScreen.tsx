@@ -1,9 +1,12 @@
 import { Flex } from "native-base";
-import { Platform } from "react-native";
 
-const FlexScreen: React.FC = ({ children }) => {
+interface Props {
+  children: React.ReactNode;
+}
+
+const FlexScreen: React.FC<Props> = ({ children }) => {
   return (
-    <Flex bg="white" flex={1} p={5} pt={5}>
+    <Flex bg="white" flex={1} p={5}>
       {children}
     </Flex>
   );

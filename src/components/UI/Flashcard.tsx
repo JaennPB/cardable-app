@@ -70,25 +70,33 @@ const Flashcard: React.FC<Props> = ({
   });
 
   return (
-    <Flex flex={1}>
-      <Flex flex={0.8} mt={5}>
+    <>
+      <Flex flex={0.8} mt={5} shadow={3}>
         <Animated.View style={[styles.card, rStylesFront]}>
-          <Heading>{question}</Heading>
+          <Heading fontFamily="Poppins_600SemiBold" fontWeight="normal">
+            {question}
+          </Heading>
           <Button
             variant="ghost"
             onPress={flipCardHandler}
             borderRadius={50}
             zIndex={20}
-            _text={{ fontSize: 20, color: "black" }}
+            _text={{
+              fontSize: 20,
+              color: "black",
+              fontFamily: "Poppins_400Regular",
+            }}
           >
             View answer
           </Button>
         </Animated.View>
         <Animated.View style={[styles.card, styles.backCard, rStylesBack]}>
-          <Heading>{answer}</Heading>
+          <Heading fontFamily="Poppins_600SemiBold" fontWeight="normal">
+            {answer}
+          </Heading>
         </Animated.View>
       </Flex>
-      <Flex flex={0.2}>
+      <Flex flex={0.2} pt={5}>
         {cardIsFlipped && (
           <Animated.View entering={SlideInDown}>
             <FlashcardControls
@@ -99,7 +107,7 @@ const Flashcard: React.FC<Props> = ({
           </Animated.View>
         )}
       </Flex>
-    </Flex>
+    </>
   );
 };
 

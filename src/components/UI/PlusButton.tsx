@@ -15,7 +15,6 @@ const PlusButton: React.FC<Props> = ({ onPress, title }) => {
       right={5}
       bottom={5}
       flexDir="row"
-      shadow={3}
     >
       <HStack
         space={2}
@@ -24,6 +23,7 @@ const PlusButton: React.FC<Props> = ({ onPress, title }) => {
         pl={4}
         p={3}
         borderRadius={30}
+        shadow={4}
       >
         <Text fontSize={20} color="white" fontFamily="Poppins_400Regular">
           {title}

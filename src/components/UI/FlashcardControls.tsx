@@ -14,7 +14,7 @@ const FlashcardControls: React.FC<Props> = ({
   onPressStay,
 }) => {
   return (
-    <HStack mt={5} space={2}>
+    <HStack space={2}>
       <Button
         onPress={onPressDowngrade}
         bg="danger.400"

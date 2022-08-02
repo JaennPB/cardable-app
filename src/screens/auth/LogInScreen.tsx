@@ -11,7 +11,7 @@ import { signInWithEmailAndPassword } from "firebase/auth/react-native";
 
 import CustomButton from "../../components/UI/CustomButton";
 import CustomInput from "../../components/UI/CustomInput";
-import BoxContainer from "../../components/UI/BoxContainer";
+import AuthBoxContainer from "../../components/UI/AuthBoxContainer";
 import ToggleAuthType from "../../components/UI/ToggleAuthType";
 import { useAppDispatch } from "../../hooks/reduxHooks";
 import { authenticate } from "../../app/mainSlice";
@@ -88,8 +88,8 @@ const LogInScreen: React.FC<Props> = ({}) => {
 
   return (
     <CustomKeyboardAV>
-      <BoxContainer>
-        <Heading mb={5} fontFamily="Poppins_600SemiBold">
+      <AuthBoxContainer>
+        <Heading mb={5} fontFamily="Poppins_600SemiBold" fontWeight="normal">
           <Heading color="teal.500">Welcome </Heading>
           back!
         </Heading>
@@ -123,7 +123,7 @@ const LogInScreen: React.FC<Props> = ({}) => {
           buttonTitle="Sign Up"
           onPress={navigateToSignUpHandler}
         />
-      </BoxContainer>
+      </AuthBoxContainer>
     </CustomKeyboardAV>
   );
 };

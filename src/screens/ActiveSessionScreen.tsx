@@ -105,7 +105,7 @@ const ActiveSessionScreen: React.FC = () => {
     const item = itemData.item;
 
     return (
-      <Flex px={width * 0.05}>
+      <Flex flex={1} px={width * 0.05}>
         <Flashcard
           question={item.question}
           answer={item.answer}

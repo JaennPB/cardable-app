@@ -1,4 +1,4 @@
-import { VStack } from "native-base";
+import { Divider, Heading, VStack } from "native-base";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -18,6 +18,10 @@ const AccountScreen: React.FC = () => {
   return (
     <VStack flex={1} p={5} space={5}>
       <CustomButton title="Log out" onPress={logOutHandler} />
+      <Divider />
+      <Heading size="lg" fontFamily="Poppins_600SemiBold" fontWeight="normal">
+        Settings
+      </Heading>
       <CustomButton title="Dark theme" onPress={logOutHandler} />
     </VStack>
   );

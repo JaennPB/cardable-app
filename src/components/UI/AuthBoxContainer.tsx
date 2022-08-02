@@ -1,6 +1,6 @@
 import { View } from "native-base";
 
-const BoxContainer: React.FC = ({ children }) => {
+const AuthBoxContainer: React.FC = ({ children }) => {
   return (
     <View bg="white" p={5} borderRadius={10} w="100%">
       {children}
@@ -8,4 +8,4 @@ const BoxContainer: React.FC = ({ children }) => {
   );
 };
 
-export default BoxContainer;
+export default AuthBoxContainer;
