@@ -12,6 +12,7 @@ import { db } from "../../db/firebase";
 import CustomButton from "../UI/CustomButton";
 import CustomInput from "../UI/CustomInput";
 import FlexScreen from "../UI/FlexScreen";
+import { Flex } from "native-base";
 
 const DeckForm: React.FC = () => {
   const navigation = useAppNavigation();
@@ -46,7 +47,7 @@ const DeckForm: React.FC = () => {
   }
 
   return (
-    <FlexScreen>
+    <Flex flex={1} bg="white" p={5}>
       <CustomInput
         autoCapitalize="sentences"
         label="Deck name"
@@ -62,7 +63,7 @@ const DeckForm: React.FC = () => {
         isLoading={isLoading}
         isLoadingText="Adding deck"
       />
-    </FlexScreen>
+    </Flex>
   );
 };
 

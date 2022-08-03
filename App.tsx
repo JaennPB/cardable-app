@@ -110,7 +110,7 @@ function BottomTabsNav() {
 
 function MainNav() {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator screenOptions={{ headerShadowVisible: false }}>
       <Stack.Screen
         name="BottomTabsNav"
         component={BottomTabsNav}

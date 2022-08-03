@@ -38,18 +38,6 @@ const FlashcardsScreen: React.FC = () => {
     });
   }
 
-  function renderFlashcardItemHandler(itemData: ListRenderItemInfo<Flashcard>) {
-    const item = itemData.item;
-
-    return (
-      <FlashcardItem
-        questionSnippet={item.question}
-        cardId={item.id}
-        index={itemData.index}
-      />
-    );
-  }
-
   return (
     <FlexScreen>
       {cardsFiltered.length >= 1 && (

@@ -14,6 +14,7 @@ import { db } from "../../db/firebase";
 
 import CustomButton from "../UI/CustomButton";
 import CustomTextArea from "../UI/CustomTextArea";
+import FlexScreen from "../UI/FlexScreen";
 
 interface Props {
   addCardfromDeck: string;
@@ -125,13 +126,11 @@ const CardForm: React.FC<Props> = ({ addCardfromDeck }) => {
   );
 
   return (
-    <KeyboardAvoidingView flex={1} behavior="padding">
-      <Flex flex={1} p={5} bg="white" w="100%">
-        {dataVisible === "question" && QuestionData}
-        {dataVisible === "answer" && AnswerData}
-        {dataVisible === "comments" && CommentsData}
-      </Flex>
-    </KeyboardAvoidingView>
+    <Flex flex={1} bg="white" p={5}>
+      {dataVisible === "question" && QuestionData}
+      {dataVisible === "answer" && AnswerData}
+      {dataVisible === "comments" && CommentsData}
+    </Flex>
   );
 };
 
