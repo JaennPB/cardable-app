@@ -23,6 +23,10 @@ const BoxesScreen: React.FC = () => {
   const navigation = useAppNavigation();
   const dispatch = useAppDispatch();
 
+  useLayoutEffect(() => {
+    dispatch(asyncFetchInitialData(userId));
+  }, []);
+
   const userId = useAppSelector((state) => state.userId);
   const boxesData = useAppSelector((state) => state.allBoxes);
   const isLoadingState = useAppSelector((state) => state.isLoading);
@@ -41,10 +45,6 @@ const BoxesScreen: React.FC = () => {
       boxId: boxId,
     });
   }
-
-  useLayoutEffect(() => {
-    dispatch(asyncFetchInitialData(userId));
-  }, []);
 
   function navigateToBoxShortcutHandler(boxId: number, boxName: string) {
     navigation.navigate("BeginSessionScreen", { boxId, boxName });

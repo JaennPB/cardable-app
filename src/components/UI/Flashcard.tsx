@@ -16,6 +16,7 @@ import FlashcardControls from "./FlashcardControls";
 interface Props {
   question: string;
   answer: string;
+  comment: string;
   onPressDowngrade: () => void;
   onPressUpgrade: () => void;
   onPressStay: () => void;
@@ -25,6 +26,7 @@ const { width } = Dimensions.get("window");
 const Flashcard: React.FC<Props> = ({
   question,
   answer,
+  comment,
   onPressDowngrade,
   onPressUpgrade,
   onPressStay,
@@ -83,7 +85,7 @@ const Flashcard: React.FC<Props> = ({
             zIndex={20}
             _text={{
               fontSize: 20,
-              color: "black",
+              color: "#14b8a6",
               fontFamily: "Poppins_400Regular",
             }}
           >
@@ -93,6 +95,9 @@ const Flashcard: React.FC<Props> = ({
         <Animated.View style={[styles.card, styles.backCard, rStylesBack]}>
           <Heading fontFamily="Poppins_600SemiBold" fontWeight="normal">
             {answer}
+          </Heading>
+          <Heading fontFamily="Poppins_400Regular" fontWeight="normal">
+            {comment}
           </Heading>
         </Animated.View>
       </Flex>

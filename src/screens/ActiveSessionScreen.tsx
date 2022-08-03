@@ -109,6 +109,7 @@ const ActiveSessionScreen: React.FC = () => {
         <Flashcard
           question={item.question}
           answer={item.answer}
+          comment={item.comment}
           onPressDowngrade={() =>
             upgradeOrDowngradeCard(item.id, "down", item.currBox)
           }

@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Alert } from "react-native";
-import { Divider, Heading, ScrollView, View } from "native-base";
+import { Flex, Heading, KeyboardAvoidingView } from "native-base";
+
+import Animated, { SlideInRight, SlideOutLeft } from "react-native-reanimated";
 
 import { useAppSelector, useAppDispatch } from "../../hooks/reduxHooks";
 import { addCard } from "../../app/mainSlice";
@@ -12,7 +14,6 @@ import { db } from "../../db/firebase";
 
 import CustomButton from "../UI/CustomButton";
 import CustomTextArea from "../UI/CustomTextArea";
-import FlexScreen from "../UI/FlexScreen";
 
 interface Props {
   addCardfromDeck: string;
@@ -25,6 +26,9 @@ const CardForm: React.FC<Props> = ({ addCardfromDeck }) => {
   const userId = useAppSelector((state) => state.userId);
 
   const [isLoading, setIsLoading] = useState(false);
+  const [dataVisible, setDataVisible] = useState<
+    "question" | "answer" | "comments"
+  >("question");
   const [userData, setUserData] = useState({
     question: "",
     answer: "",
@@ -63,44 +67,71 @@ const CardForm: React.FC<Props> = ({ addCardfromDeck }) => {
     }
   }
 
+  function nextItemHandler(dataToShow: "answer" | "comments") {
+    if (dataToShow === "answer" && !userData.question) return;
+    if (dataToShow === "comments" && !userData.answer) return;
+    setDataVisible(dataToShow);
+  }
+
+  const QuestionData = (
+    <Animated.View entering={SlideInRight.delay(500)} exiting={SlideOutLeft}>
+      <Heading mb={5} fontFamily="Poppins_600SemiBold">
+        Front of flashcard
+      </Heading>
+      <CustomTextArea
+        label="Question"
+        placeholder="i.e. Capital of France"
+        onChangeText={setDataHandler.bind(this, "question")}
+        value={userData.question}
+      />
+      <CustomButton
+        title="Next"
+        onPress={nextItemHandler.bind(this, "answer")}
+      />
+    </Animated.View>
+  );
+
+  const AnswerData = (
+    <Animated.View entering={SlideInRight} exiting={SlideOutLeft}>
+      <Heading mb={5} fontFamily="Poppins_600SemiBold">
+        Back of flashcard
+      </Heading>
+      <CustomTextArea
+        label="Answer"
+        placeholder="i.e. Paris"
+        onChangeText={setDataHandler.bind(this, "answer")}
+        value={userData.answer}
+      />
+      <CustomButton
+        title="Next"
+        onPress={nextItemHandler.bind(this, "comments")}
+      />
+    </Animated.View>
+  );
+
+  const CommentsData = (
+    <Animated.View entering={SlideInRight}>
+      <Heading mb={5} fontFamily="Poppins_600SemiBold">
+        Back of flashcard
+      </Heading>
+      <CustomTextArea
+        label="Comment (optional)"
+        placeholder="i.e. Population 2.1 million"
+        onChangeText={setDataHandler.bind(this, "comment")}
+        value={userData.comment}
+      />
+      <CustomButton title="Submit" onPress={addCardHandler} />
+    </Animated.View>
+  );
+
   return (
-    <FlexScreen>
-      <ScrollView flex={1} bg="white">
-        <View>
-          <Heading mb={5} fontFamily="Poppins_600SemiBold">
-            Front
-          </Heading>
-          <CustomTextArea
-            label="Question"
-            placeholder="i.e. Capital of Mexico"
-            onChangeText={setDataHandler.bind(this, "question")}
-            value={userData.question}
-          />
-          <Divider />
-          <Heading my={5} fontFamily="Poppins_600SemiBold">
-            Back
-          </Heading>
-          <CustomTextArea
-            label="Answer"
-            placeholder="i.e. Mexico City"
-            onChangeText={setDataHandler.bind(this, "answer")}
-            value={userData.answer}
-          />
-          <CustomTextArea
-            label="Comment"
-            placeholder="i.e. Population 8.8 million"
-            onChangeText={setDataHandler.bind(this, "comment")}
-            value={userData.comment}
-          />
-          <CustomButton
-            title="Add Card"
-            onPress={addCardHandler}
-            isLoading={isLoading}
-            isLoadingText="Adding card"
-          />
-        </View>
-      </ScrollView>
-    </FlexScreen>
+    <KeyboardAvoidingView flex={1} behavior="padding">
+      <Flex flex={1} p={5} bg="white" w="100%">
+        {dataVisible === "question" && QuestionData}
+        {dataVisible === "answer" && AnswerData}
+        {dataVisible === "comments" && CommentsData}
+      </Flex>
+    </KeyboardAvoidingView>
   );
 };
 

@@ -1,4 +1,4 @@
-import { Text, VStack, Input } from "native-base";
+import { Text, VStack, Input, KeyboardAvoidingView } from "native-base";
 
 interface Props {
   label: string;
@@ -14,9 +14,9 @@ const CustomTextArea: React.FC<Props> = ({
   value,
 }) => {
   return (
-    <VStack>
-      <Text fontSize={18} mb={2} fontFamily="Poppins_400Regular">
-        {label}
+    <VStack space={2}>
+      <Text fontSize={20} fontFamily="Poppins_400Regular">
+        {label}:
       </Text>
       <Input
         p={5}
@@ -27,7 +27,10 @@ const CustomTextArea: React.FC<Props> = ({
         autoCapitalize="sentences"
         multiline
         returnKeyType="default"
-        maxH={150}
+        h={220}
+        borderRadius={20}
+        _focus={{ bg: "teal.100" }}
+        borderWidth={0}
         onChangeText={onChangeText}
         value={value}
         fontFamily="Poppins_400Regular"

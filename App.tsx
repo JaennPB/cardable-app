@@ -9,7 +9,6 @@ import {
   useFonts,
   Poppins_400Regular,
   Poppins_600SemiBold,
-  Poppins_700Bold,
 } from "@expo-google-fonts/poppins";
 
 import { useAppDispatch, useAppSelector } from "./src/hooks/reduxHooks";
@@ -122,21 +121,31 @@ function MainNav() {
       <Stack.Screen
         name="FlashcardsScreen"
         component={FlashcardsScreen}
-        options={{ headerTitleStyle: { fontFamily: "Poppins_600SemiBold" } }}
+        options={{
+          headerTitleStyle: {
+            fontFamily: "Poppins_600SemiBold",
+            color: "#000",
+          },
+          headerTintColor: "#14b8a6",
+        }}
       />
       <Stack.Screen
         name="ManageDataScreen"
         component={ManageDataScreen}
         options={{
-          presentation: "fullScreenModal",
           headerTitleStyle: { fontFamily: "Poppins_600SemiBold" },
+          presentation: "fullScreenModal",
         }}
       />
       <Stack.Screen
         name="BeginSessionScreen"
         component={BeginSessionScreen}
         options={{
-          headerTitleStyle: { fontFamily: "Poppins_600SemiBold" },
+          headerTitleStyle: {
+            fontFamily: "Poppins_600SemiBold",
+            color: "#000",
+          },
+          headerTintColor: "#14b8a6",
         }}
       />
       <Stack.Screen
@@ -149,7 +158,7 @@ function MainNav() {
         component={StatsScreen}
         options={{
           headerTitle: "Your stats",
-          headerBackVisible: false,
+          presentation: "fullScreenModal",
           headerTitleStyle: { fontFamily: "Poppins_600SemiBold" },
         }}
       />
@@ -168,7 +177,6 @@ function AllNavs() {
   let [fontsLoaded] = useFonts({
     Poppins_400Regular,
     Poppins_600SemiBold,
-    Poppins_700Bold,
   });
 
   useEffect(() => {

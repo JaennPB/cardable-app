@@ -44,7 +44,12 @@ const DecksScreen: React.FC = () => {
       )}
       {decksData.length <= 0 && (
         <Flex flex={1} justify="center" alignItems="center">
-          <Heading textAlign="center" fontSize={18}>
+          <Heading
+            textAlign="center"
+            fontSize={18}
+            fontFamily="Poppins_600SemiBold"
+            fontWeight="normal"
+          >
             Please begin by adding some decks.
           </Heading>
         </Flex>

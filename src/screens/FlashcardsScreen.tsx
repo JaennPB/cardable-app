@@ -66,7 +66,12 @@ const FlashcardsScreen: React.FC = () => {
       )}
       {cardsFiltered.length <= 0 && (
         <Flex flex={1} justify="center" alignItems="center">
-          <Heading textAlign="center" fontSize={18}>
+          <Heading
+            textAlign="center"
+            fontSize={18}
+            fontFamily="Poppins_600SemiBold"
+            fontWeight="normal"
+          >
             Now, add some flashcards to begin!
           </Heading>
         </Flex>

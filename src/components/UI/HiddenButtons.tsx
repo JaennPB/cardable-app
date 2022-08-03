@@ -33,7 +33,7 @@ const HiddenButtons: React.FC<Props> = ({
       <Pressable
         position="absolute"
         bg="danger.400"
-        borderRadius={10}
+        borderRadius={25}
         px={6}
         right={0}
         w="100%"

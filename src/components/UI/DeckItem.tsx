@@ -111,7 +111,7 @@ const DeckItem: React.FC<Props> = ({
           <Pressable
             onPress={onPress}
             bg="teal.500"
-            borderRadius={10}
+            borderRadius={25}
             p={5}
             mb={5}
             h={66}

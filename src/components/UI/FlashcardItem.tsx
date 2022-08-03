@@ -82,11 +82,16 @@ const FlashcardItem: React.FC<Props> = ({ questionSnippet, cardId, index }) => {
       />
       <GestureDetector gesture={gesture}>
         <Animated.View style={rStyle}>
-          <View bg="teal.500" borderRadius={10} p={5} mb={5} h={90} shadow={3}>
+          <View bg="teal.500" borderRadius={30} p={5} mb={5} h={90} shadow={3}>
             <Text color="white" fontSize={20} fontFamily="Poppins_600SemiBold">
               Question:
             </Text>
-            <Text color="white" fontSize={18} fontFamily="Poppins_400Regular">
+            <Text
+              color="white"
+              fontSize={18}
+              fontFamily="Poppins_400Regular"
+              pb={5}
+            >
               {questionSnippet}
             </Text>
           </View>

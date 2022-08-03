@@ -44,6 +44,7 @@ const CustomInput: React.FC<Props> = ({
         secureTextEntry={secureTextEntry}
         borderColor={"danger.400"}
         borderWidth={isInvalid ? 1 : 0}
+        borderRadius={20}
         _focus={{
           borderColor: "danger.400",
           bg: "teal.100",

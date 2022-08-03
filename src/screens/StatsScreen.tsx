@@ -104,6 +104,7 @@ const StatsScreen: React.FC = () => {
               cy={height / 2}
               r={CIRCLE_LENGTH / (2 * Math.PI)}
               strokeWidth={25}
+              stroke="#e5e5e5"
             />
             <AnimatedCircle
               cx={width / 2}

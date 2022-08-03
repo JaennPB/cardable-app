@@ -24,6 +24,9 @@ const DeckForm: React.FC = () => {
 
   async function addDeckHandler() {
     const deckId = deckName.toLowerCase().replace(/\s/g, "");
+
+    if (!deckName) return;
+
     try {
       setIsLoading(true);
       setDoc(doc(db, "users", userId, "decks", deckId), {
@@ -51,6 +54,7 @@ const DeckForm: React.FC = () => {
         placeholder="i.e. Capital cities"
         onChangeText={setDeckName}
         value={deckName}
+        maxLength={20}
       />
       <CustomButton
         title="Add Deck"
