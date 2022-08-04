@@ -1,33 +1,29 @@
 {
   "expo": {
-    "name": "flashcard-app-ts",
-    "slug": "flashcard-app-ts",
+    "name": "Cardable",
+    "slug": "CardableApp",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
+      "image": "./assets/icon.png",
+      "resizeMode": "center",
       "backgroundColor": "#ffffff"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       }
     },
-    "web": {
-      "favicon": "./assets/favicon.png"
-    }
+    "description": "Cardable: Learn, repeat, learn.",
+    "githubUrl": "https://github.com/JaennPB/cardable-app.git"
   }
 }

@@ -19,9 +19,7 @@ import CustomInput from "../../components/UI/CustomInput";
 import CustomKeyboardAV from "../../components/UI/CustomKeyboardAV";
 import ToggleAuthType from "../../components/UI/ToggleAuthType";
 
-interface Props {}
-
-const SignUpScreen: React.FC<Props> = ({}) => {
+const SignUpScreen: React.FC = ({}) => {
   const navigation = useAppNavigation();
   const dispatch = useAppDispatch();
 
