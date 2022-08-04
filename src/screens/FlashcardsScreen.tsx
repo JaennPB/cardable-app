@@ -1,18 +1,16 @@
-import { useLayoutEffect } from "react";
-import { ListRenderItemInfo } from "react-native";
 import { Flex, Heading, ScrollView } from "native-base";
+import { useLayoutEffect } from "react";
 
-import Animated, { Layout } from "react-native-reanimated";
 import * as Haptics from "expo-haptics";
 
+import { RouteProp, useRoute } from "@react-navigation/native";
 import { useAppNavigation } from "../hooks/navigationHooks";
-import { useRoute, RouteProp } from "@react-navigation/native";
 
 import { useAppSelector } from "../hooks/reduxHooks";
 
-import PlusButton from "../components/UI/PlusButton";
-import FlexScreen from "../components/UI/FlexScreen";
 import FlashcardItem from "../components/UI/FlashcardItem";
+import FlexScreen from "../components/UI/FlexScreen";
+import PlusButton from "../components/UI/PlusButton";
 
 const FlashcardsScreen: React.FC = () => {
   const navigation = useAppNavigation();

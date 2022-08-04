@@ -1,4 +1,4 @@
-import { Text, Divider, Flex, Button } from "native-base";
+import { Button, Divider, Flex, Text } from "native-base";
 
 interface Props {
   dividerTitle: string;

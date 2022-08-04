@@ -1,26 +1,23 @@
-import { useEffect } from "react";
-import { Dimensions, Alert } from "react-native";
 import { Flex, Heading } from "native-base";
+import { useEffect } from "react";
+import { Alert, Dimensions } from "react-native";
 
 import Animated, {
   SlideInDown,
-  SlideInLeft,
-  SlideInRight,
   SlideInUp,
   useAnimatedProps,
   useDerivedValue,
   useSharedValue,
-  withSpring,
   withTiming,
 } from "react-native-reanimated";
-import Svg, { Circle } from "react-native-svg";
 import { ReText } from "react-native-redash";
+import Svg, { Circle } from "react-native-svg";
 
-import { useRoute, RouteProp } from "@react-navigation/native";
+import { RouteProp, useRoute } from "@react-navigation/native";
 import { useAppNavigation } from "../hooks/navigationHooks";
 
-import { useAppDispatch, useAppSelector } from "../hooks/reduxHooks";
 import { manageCard } from "../app/mainSlice";
+import { useAppDispatch, useAppSelector } from "../hooks/reduxHooks";
 
 import { doc, writeBatch } from "firebase/firestore";
 import { db } from "../db/firebase";

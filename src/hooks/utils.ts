@@ -18,3 +18,13 @@ export function useItemSeparator(
     return { marginLeft: marginBetween };
   }
 }
+
+export const LEITNER_SCHEDULE = {
+  day1: [1, 2],
+  day2: [1, 3],
+  day3: [1, 2],
+  day4: [1, 4],
+  day5: [1, 2],
+  day6: [1, 3],
+  day7: [1, 2],
+};

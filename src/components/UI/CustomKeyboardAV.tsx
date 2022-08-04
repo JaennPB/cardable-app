@@ -1,5 +1,5 @@
-import { Platform } from "react-native";
 import { KeyboardAvoidingView } from "native-base";
+import { Platform } from "react-native";
 
 const CustomKeyboardAV: React.FC = ({ children }) => {
   return (

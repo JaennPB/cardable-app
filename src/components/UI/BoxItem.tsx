@@ -1,5 +1,5 @@
-import { Dimensions } from "react-native";
 import { Flex, Heading, Pressable } from "native-base";
+import { Dimensions } from "react-native";
 
 import Animated, {
   interpolate,
@@ -50,8 +50,6 @@ const BoxItem: React.FC<Props> = ({ title, index, translateX, onPress }) => {
           align="center"
           borderRadius={25}
           bg="white"
-          borderWidth={1}
-          borderColor="teal.500"
           shadow={4}
         >
           <Heading

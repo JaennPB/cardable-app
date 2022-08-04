@@ -1,4 +1,4 @@
-import { Text, VStack, Input, KeyboardAvoidingView } from "native-base";
+import { Input, Text, VStack } from "native-base";
 
 interface Props {
   label: string;

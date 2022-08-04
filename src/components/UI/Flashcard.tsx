@@ -1,4 +1,4 @@
-import { Button, Flex, Heading, View } from "native-base";
+import { Button, Flex, Heading } from "native-base";
 import { useState } from "react";
 import { Dimensions, StyleSheet } from "react-native";
 

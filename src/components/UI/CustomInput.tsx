@@ -1,5 +1,5 @@
-import { KeyboardTypeOptions } from "react-native";
 import { Input, Text, VStack } from "native-base";
+import { KeyboardTypeOptions } from "react-native";
 
 interface Props {
   label: string;

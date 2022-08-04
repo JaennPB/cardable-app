@@ -1,18 +1,17 @@
+import { Flex } from "native-base";
 import { useState } from "react";
 import { Alert } from "react-native";
 
 import { useAppNavigation } from "../../hooks/navigationHooks";
 
-import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
 import { addDeck } from "../../app/mainSlice";
+import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
 
 import { doc, setDoc } from "firebase/firestore";
 import { db } from "../../db/firebase";
 
 import CustomButton from "../UI/CustomButton";
 import CustomInput from "../UI/CustomInput";
-import FlexScreen from "../UI/FlexScreen";
-import { Flex } from "native-base";
 
 const DeckForm: React.FC = () => {
   const navigation = useAppNavigation();

@@ -20,8 +20,9 @@ const CustomButton: React.FC<Props> = ({
       isLoading={isLoading}
       isLoadingText={isLoadingText}
       borderRadius={20}
-      p={5}
-      bg="teal.400"
+      px={5}
+      py={3}
+      bg="teal.500"
       colorScheme="teal"
     >
       {title}

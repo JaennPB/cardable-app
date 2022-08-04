@@ -1,20 +1,19 @@
+import { Flex, Heading } from "native-base";
 import { useState } from "react";
 import { Alert } from "react-native";
-import { Flex, Heading, KeyboardAvoidingView } from "native-base";
 
 import Animated, { SlideInRight, SlideOutLeft } from "react-native-reanimated";
 
-import { useAppSelector, useAppDispatch } from "../../hooks/reduxHooks";
-import { addCard } from "../../app/mainSlice";
-
 import { useAppNavigation } from "../../hooks/navigationHooks";
+
+import { addCard } from "../../app/mainSlice";
+import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
 
 import { doc, setDoc } from "firebase/firestore";
 import { db } from "../../db/firebase";
 
 import CustomButton from "../UI/CustomButton";
 import CustomTextArea from "../UI/CustomTextArea";
-import FlexScreen from "../UI/FlexScreen";
 
 interface Props {
   addCardfromDeck: string;

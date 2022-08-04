@@ -1,11 +1,11 @@
-import { useLayoutEffect } from "react";
 import { Button } from "native-base";
+import { useLayoutEffect } from "react";
 
+import { RouteProp, useRoute } from "@react-navigation/native";
 import { useAppNavigation } from "../hooks/navigationHooks";
-import { useRoute, RouteProp } from "@react-navigation/native";
 
-import DeckForm from "../components/forms/DeckForm";
 import CardForm from "../components/forms/CardForm";
+import DeckForm from "../components/forms/DeckForm";
 
 const ManageDataScreen: React.FC = () => {
   const navigation = useAppNavigation();

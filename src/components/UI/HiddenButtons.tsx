@@ -4,7 +4,6 @@ import Animated, {
   interpolate,
   useAnimatedStyle,
 } from "react-native-reanimated";
-import * as Haptics from "expo-haptics";
 
 interface Props {
   translateX: Animated.SharedValue<number>;

@@ -1,9 +1,9 @@
-import { VStack } from "native-base";
+import { Flex } from "native-base";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-import { useAppDispatch } from "../hooks/reduxHooks";
 import { logout } from "../app/mainSlice";
+import { useAppDispatch } from "../hooks/reduxHooks";
 
 import CustomButton from "../components/UI/CustomButton";
 
@@ -16,9 +16,9 @@ const AccountScreen: React.FC = () => {
   }
 
   return (
-    <VStack flex={1} p={5} space={5} bg="muted.100">
+    <Flex flex={1} p={5} pt={6} bg="muted.50" borderTopRadius={20}>
       <CustomButton title="Log out" onPress={logOutHandler} />
-    </VStack>
+    </Flex>
   );
 };
 

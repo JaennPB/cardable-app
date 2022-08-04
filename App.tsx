@@ -1,39 +1,41 @@
+import { Image, NativeBaseProvider, StatusBar, View } from "native-base";
 import { useCallback, useEffect, useState } from "react";
 import { Alert, Platform } from "react-native";
-import { NativeBaseProvider, StatusBar, View, Image } from "native-base";
 
+import {
+  Poppins_400Regular,
+  Poppins_600SemiBold,
+  useFonts,
+} from "@expo-google-fonts/poppins";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as SplashScreen from "expo-splash-screen";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import {
-  useFonts,
-  Poppins_400Regular,
-  Poppins_600SemiBold,
-} from "@expo-google-fonts/poppins";
 
-import { useAppDispatch, useAppSelector } from "./src/hooks/reduxHooks";
-import { Provider } from "react-redux";
-import { store } from "./src/app/store";
-import { authenticate } from "./src/app/mainSlice";
-
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
+import { Provider } from "react-redux";
+import { authenticate } from "./src/app/mainSlice";
+import { store } from "./src/app/store";
+import { useAppDispatch, useAppSelector } from "./src/hooks/reduxHooks";
+
+import AccountScreen from "./src/screens/AccountScreen";
+import ActiveSessionScreen from "./src/screens/ActiveSessionScreen";
 import LogInScreen from "./src/screens/auth/LogInScreen";
 import SignUpScreen from "./src/screens/auth/SignUpScreen";
+import BeginSessionScreen from "./src/screens/BeginSessionScreen";
 import BoxesScreen from "./src/screens/BoxesScreen";
-import AccountScreen from "./src/screens/AccountScreen";
 import DecksScreen from "./src/screens/DecksScreen";
 import FlashcardsScreen from "./src/screens/FlashcardsScreen";
 import ManageDataScreen from "./src/screens/ManageDataScreen";
-import BeginSessionScreen from "./src/screens/BeginSessionScreen";
-import ActiveSessionScreen from "./src/screens/ActiveSessionScreen";
 import StatsScreen from "./src/screens/StatsScreen";
 
-import { Ionicons } from "@expo/vector-icons";
-import { AntDesign } from "@expo/vector-icons";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import {
+  AntDesign,
+  Ionicons,
+  MaterialCommunityIcons,
+} from "@expo/vector-icons";
 
 const Stack = createNativeStackNavigator<NavParams>();
 const BottomTabs = createBottomTabNavigator<NavParams>();
@@ -56,7 +58,10 @@ function BottomTabsNav() {
           fontFamily: "Poppins_400Regular",
         },
         tabBarActiveTintColor: "#14b8a6",
-        headerTitleStyle: { fontSize: 20, fontFamily: "Poppins_600SemiBold" },
+        headerTitleStyle: {
+          fontSize: 20,
+          fontFamily: "Poppins_600SemiBold",
+        },
         headerShadowVisible: false,
       }}
     >
@@ -99,6 +104,7 @@ function BottomTabsNav() {
         options={{
           headerTitle: "Account",
           tabBarLabel: "Account",
+
           tabBarIcon: ({ color }) => (
             <Ionicons name="md-person-outline" size={24} color={color} />
           ),

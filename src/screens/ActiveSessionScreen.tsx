@@ -1,14 +1,14 @@
+import { Button, Flex, Heading, Text } from "native-base";
 import { useLayoutEffect, useRef, useState } from "react";
 import { Alert, Dimensions, FlatList, ListRenderItemInfo } from "react-native";
-import { Button, Flex, Heading, Text, View } from "native-base";
 
-import { useRoute, RouteProp } from "@react-navigation/native";
+import { RouteProp, useRoute } from "@react-navigation/native";
 import { useAppNavigation } from "../hooks/navigationHooks";
 
 import { useAppSelector } from "../hooks/reduxHooks";
 
-import Flashcard from "../components/UI/Flashcard";
 import CustomButton from "../components/UI/CustomButton";
+import Flashcard from "../components/UI/Flashcard";
 
 const { width } = Dimensions.get("window");
 

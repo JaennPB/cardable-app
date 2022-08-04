@@ -1,18 +1,18 @@
-import { Alert } from "react-native";
 import { Text, View } from "native-base";
+import { Alert } from "react-native";
 
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import Animated, {
-  SlideInRight,
   Layout,
+  SlideInRight,
   SlideOutLeft,
   useAnimatedStyle,
   useSharedValue,
   withTiming,
 } from "react-native-reanimated";
 
-import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
 import { deleteCard } from "../../app/mainSlice";
+import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
 
 import { deleteDoc, doc } from "firebase/firestore";
 import { db } from "../../db/firebase";

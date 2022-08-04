@@ -1,17 +1,17 @@
+import { FlatList, Flex, Heading } from "native-base";
 import { useLayoutEffect } from "react";
 import { ListRenderItemInfo } from "react-native";
-import { FlatList, Flex, Heading } from "native-base";
 
 import * as Haptics from "expo-haptics";
 
-import { useRoute, RouteProp } from "@react-navigation/native";
+import { RouteProp, useRoute } from "@react-navigation/native";
 import { useAppNavigation } from "../hooks/navigationHooks";
 
 import { useAppSelector } from "../hooks/reduxHooks";
 
+import CustomButton from "../components/UI/CustomButton";
 import DeckItem from "../components/UI/DeckItem";
 import FlexScreen from "../components/UI/FlexScreen";
-import CustomButton from "../components/UI/CustomButton";
 
 const BeginSessionScreen: React.FC = () => {
   const navigation = useAppNavigation();

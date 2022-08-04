@@ -1,17 +1,17 @@
+import { Flex, Heading } from "native-base";
 import { useLayoutEffect } from "react";
 import { Dimensions, Platform } from "react-native";
-import { Flex, Heading } from "native-base";
 
+import * as Haptics from "expo-haptics";
 import Animated, {
   useAnimatedScrollHandler,
   useSharedValue,
 } from "react-native-reanimated";
-import * as Haptics from "expo-haptics";
 
 import { useAppNavigation } from "../hooks/navigationHooks";
 
-import { useAppDispatch, useAppSelector } from "../hooks/reduxHooks";
 import { asyncFetchInitialData } from "../app/mainSlice";
+import { useAppDispatch, useAppSelector } from "../hooks/reduxHooks";
 
 import BoxItem from "../components/UI/BoxItem";
 import CustomSpinner from "../components/UI/CustomSpinner";
@@ -54,12 +54,12 @@ const BoxesScreen: React.FC = () => {
     <>
       {isLoadingState && <CustomSpinner />}
       {!isLoadingState && (
-        <Flex flex={1} justify="center" bg="muted.100">
+        <Flex flex={1} justify="center" bg="muted.50">
           <Flex flex={1}>
             <Heading
               alignSelf="flex-start"
               ml={5}
-              pt={10}
+              pt={5}
               fontFamily="Poppins_600SemiBold"
               size={Platform.OS === "ios" ? "2xl" : "lg"}
               fontWeight="normal"
@@ -91,7 +91,7 @@ const BoxesScreen: React.FC = () => {
             </Animated.ScrollView>
           </Flex>
           <Flex
-            flex={2}
+            flex={3}
             bg="white"
             w={width}
             p={5}

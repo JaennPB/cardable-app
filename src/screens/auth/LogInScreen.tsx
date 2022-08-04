@@ -1,21 +1,21 @@
+import { Heading, VStack } from "native-base";
 import { useState } from "react";
 import { Alert } from "react-native";
-import { Heading, VStack } from "native-base";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { useAppNavigation } from "../../hooks/navigationHooks";
 
-import { auth } from "../../db/firebase";
 import { signInWithEmailAndPassword } from "firebase/auth/react-native";
+import { auth } from "../../db/firebase";
 
+import { authenticate } from "../../app/mainSlice";
+import AuthBoxContainer from "../../components/UI/AuthBoxContainer";
 import CustomButton from "../../components/UI/CustomButton";
 import CustomInput from "../../components/UI/CustomInput";
-import AuthBoxContainer from "../../components/UI/AuthBoxContainer";
+import CustomKeyboardAV from "../../components/UI/CustomKeyboardAV";
 import ToggleAuthType from "../../components/UI/ToggleAuthType";
 import { useAppDispatch } from "../../hooks/reduxHooks";
-import { authenticate } from "../../app/mainSlice";
-import CustomKeyboardAV from "../../components/UI/CustomKeyboardAV";
 
 interface Props {}
 

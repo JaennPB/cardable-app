@@ -1,23 +1,23 @@
+import { Heading, Text, VStack } from "native-base";
 import { useState } from "react";
 import { Alert } from "react-native";
-import { Heading, VStack, Text } from "native-base";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { useAppNavigation } from "../../hooks/navigationHooks";
 
-import { useAppDispatch } from "../../hooks/reduxHooks";
 import { authenticate } from "../../app/mainSlice";
+import { useAppDispatch } from "../../hooks/reduxHooks";
 
-import { auth, db } from "../../db/firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth/react-native";
 import { doc, writeBatch } from "firebase/firestore";
+import { auth, db } from "../../db/firebase";
 
+import AuthBoxContainer from "../../components/UI/AuthBoxContainer";
 import CustomButton from "../../components/UI/CustomButton";
 import CustomInput from "../../components/UI/CustomInput";
-import AuthBoxContainer from "../../components/UI/AuthBoxContainer";
-import ToggleAuthType from "../../components/UI/ToggleAuthType";
 import CustomKeyboardAV from "../../components/UI/CustomKeyboardAV";
+import ToggleAuthType from "../../components/UI/ToggleAuthType";
 
 interface Props {}
 
@@ -68,6 +68,7 @@ const SignUpScreen: React.FC<Props> = ({}) => {
         "Box 4",
         "Box 5",
         "Box 6",
+        "Box 7",
       ];
       const batch = writeBatch(db);
 

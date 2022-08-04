@@ -1,21 +1,21 @@
+import { HStack, Pressable, Text } from "native-base";
 import { Alert } from "react-native";
-import { Text, Pressable, HStack } from "native-base";
 
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import Animated, {
-  SlideInRight,
   Layout,
+  SlideInRight,
   SlideOutLeft,
   useAnimatedStyle,
   useSharedValue,
   withTiming,
 } from "react-native-reanimated";
 
-import { writeBatch, doc, deleteDoc } from "firebase/firestore";
-import { db } from "../../db/firebase";
-
-import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
 import { deleteDeck } from "../../app/mainSlice";
+import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
+
+import { doc, writeBatch } from "firebase/firestore";
+import { db } from "../../db/firebase";
 
 import HiddenButtons from "./HiddenButtons";
 

@@ -1,13 +1,12 @@
-import { ListRenderItemInfo } from "react-native";
-import { FlatList, Flex, Heading, ScrollView } from "native-base";
+import { Flex, Heading, ScrollView } from "native-base";
 
 import * as Haptics from "expo-haptics";
 
 import { useAppNavigation } from "../hooks/navigationHooks";
 import { useAppSelector } from "../hooks/reduxHooks";
 
-import PlusButton from "../components/UI/PlusButton";
 import DeckItem from "../components/UI/DeckItem";
+import PlusButton from "../components/UI/PlusButton";
 
 const DecksScreen: React.FC = () => {
   const navigation = useAppNavigation();
@@ -27,7 +26,7 @@ const DecksScreen: React.FC = () => {
   }
 
   return (
-    <Flex flex={1} p={5} bg="muted.100">
+    <Flex flex={1} p={5} pt={6} bg="muted.50" borderTopRadius={20}>
       {decksData.length >= 1 && (
         <ScrollView>
           {decksData.map((deck, index) => (
