@@ -17,7 +17,7 @@ const AccountScreen: React.FC = () => {
 
   return (
     <Flex flex={1} p={5} pt={6} bg="muted.50" borderTopRadius={20}>
-      <CustomButton title="Log out" onPress={logOutHandler} />
+      <CustomButton title="Log Out" onPress={logOutHandler} />
     </Flex>
   );
 };

@@ -31,7 +31,7 @@ const FlashcardsScreen: React.FC = () => {
   function addCardToDeckHandler() {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
     navigation.navigate("ManageDataScreen", {
-      type: "card",
+      type: "Card",
       addCardFromDeck: deckId,
     });
   }
@@ -62,7 +62,7 @@ const FlashcardsScreen: React.FC = () => {
           </Heading>
         </Flex>
       )}
-      <PlusButton onPress={addCardToDeckHandler} title="Add card" />
+      <PlusButton onPress={addCardToDeckHandler} title="Add Card" />
     </FlexScreen>
   );
 };

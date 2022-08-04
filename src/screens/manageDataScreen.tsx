@@ -33,8 +33,8 @@ const ManageDataScreen: React.FC = () => {
 
   return (
     <>
-      {type === "deck" && <DeckForm />}
-      {type === "card" && <CardForm addCardfromDeck={addCardFromDeck!} />}
+      {type === "Deck" && <DeckForm />}
+      {type === "Card" && <CardForm addCardfromDeck={addCardFromDeck!} />}
     </>
   );
 };

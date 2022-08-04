@@ -47,9 +47,9 @@ const CardForm: React.FC<Props> = ({ addCardfromDeck }) => {
     try {
       setIsLoading(true);
       const cardObj = {
-        question: userData.question,
-        answer: userData.answer,
-        comment: userData.comment,
+        question: userData.question.trim(),
+        answer: userData.answer.trim(),
+        comment: userData.comment.trim(),
         from: addCardfromDeck,
         currBox: 1,
         id: cardId,

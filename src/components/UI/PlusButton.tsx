@@ -4,7 +4,7 @@ import { AntDesign } from "@expo/vector-icons";
 
 interface Props {
   onPress: () => void;
-  title: "Add deck" | "Add card";
+  title: "Add Deck" | "Add Card";
 }
 
 const PlusButton: React.FC<Props> = ({ onPress, title }) => {

@@ -22,7 +22,7 @@ const DecksScreen: React.FC = () => {
   function addDeckHandler() {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
 
-    navigation.navigate("ManageDataScreen", { type: "deck" });
+    navigation.navigate("ManageDataScreen", { type: "Deck" });
   }
 
   return (
@@ -53,7 +53,7 @@ const DecksScreen: React.FC = () => {
           </Heading>
         </Flex>
       )}
-      <PlusButton onPress={addDeckHandler} title="Add deck" />
+      <PlusButton onPress={addDeckHandler} title="Add Deck" />
     </Flex>
   );
 };

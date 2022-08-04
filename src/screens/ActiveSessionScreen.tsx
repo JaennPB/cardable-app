@@ -40,7 +40,7 @@ const ActiveSessionScreen: React.FC = () => {
           style: "default",
         },
         {
-          text: "End session",
+          text: "End Session",
           onPress: () =>
             navigation.navigate("StatsScreen", {
               updatedItems: docsToUpdate,
@@ -64,7 +64,7 @@ const ActiveSessionScreen: React.FC = () => {
           }}
           onPress={endSessionHandler}
         >
-          End session
+          End Session
         </Button>
       ),
     });

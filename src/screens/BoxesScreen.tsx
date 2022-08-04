@@ -4,6 +4,7 @@ import { Dimensions, Platform } from "react-native";
 
 import * as Haptics from "expo-haptics";
 import Animated, {
+  SlideInDown,
   useAnimatedScrollHandler,
   useSharedValue,
 } from "react-native-reanimated";
@@ -90,23 +91,17 @@ const BoxesScreen: React.FC = () => {
               ))}
             </Animated.ScrollView>
           </Flex>
-          <Flex
-            flex={3}
-            bg="white"
-            w={width}
-            p={5}
-            borderTopRadius={20}
-            justify="space-around"
-          >
-            <DateReview
-              onPressToday={navigateToBoxShortcutHandler.bind(this, 1, "Box 1")}
-              onPressTomorrow={navigateToBoxShortcutHandler.bind(
-                this,
-                3,
-                "Box 3"
-              )}
-            />
-          </Flex>
+          <Animated.View entering={SlideInDown.duration(500)}>
+            <Flex
+              bg="white"
+              w={width}
+              p={5}
+              borderTopRadius={20}
+              justify="space-around"
+            >
+              <DateReview />
+            </Flex>
+          </Animated.View>
         </Flex>
       )}
     </>

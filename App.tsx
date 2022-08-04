@@ -87,7 +87,7 @@ function BottomTabsNav() {
         name="DecksScreen"
         component={DecksScreen}
         options={{
-          headerTitle: "Your decks",
+          headerTitle: "Your Decks",
           tabBarLabel: "Decks",
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons
@@ -163,7 +163,7 @@ function MainNav() {
         name="StatsScreen"
         component={StatsScreen}
         options={{
-          headerTitle: "Your stats",
+          headerTitle: "Your Score",
           presentation: "fullScreenModal",
           headerTitleStyle: { fontFamily: "Poppins_600SemiBold" },
         }}
