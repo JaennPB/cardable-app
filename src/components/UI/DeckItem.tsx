@@ -113,6 +113,7 @@ const DeckItem: React.FC<Props> = ({
             bg="teal.500"
             borderRadius={25}
             p={5}
+            mx={5}
             mb={5}
             h={66}
             shadow={3}

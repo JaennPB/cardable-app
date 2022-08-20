@@ -30,7 +30,7 @@ const BoxItem: React.FC<Props> = ({ title, index, translateX, onPress }) => {
         index * (width * 0.8),
         (index + 1) * (width * 0.8),
       ],
-      [0, -30, 0]
+      [0, -20, 0]
     );
 
     return {

@@ -26,7 +26,7 @@ const DecksScreen: React.FC = () => {
   }
 
   return (
-    <Flex flex={1} p={5} pt={6} bg="muted.50" borderTopRadius={20}>
+    <Flex flex={1} pt={5} bg="muted.50" borderTopRadius={20}>
       {decksData.length >= 1 && (
         <ScrollView>
           {decksData.map((deck, index) => (

@@ -9,7 +9,6 @@ import { useAppNavigation } from "../hooks/navigationHooks";
 import { useAppSelector } from "../hooks/reduxHooks";
 
 import FlashcardItem from "../components/UI/FlashcardItem";
-import FlexScreen from "../components/UI/FlexScreen";
 import PlusButton from "../components/UI/PlusButton";
 
 const FlashcardsScreen: React.FC = () => {
@@ -37,7 +36,7 @@ const FlashcardsScreen: React.FC = () => {
   }
 
   return (
-    <FlexScreen>
+    <Flex flex={1} bg="muted.50" pt={5}>
       {cardsFiltered.length >= 1 && (
         <ScrollView>
           {cardsFiltered.map((card, index) => (
@@ -63,7 +62,7 @@ const FlashcardsScreen: React.FC = () => {
         </Flex>
       )}
       <PlusButton onPress={addCardToDeckHandler} title="Add Card" />
-    </FlexScreen>
+    </Flex>
   );
 };
 

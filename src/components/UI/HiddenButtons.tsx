@@ -34,6 +34,7 @@ const HiddenButtons: React.FC<Props> = ({
         bg="danger.400"
         borderRadius={25}
         px={6}
+        mr={5}
         right={0}
         w="100%"
         h={isFlashcard ? 90 : 66}

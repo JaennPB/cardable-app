@@ -62,6 +62,8 @@ function BottomTabsNav() {
           fontSize: 20,
           fontFamily: "Poppins_600SemiBold",
         },
+        headerTintColor: "#0d9488",
+
         headerShadowVisible: false,
       }}
     >

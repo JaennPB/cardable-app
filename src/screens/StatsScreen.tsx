@@ -89,7 +89,13 @@ const StatsScreen: React.FC = () => {
 
   return (
     <>
-      <Flex flex={0.6} justify="center" align="center" position="relative">
+      <Flex
+        flex={0.6}
+        justify="center"
+        align="center"
+        position="relative"
+        bg="muted.50"
+      >
         <ReText
           style={{ fontSize: 60, fontFamily: "Poppins_600SemiBold" }}
           text={animatedText}
@@ -116,7 +122,7 @@ const StatsScreen: React.FC = () => {
           </Svg>
         </Flex>
       </Flex>
-      <Flex flex={0.3} align="center">
+      <Flex flex={0.3} align="center" bg="muted.50">
         <Animated.View entering={SlideInUp.delay(300)}>
           <Heading
             size="2xl"
@@ -129,7 +135,7 @@ const StatsScreen: React.FC = () => {
           </Heading>
         </Animated.View>
       </Flex>
-      <Flex flex={0.1} p={5}>
+      <Flex flex={0.1} p={5} bg="muted.50">
         <Animated.View entering={SlideInDown.delay(2300)}>
           <CustomButton title="Continue" onPress={continueHandler} />
         </Animated.View>

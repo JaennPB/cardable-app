@@ -11,7 +11,6 @@ import { useAppSelector } from "../hooks/reduxHooks";
 
 import CustomButton from "../components/UI/CustomButton";
 import DeckItem from "../components/UI/DeckItem";
-import FlexScreen from "../components/UI/FlexScreen";
 
 const BeginSessionScreen: React.FC = () => {
   const navigation = useAppNavigation();
@@ -49,7 +48,7 @@ const BeginSessionScreen: React.FC = () => {
   }
 
   return (
-    <FlexScreen>
+    <Flex flex={1} bg="muted.50">
       {allDecks.length <= 0 && (
         <Flex flex={1} justify="center" alignItems="center">
           <Heading textAlign="center" fontSize={18} mb={5}>
@@ -63,13 +62,18 @@ const BeginSessionScreen: React.FC = () => {
       )}
       {allDecks.length > 0 && (
         <>
-          <Heading mb={5} fontFamily="Poppins_600SemiBold" fontWeight="normal">
+          <Heading
+            my={5}
+            ml={5}
+            fontFamily="Poppins_600SemiBold"
+            fontWeight="normal"
+          >
             Choose a deck to study
           </Heading>
           <FlatList data={allDecks} renderItem={renderDeckItemsHandler} />
         </>
       )}
-    </FlexScreen>
+    </Flex>
   );
 };
 

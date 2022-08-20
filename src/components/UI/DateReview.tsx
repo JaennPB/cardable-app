@@ -1,53 +1,68 @@
-import { Divider, Flex, Heading } from "native-base";
+import { Divider, Flex, Heading, Pressable, Text } from "native-base";
 
-import moment from "moment";
+import { LEITNER_SCHEDULE } from "../../hooks/utils";
 import QuickSessionButton from "./QuickSessionButton";
 
-interface Props {}
+interface Props {
+  onPress: () => void;
+}
 
-const DateReview: React.FC<Props> = () => {
+const DAY = "1";
+const TOMORROW = "2";
+
+const DateReview: React.FC<Props> = ({ onPress }) => {
   return (
-    <>
-      <Heading
-        size="md"
-        fontFamily="Poppins_600SemiBold"
-        fontWeight="normal"
-        mb={5}
-      >
-        {moment().format("MMMM Do YYYY")}{" "}
-        <Heading color="teal.500" fontSize={16}>
-          Day 12
-        </Heading>
-      </Heading>
+    <Flex flex={2} bg="white" p={5} borderTopRadius={20}>
+      <Flex flexDir="row" justify="space-between" align="center" mb={5}>
+        <Pressable onPress={onPress} _pressed={{ opacity: 0.3 }}>
+          <Heading>Capital cities</Heading>
+        </Pressable>
+        <Text fontFamily="Poppins_600SemiBold" fontSize={16} color="teal.500">
+          {`Day ${DAY}`}
+        </Text>
+      </Flex>
       <Flex direction="row">
         <Flex flex={1}>
           <Heading
             fontWeight="normal"
             fontFamily="Poppins_600SemiBold"
-            mb={5}
             size="md"
           >
             Today
           </Heading>
-          <QuickSessionButton title="Box 5" onPress={() => {}} />
-          <QuickSessionButton title="Box 1" onPress={() => {}} />
+          {LEITNER_SCHEDULE[DAY].map((box, index) => (
+            <QuickSessionButton
+              key={index}
+              title={`Box ${box.toString()}`}
+              onPress={() => {}}
+            />
+          ))}
+          {LEITNER_SCHEDULE[DAY].length < 3 && (
+            <QuickSessionButton title="N/A" onPress={() => {}} />
+          )}
         </Flex>
         <Divider orientation="vertical" mx={5} />
         <Flex flex={1}>
           <Heading
             fontWeight="normal"
             fontFamily="Poppins_600SemiBold"
-            mb={5}
             size="md"
           >
             Tomorrow
           </Heading>
-          <QuickSessionButton title="Box 4" onPress={() => {}} />
-          <QuickSessionButton title="Box 2" onPress={() => {}} />
-          <QuickSessionButton title="Box 1" onPress={() => {}} />
+          {LEITNER_SCHEDULE[TOMORROW].map((box, index) => (
+            <QuickSessionButton
+              key={index}
+              title={`Box ${box.toString()}`}
+              onPress={() => {}}
+            />
+          ))}
+          {LEITNER_SCHEDULE[TOMORROW].length < 3 && (
+            <QuickSessionButton title="N/A" onPress={() => {}} />
+          )}
         </Flex>
       </Flex>
-    </>
+    </Flex>
   );
 };
 

@@ -3,8 +3,8 @@ import { useLayoutEffect } from "react";
 import { Dimensions, Platform } from "react-native";
 
 import * as Haptics from "expo-haptics";
+import moment from "moment";
 import Animated, {
-  SlideInDown,
   useAnimatedScrollHandler,
   useSharedValue,
 } from "react-native-reanimated";
@@ -18,7 +18,7 @@ import BoxItem from "../components/UI/BoxItem";
 import CustomSpinner from "../components/UI/CustomSpinner";
 import DateReview from "../components/UI/DateReview";
 
-const { width } = Dimensions.get("window");
+const { width, height } = Dimensions.get("window");
 
 const BoxesScreen: React.FC = () => {
   const navigation = useAppNavigation();
@@ -47,28 +47,23 @@ const BoxesScreen: React.FC = () => {
     });
   }
 
-  function navigateToBoxShortcutHandler(boxId: number, boxName: string) {
-    navigation.navigate("BeginSessionScreen", { boxId, boxName });
-  }
-
   return (
     <>
       {isLoadingState && <CustomSpinner />}
       {!isLoadingState && (
         <Flex flex={1} justify="center" bg="muted.50">
-          <Flex flex={1}>
-            <Heading
-              alignSelf="flex-start"
-              ml={5}
-              pt={5}
-              fontFamily="Poppins_600SemiBold"
-              size={Platform.OS === "ios" ? "2xl" : "lg"}
-              fontWeight="normal"
-            >
-              Your boxes
-            </Heading>
-          </Flex>
-          <Flex flex={5} justify="center" align="center">
+          <Heading
+            flex={0.5}
+            alignSelf="flex-start"
+            ml={5}
+            pt={5}
+            fontFamily="Poppins_600SemiBold"
+            size={Platform.OS === "ios" ? "2xl" : "md"}
+            fontWeight="normal"
+          >
+            {moment().format("MMMM Do YYYY")}
+          </Heading>
+          <Flex flex={3} justify="center" align="center">
             <Animated.ScrollView
               horizontal
               showsHorizontalScrollIndicator={false}
@@ -91,17 +86,7 @@ const BoxesScreen: React.FC = () => {
               ))}
             </Animated.ScrollView>
           </Flex>
-          <Animated.View entering={SlideInDown.duration(500)}>
-            <Flex
-              bg="white"
-              w={width}
-              p={5}
-              borderTopRadius={20}
-              justify="space-around"
-            >
-              <DateReview />
-            </Flex>
-          </Animated.View>
+          <DateReview onPress={() => console.log("Change deck")} />
         </Flex>
       )}
     </>
